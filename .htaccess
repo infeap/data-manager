@@ -1,0 +1,18 @@
+# This file is part of the
+# Infeap Data Manager (https://www.infeap.org/data-manager)
+# open source project.
+
+# Configure rewrite engine
+<IfModule mod_rewrite.c>
+
+    RewriteEngine On
+
+    # Redirect every request unconditionally to redirect.php
+    # basically concealing all directories and files except public/
+    RewriteCond %{REQUEST_URI} !^/?public/
+    RewriteRule .* redirect.php [L]
+
+</IfModule>
+
+# Explain when rewrite engine is not available
+ErrorDocument 404 "<h1>Setup required</h1><p>The Apache HTTP Server module <b>mod_rewrite</b> must be installed and enabled to be used in <b>.htaccess</b> files - but seems not to.</p><p>Please ask your server's administrator to enable it.</p>"

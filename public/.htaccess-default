@@ -1,0 +1,119 @@
+# This file is part of the
+# Infeap Data Manager (https://www.infeap.org/data-manager)
+# open source project.
+
+# Configure web server environments
+<IfVersion >= 2.4>
+
+    # Example for live (or production) environment
+    <If "%{HTTP_HOST} == 'data.infeap.org'">
+        SetEnv INFEAP_CONTEXT live
+    </If>
+
+    # Example for staging environment
+    <If "%{HTTP_HOST} == 'staging.data.infeap.org'">
+        SetEnv INFEAP_CONTEXT staging
+
+        AuthType Basic
+        AuthName "Infeap Data Manager Staging Environment"
+        AuthUserFile /var/www/vhosts/infeap.org/httpdocs/data/staging/public/.htpasswd
+        Require valid-user
+    </If>
+
+    # Example for local machine development (or testing)
+    <If "%{HTTP_HOST} == 'data.infeap.localhost'">
+        SetEnv INFEAP_CONTEXT development
+        # Can also be further branched by developer names as "development/t.krebs"
+    </If>
+
+</IfVersion>
+
+# Configure rewrite engine
+<IfModule mod_rewrite.c>
+
+    # We use start.php instead of index.php to ensure that the rewrite engine works
+    DirectoryIndex start.php
+
+    RewriteEngine On
+
+    # Ignore index.html/.php once app files are setup
+    RewriteRule index\.html start.php [L]
+    RewriteRule index\.php start.php [L]
+
+    # The following rule tells Apache that if the requested filename exists, simply serve it
+    RewriteCond %{REQUEST_FILENAME} -s [OR]
+    RewriteCond %{REQUEST_FILENAME} -l [OR]
+    RewriteCond %{REQUEST_FILENAME} -d
+    RewriteRule ^.*$ - [NC,L]
+
+    # The following rewrites all other queries to start.php.
+    # The condition ensures that if you are using Apache aliases to do mass virtual hosting,
+    # the base path will be prepended to allow proper resolution of the start.php file;
+    # it will work in non-aliased environments as well, providing a safe, one-size fits all solution.
+    RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
+    RewriteRule ^(.*) - [E=BASE:%1]
+    RewriteRule ^(.*)$ %{ENV:BASE}start.php [NC,L]
+
+</IfModule>
+
+# Explain when rewrite engine is not available
+ErrorDocument 404 "<h1>Setup required</h1><p>The Apache HTTP Server module <b>mod_rewrite</b> must be installed and enabled to be used in <b>.htaccess</b> files - but seems not to.</p><p>Please ask your server's administrator to enable it.</p>"
+
+# Configure PHP or serve as a template for recommended php.ini settings
+<IfModule mod_php7.c>
+
+    php_value max_execution_time 120
+    php_value max_input_time 120
+
+    php_value post_max_size 64M
+    php_value upload_max_filesize 64M
+
+    php_value max_input_vars 4096
+    php_value suhosin.get.max_vars 4096
+    php_value suhosin.post.max_vars 4096
+    php_value suhosin.request.max_vars 4096
+
+</IfModule>
+
+# Configure output compression
+<IfModule mod_filter.c>
+<IfModule mod_deflate.c>
+
+    AddType application/font-woff woff
+    AddType application/font-woff2 woff2
+
+    AddOutputFilterByType DEFLATE text/plain text/csv text/html text/xml text/css text/javascript application/javascript application/json image/svg+xml image/x-icon application/font-woff application/font-woff2 application/vnd.ms-fontobject
+
+</IfModule>
+</IfModule>
+
+# Configure HTTP cache and headers
+<IfModule mod_headers.c>
+
+    # Disable ETag header
+    Header Unset ETag
+    FileETag None
+
+    # Disable Expires header
+    Header Unset Expires
+
+    # Disable Powered-By header
+    Header Unset X-Powered-By
+
+    # Disable caching of content file types
+    <FilesMatch "\.(txt|csv|htm|html|xml|zip)$">
+        Header Set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    </FilesMatch>
+
+    # Set cache time to one month for most important static file types
+    <FilesMatch "\.(css|js|jpg|jpeg|png|gif|svg|ico|pdf|mpg|mpeg|mp4|mp3|ogg|woff|woff2|eot|ttf)$">
+        Header Set Cache-Control "max-age=2592000"
+    </FilesMatch>
+
+</IfModule>
+
+# Set default charset for text and html files
+AddDefaultCharset UTF-8
+
+# Disable directory listings and MultiViews negotiation
+Options -Indexes -MultiViews
