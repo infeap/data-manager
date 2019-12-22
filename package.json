@@ -4,7 +4,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "node bin/increment-version.js"
+            "pre-commit": "node bin/increment-version.js && git add version.json"
         }
     }
 }
