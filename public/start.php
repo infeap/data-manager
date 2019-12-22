@@ -8,8 +8,10 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-require '../init/app.php';
+$initApp = require '../init/app.php';
 
-?>
+$initApp(function (array $app) {
 
-Infeap Data Manager is born
+    echo 'Infeap Data Manager is growing';
+
+});

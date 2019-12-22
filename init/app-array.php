@@ -70,7 +70,7 @@ return (function (): callable {
 
     return function (callable $callback) use ($app) {
 
-        $callback($app);
+        return $callback($app);
     };
 
 })();
