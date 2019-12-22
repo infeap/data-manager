@@ -1,4 +1,5 @@
 {
-    "number": 2,
-    "date": "2019-12-22Z"
+    "number": 3,
+    "date": "2019-12-22Z",
+    "branch": "master"
 }
