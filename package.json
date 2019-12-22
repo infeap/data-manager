@@ -1,0 +1,10 @@
+{
+    "devDependencies": {
+        "husky": "^3.1.0"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "node bin/increment-version.js"
+        }
+    }
+}
