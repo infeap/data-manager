@@ -33,5 +33,4 @@ return $initAppArray(function (array $app): callable {
 
         return $callback($app);
     };
-
 });

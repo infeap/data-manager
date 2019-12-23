@@ -10,7 +10,11 @@
 
 $initApp = require '../init/app.php';
 
-$initApp(function (array $app) {
+$initApp(function (array $appBaseConfig) {
+
+    $initServiceManager = require '../init/service-manager.php';
+
+    $serviceManager = $initServiceManager($appBaseConfig);
 
     echo 'Infeap Data Manager is growing';
 
