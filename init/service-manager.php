@@ -12,5 +12,11 @@ use Zend\ServiceManager\ServiceManager;
 
 return function (array $app): ServiceManager {
 
-    return new ServiceManager();
+    $initServiceConfig = require 'service-config.php';
+
+    $serviceConfig = $initServiceConfig($app);
+
+    $serviceManagerConfig = $serviceConfig['dependencies'];
+
+    return new ServiceManager($serviceManagerConfig);
 };

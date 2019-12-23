@@ -14,7 +14,11 @@ $initApp(function (array $appBaseConfig) {
 
     $initServiceManager = require '../init/service-manager.php';
 
+    /** @var \Zend\ServiceManager\ServiceManager $serviceManager */
     $serviceManager = $initServiceManager($appBaseConfig);
+
+    /** @var \Zend\Expressive\Application $app */
+    $app = $serviceManager->get(\Zend\Expressive\Application::class);
 
     echo 'Infeap Data Manager is growing';
 

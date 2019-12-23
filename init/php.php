@@ -23,8 +23,10 @@ return function (array $app) {
 
     ini_set('default_charset', 'UTF-8');
 
-    if (isset($app['config']['php']) && is_array($app['config']['php'])) {
-        foreach ($app['config']['php'] as $key => $value) {
+    $phpConfig = $app['config']['php'] ?? false;
+
+    if ($phpConfig && is_array($phpConfig)) {
+        foreach ($phpConfig as $key => $value) {
             ini_set($key, $value);
         }
     }
