@@ -14,6 +14,6 @@ version.date = currentDate
 
 version.branch = gitBranch.sync()
 
-let versionFileContent = JSON.stringify(version, null, 4)
+let versionFileContent = JSON.stringify(version, null, 4) + '\n'
 
 fs.writeFileSync('version.json', versionFileContent)
