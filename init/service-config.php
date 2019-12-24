@@ -13,34 +13,68 @@ use Zend\ConfigAggregator\ConfigAggregator;
 
 return function (array $app): array {
 
+    $configCachePath = sprintf('%s/var/cache/config/version-%s-%s-%s',
+        $app['dir'], $app['version']['number'],
+        str_replace('/', '-', $app['version']['branch']),
+        str_replace('/', '-', $app['context']));
+
+    $configCacheHashFile = sprintf('%s-hash.php',
+        $configCachePath);
+
+    $configCacheFile = sprintf('%s.php',
+        $configCachePath);
+
+    $appConfigHash = crc32(serialize($app['config']));
+    $appConfigHasChanged = true;
+
+    if (is_file($configCacheHashFile) && is_readable($configCacheHashFile)) {
+        $configCacheHash = include $configCacheHashFile;
+
+        if ($configCacheHash == $appConfigHash) {
+            $appConfigHasChanged = false;
+        }
+    }
+
+    if ($app['config']['debug'] || $app['config']['develop']) {
+        $appConfigHasChanged = true;
+    }
+
+    if ($appConfigHasChanged) {
+        if (is_file($configCacheFile)) {
+            unlink($configCacheFile);
+        }
+    }
+
     $configProviders = [];
 
-    foreach (new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($app['dir'] . '/config/services/',
-            FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
+    if (! is_file($configCacheFile)) {
+        foreach (new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($app['dir'] . '/config/services/',
+                FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
 
-        if (preg_match('~\.php$~', $iteratedFile)) {
-            $config = include $iteratedFile;
+            if (preg_match('~\.php$~', $iteratedFile)) {
+                $config = include $iteratedFile;
 
-            if (is_callable($config)) {
-                $config = $config($app);
-            }
-
-            if (is_array($config)) {
-                $configArray = [];
-
-                foreach ($config as $key => $value) {
-                    if (is_numeric($key)) {
-                        if (class_exists($value)) {
-                            $configProviders[] = $value;
-                        }
-                    } else {
-                        $configArray['dependencies'][$key] = $value;
-                    }
+                if (is_callable($config)) {
+                    $config = $config($app);
                 }
 
-                if ($configArray) {
-                    $configProviders[] = new ArrayProvider($configArray);
+                if (is_array($config)) {
+                    $configArray = [];
+
+                    foreach ($config as $key => $value) {
+                        if (is_numeric($key)) {
+                            if (class_exists($value)) {
+                                $configProviders[] = $value;
+                            }
+                        } else {
+                            $configArray['dependencies'][$key] = $value;
+                        }
+                    }
+
+                    if ($configArray) {
+                        $configProviders[] = new ArrayProvider($configArray);
+                    }
                 }
             }
         }
@@ -55,9 +89,17 @@ return function (array $app): array {
                 'app_context' => $app['context'],
             ],
         ],
+
+        'config_cache_enabled' => true,
     ]);
 
-    $aggregator = new ConfigAggregator($configProviders);
+    $aggregator = new ConfigAggregator($configProviders, $configCacheFile);
+
+    if ($appConfigHasChanged) {
+        if (is_writeable($configCacheHashFile)) {
+            file_put_contents($configCacheHashFile, "<?php\n\nreturn $appConfigHash;\n");
+        }
+    }
 
     return $aggregator->getMergedConfig();
 };

@@ -12,6 +12,7 @@ return (function (): callable {
 
     $app['dir'] = dirname(__DIR__);
     $app['config']['debug'] = true; // during init
+    $app['config']['develop'] = false; // during init
 
     $initPhp = require $app['dir'] . '/init/php.php';
     $initPhp($app);
