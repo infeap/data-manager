@@ -96,7 +96,9 @@ return function (array $app): array {
     $aggregator = new ConfigAggregator($configProviders, $configCacheFile);
 
     if ($appConfigHasChanged) {
-        if (is_writeable($configCacheHashFile)) {
+        if ((is_file($configCacheHashFile) && is_writable($configCacheHashFile)) ||
+            (! is_file($configCacheHashFile) && is_writable(dirname($configCacheHashFile)))) {
+
             file_put_contents($configCacheHashFile, "<?php\n\nreturn $appConfigHash;\n");
         }
     }
