@@ -32,6 +32,13 @@ return (function (): callable {
     }
 
     if (! is_file($app['dir'] . '/public/.htaccess')) {
+        if (is_writable($app['dir'] . '/public/') && is_readable($app['dir'] . '/public/.htaccess-default')) {
+            if (copy($app['dir'] . '/public/.htaccess-default', $app['dir'] . '/public/.htaccess')) {
+                header('Refresh: 0');
+                exit('Please reload this page.');
+            }
+        }
+
         http_response_code(500);
         exit('The application files are not (yet) setup. Please read the installation documentation. Concretely, the public/.htaccess file is missing.');
     }

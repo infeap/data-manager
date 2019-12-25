@@ -9,7 +9,7 @@
  */
 
 /*
- * Redirect every request unconditionally to the public/ directory
+ * Redirect every request into the public/ directory
  * basically concealing all other directories and files
  */
 
