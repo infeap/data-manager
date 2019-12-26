@@ -8,9 +8,39 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+/*
+ * $app keys:
+ *
+ * $app['dir'] = Application directory (not public/)
+ * $app['base_path']
+ * $app['request_path']
+ *
+ * $app['version'] = Version data from version.json file
+ * $app['version']['number']
+ * $app['version']['date']
+ * $app['version']['branch']
+ *
+ * $app['context'] = Context set in public/.htaccess or 'default'
+ *
+ * $app['config'] = Context dependend configuration from config/context/* files
+ * $app['config']['debug']
+ * $app['config']['develop']
+ * $app['config']['hash']
+ */
 return (function (): callable {
 
-    $app['dir'] = dirname(__DIR__);
+    $app['dir'] = strtr(dirname(__DIR__), [
+        DIRECTORY_SEPARATOR => '/',
+    ]);
+
+    $app['base_path'] = dirname($_SERVER['PHP_SELF']);
+
+    if (strlen($app['base_path']) > 1) {
+        $app['request_path'] = substr($_SERVER['REQUEST_URI'], strlen($app['base_path']));
+    } else {
+        $app['request_path'] = $_SERVER['REQUEST_URI'];
+    }
+
     $app['config']['debug'] = true; // during init
     $app['config']['develop'] = false; // during init
 
@@ -51,6 +81,14 @@ return (function (): callable {
 
     $appContextConfigFile = $app['dir'] . '/config/context/' . $app['context'] . '.php';
 
+    if (! is_file($appContextConfigFile)) {
+        $appContextExampleConfigFile = $app['dir'] . '/config/context/example-' . $app['context'] . '.php';
+
+        if (is_file($appContextExampleConfigFile) && is_readable($appContextExampleConfigFile) && is_writable(dirname($appContextExampleConfigFile))) {
+            copy($appContextExampleConfigFile, $appContextConfigFile);
+        }
+    }
+
     if (! (is_file($appContextConfigFile) && is_readable($appContextConfigFile))) {
         http_response_code(500);
         exit('The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" is missing or not readable.');
@@ -73,6 +111,7 @@ return (function (): callable {
     }
 
     $app['config'] = array_merge($app['config'], $appContextConfig);
+    $app['config']['hash'] = crc32(serialize($app['config']));
 
     $initPhp($app);
 
