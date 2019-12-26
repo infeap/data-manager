@@ -10,6 +10,9 @@
 
 use Zend\ServiceManager\ServiceManager;
 
+/*
+ * See init/app-array.php for available $app keys
+ */
 return function (array $app): ServiceManager {
 
     $initServiceConfig = require 'service-config.php';

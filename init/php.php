@@ -8,6 +8,9 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+/*
+ * See init/app-array.php for available $app keys
+ */
 return function (array $app) {
 
     ini_set('error_reporting', E_ALL);
