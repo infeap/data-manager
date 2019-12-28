@@ -13,12 +13,12 @@
  * basically concealing all other directories and files
  */
 
-$basePath = dirname($_SERVER['SCRIPT_NAME']);
+$basePath = dirname($_SERVER['PHP_SELF']);
 
-if (strlen($basePath) == 1) {
-    $basePath = '';
+if (strlen($basePath) > 1) {
+    $requestPath = substr($_SERVER['REQUEST_URI'], strlen($basePath));
+} else {
+    $requestPath = $_SERVER['REQUEST_URI'];
 }
 
-$requestedPath = str_replace($basePath, '', $_SERVER['REQUEST_URI']);
-
-header('Location: ' . $basePath . '/public' . $requestedPath);
+header('Location: ' . $basePath . '/public' . $requestPath);
