@@ -11,18 +11,46 @@
 
 const fs = require('fs')
 const gitBranch = require('git-branch')
+const path = require('path')
 
-let version = require('../version')
+let appDir = path.dirname(__dirname)
 
-version.number++
+let appPackageFile = path.join(appDir, '/package.json')
+
+try {
+    fs.accessSync(appPackageFile, fs.R_OK)
+} catch (error) {
+    console.error(appPackageFile + ' does not exist or is not readable')
+    process.exit(1)
+}
+
+let appPackage = require(appPackageFile)
+
+if (! appPackage.name || appPackage.name != 'infeap/data-manager') {
+    console.error(appPackageFile + ' does not belong to the Infeap Data Manager project')
+    process.exit(2)
+}
+
+let appVersionFile = path.join(appDir, '/version.json')
+
+try {
+    fs.accessSync(appVersionFile, fs.R_OK | fs.W_OK)
+} catch (error) {
+    console.error(appVersionFile + ' does not exist or is not readable or is not writable')
+    process.exit(3)
+}
+
+let appVersion = require(appVersionFile)
+
+appVersion.number++
 
 let currentDateTime = (new Date()).toISOString()
 let currentDate = currentDateTime.split('T')[0] + 'Z'
 
-version.date = currentDate
+appVersion.date = currentDate
 
-version.branch = gitBranch.sync()
+appVersion.branch = gitBranch.sync()
 
-let versionFileContent = JSON.stringify(version, null, 4) + '\n'
+let appVersionFileContent = JSON.stringify(appVersion, null, 4) + '\n'
 
-fs.writeFileSync('version.json', versionFileContent)
+fs.writeFileSync(appVersionFile, appVersionFileContent)
