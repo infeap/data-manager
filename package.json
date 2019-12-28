@@ -1,11 +1,16 @@
 {
+    "name": "infeap/data-manager",
     "devDependencies": {
         "git-branch": "^2.0.1",
+        "glob": "^7.1.6",
         "husky": "^3.1.0"
     },
     "husky": {
         "hooks": {
-            "pre-commit": "node bin/increment-version.js && git add version.json"
+            "pre-commit": "node bin/increment-version.js && git add version.json",
+            "post-commit": "node bin/delete-cache.js",
+            "post-checkout": "node bin/delete-cache.js",
+            "post-merge": "node bin/delete-cache.js"
         }
     }
 }

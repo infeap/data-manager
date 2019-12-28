@@ -1,4 +1,5 @@
 {
+    "name": "infeap/data-manager",
     "require": {
         "zendframework/zend-config-aggregator": "^1.1.1",
         "zendframework/zend-diactoros": "^2.2.1",
