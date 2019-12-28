@@ -11,35 +11,15 @@
 use Zend\ConfigAggregator\ArrayProvider;
 use Zend\ConfigAggregator\ConfigAggregator;
 
+/*
+ * See init/app-array.php for available $app keys
+ */
 return function (array $app): array {
 
-    $configCachePath = sprintf('%s/var/cache/config/version-%s-%s-%s',
-        $app['dir'], $app['version']['number'],
-        str_replace('/', '-', $app['version']['branch']),
-        str_replace('/', '-', $app['context']));
+    $configCacheFile = sprintf('%s/config/services.php',
+        $app['config']['cache_dir']);
 
-    $configCacheHashFile = sprintf('%s-hash.php',
-        $configCachePath);
-
-    $configCacheFile = sprintf('%s.php',
-        $configCachePath);
-
-    $appConfigHash = crc32(serialize($app['config']));
-    $appConfigHasChanged = true;
-
-    if (is_file($configCacheHashFile) && is_readable($configCacheHashFile)) {
-        $configCacheHash = include $configCacheHashFile;
-
-        if ($configCacheHash == $appConfigHash) {
-            $appConfigHasChanged = false;
-        }
-    }
-
-    if ($app['config']['debug'] || $app['config']['develop']) {
-        $appConfigHasChanged = true;
-    }
-
-    if ($appConfigHasChanged) {
+    if ($app['checks']['context_config_has_changed']) {
         if (is_file($configCacheFile)) {
             unlink($configCacheFile);
         }
@@ -84,24 +64,27 @@ return function (array $app): array {
         'dependencies' => [
             'services' => [
                 'app_dir' => $app['dir'],
-                'app_config' => $app['config'],
+                'app_base_path' => $app['base_path'],
+                'app_request_path' => $app['request_path'],
                 'app_version' => $app['version'],
                 'app_context' => $app['context'],
+                'app_config' => $app['config'],
             ],
         ],
 
         'config_cache_enabled' => true,
     ]);
 
-    $aggregator = new ConfigAggregator($configProviders, $configCacheFile);
-
-    if ($appConfigHasChanged) {
-        if ((is_file($configCacheHashFile) && is_writable($configCacheHashFile)) ||
-            (! is_file($configCacheHashFile) && is_writable(dirname($configCacheHashFile)))) {
-
-            file_put_contents($configCacheHashFile, "<?php\n\nreturn $appConfigHash;\n");
-        }
+    if (! $app['checks']['cache_dir_is_writable']) {
+        $configCacheFile = null;
     }
 
-    return $aggregator->getMergedConfig();
+    $aggregator = new ConfigAggregator($configProviders, $configCacheFile);
+
+    $mergedConfig = $aggregator->getMergedConfig();
+
+    // Add app checks afterwards so it is not cached
+    $mergedConfig['dependencies']['services']['app_checks'] = $app['checks'];
+
+    return $mergedConfig;
 };

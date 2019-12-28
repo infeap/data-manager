@@ -10,6 +10,9 @@
 
 $initApp = require '../init/app.php';
 
+/*
+ * See init/app-array.php for available $appBaseConfig keys
+ */
 $initApp(function (array $appBaseConfig) {
 
     $initServiceManager = require '../init/service-manager.php';
@@ -20,6 +23,12 @@ $initApp(function (array $appBaseConfig) {
     /** @var \Zend\Expressive\Application $app */
     $app = $serviceManager->get(\Zend\Expressive\Application::class);
 
-    echo 'Infeap Data Manager is growing';
+    $configMiddlewarePipeline = require '../config/middleware-pipeline.php';
+    $configMiddlewarePipeline($app, $serviceManager);
+
+    $initRoutes = require '../init/routes.php';
+    $initRoutes($app, $serviceManager);
+
+    $app->run();
 
 });
