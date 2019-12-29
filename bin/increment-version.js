@@ -42,14 +42,29 @@ try {
 
 let appVersion = require(appVersionFile)
 
-appVersion.number++
+appVersion.branch = gitBranch.sync()
+
+if (appVersion.branch.includes('/')) {
+    let branchSegments = appVersion.branch.split('/')
+    let numberSegments = appVersion.number.split('/')
+
+    if (numberSegments.length < branchSegments.length) {
+        for (let i = 0; i <= branchSegments.length - numberSegments.length; i++) {
+            numberSegments.push('0')
+        }
+    }
+
+    numberSegments[numberSegments.length - 1] = (parseInt(numberSegments[numberSegments.length - 1]) + 1).toString()
+
+    appVersion.number = numberSegments.join('/')
+} else {
+    appVersion.number = (parseInt(appVersion.number) + 1).toString()
+}
 
 let currentDateTime = (new Date()).toISOString()
 let currentDate = currentDateTime.split('T')[0] + 'Z'
 
 appVersion.date = currentDate
-
-appVersion.branch = gitBranch.sync()
 
 let appVersionFileContent = JSON.stringify(appVersion, null, 4) + '\n'
 

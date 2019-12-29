@@ -125,7 +125,7 @@ return (function (): callable {
 
     $app['config']['cache_dir'] = sprintf('%s/version-%s-%s/%s',
         $cacheDir,
-        $app['version']['number'],
+        str_replace('/', '-', $app['version']['number']),
         str_replace('/', '-', $app['version']['branch']),
         str_replace('/', '-', $app['context']));
 
