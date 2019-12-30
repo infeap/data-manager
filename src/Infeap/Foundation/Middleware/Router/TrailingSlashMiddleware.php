@@ -8,7 +8,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeap\Foundation\Router\Middleware;
+namespace Infeap\Foundation\Middleware\Router;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -21,10 +21,14 @@ class TrailingSlashMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $requestPath = $request->getUri()->getPath();
+        $requestPath = $request->getAttribute('request_path');
 
-        if (substr($requestPath, -1, 1) == '/') {
-            return new RedirectResponse(rtrim($requestPath, '/'));
+        if (strlen($requestPath) > 1) {
+            if (substr($requestPath, -1, 1) == '/') {
+                $fullPath = $request->getUri()->getPath();
+
+                return new RedirectResponse(rtrim($fullPath, '/'));
+            }
         }
 
         return $handler->handle($request);
