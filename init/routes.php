@@ -14,7 +14,7 @@ use Zend\ServiceManager\ServiceManager;
 return function (Application $app, ServiceManager $serviceManager) {
 
     $basePath = $serviceManager->get('app_base_path');
-    $basePath = rtrim('/', $basePath);
+    $basePath = rtrim($basePath, '/');
 
     $initRoutesConfig = require 'routes-config.php';
 
