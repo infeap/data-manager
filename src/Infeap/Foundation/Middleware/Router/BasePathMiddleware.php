@@ -29,8 +29,8 @@ class BasePathMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $request = $request->withAttribute('base_path', $this->basePath);
-        $request = $request->withAttribute('request_path', $this->requestPath);
+        $request = $request->withAttribute('app_base_path', $this->basePath);
+        $request = $request->withAttribute('app_request_path', $this->requestPath);
 
         return $handler->handle($request);
     }

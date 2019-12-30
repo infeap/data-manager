@@ -21,7 +21,7 @@ class TrailingSlashMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $requestPath = $request->getAttribute('request_path');
+        $requestPath = $request->getAttribute('app_request_path');
 
         if (strlen($requestPath) > 1) {
             if (substr($requestPath, -1, 1) == '/') {
