@@ -50,6 +50,12 @@ return (function (): callable {
         $app['request_path'] = $_SERVER['REQUEST_URI'];
     }
 
+    $appRequestPathQueryPos = strpos($app['request_path'], '?');
+
+    if ($appRequestPathQueryPos) {
+        $app['request_path'] = substr($app['request_path'], 0, $appRequestPathQueryPos);
+    }
+
     $app['config']['debug'] = true; // during init
     $app['config']['develop'] = false; // during init
 

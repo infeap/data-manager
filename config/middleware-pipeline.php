@@ -10,7 +10,8 @@
 
 use Infeap\Foundation\Handler\Page\NotificationExceptionHandler;
 use Infeap\Foundation\Middleware\Router\BasePathMiddleware;
-use Infeap\Foundation\Middleware\Router\TrailingSlashMiddleware;
+use Infeap\Foundation\Middleware\Router\IndexFilesHandler;
+use Infeap\Foundation\Middleware\Router\TrailingSlashHandler;
 
 use Zend\Expressive\Application;
 use Zend\Expressive\Handler\NotFoundHandler;
@@ -37,7 +38,6 @@ return function (Application $app, ServiceManager $serviceManager) {
 
     $app->pipe(ImplicitHeadMiddleware::class);
     $app->pipe(ImplicitOptionsMiddleware::class);
-
     $app->pipe(MethodNotAllowedMiddleware::class);
 
     $app->pipe(UrlHelperMiddleware::class);
@@ -45,7 +45,8 @@ return function (Application $app, ServiceManager $serviceManager) {
 
     $app->pipe(DispatchMiddleware::class);
 
-    $app->pipe(TrailingSlashMiddleware::class);
+    $app->pipe(IndexFilesHandler::class);
+    $app->pipe(TrailingSlashHandler::class);
 
     $app->pipe(NotFoundHandler::class);
 
