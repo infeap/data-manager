@@ -11,6 +11,7 @@
 use Infeap\Foundation\Handler\Page\NotificationExceptionHandler;
 use Infeap\Foundation\Middleware\Router\BasePathMiddleware;
 use Infeap\Foundation\Middleware\Router\TrailingSlashMiddleware;
+
 use Zend\Expressive\Application;
 use Zend\Expressive\Handler\NotFoundHandler;
 use Zend\Expressive\Helper\BodyParams\BodyParamsMiddleware;
