@@ -23,9 +23,10 @@ return function (array $app): array {
                     ],
                 ],
                 'twig' => [
+                    'assets_url' => rtrim($app['base_path'], '/') . '/',
                     'cache_dir' => $app['checks']['cache_dir_is_writable'] ? $app['config']['cache_dir'] . '/templates/' : false,
                     'extensions' => [
-                        // \Infeap\Foundation\Template\Twig\AssetExtension::class,
+                        \Infeap\Foundation\Template\Twig\AssetExtension::class,
                     ],
                     'globals' => [
                         'app' => $app,
