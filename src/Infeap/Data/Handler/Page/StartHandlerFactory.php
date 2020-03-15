@@ -10,8 +10,8 @@
 
 namespace Infeap\Data\Handler\Page;
 
-use Zend\Expressive\Template\TemplateRendererInterface;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
+use Mezzio\Template\TemplateRendererInterface;
 
 class StartHandlerFactory
 {

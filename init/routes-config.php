@@ -8,10 +8,10 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-use Zend\ConfigAggregator\ArrayProvider;
-use Zend\ConfigAggregator\ConfigAggregator;
-use Zend\Expressive\Application;
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ConfigAggregator\ArrayProvider;
+use Laminas\ConfigAggregator\ConfigAggregator;
+use Laminas\ServiceManager\ServiceManager;
+use Mezzio\Application;
 
 return function (Application $app, ServiceManager $serviceManager) {
 

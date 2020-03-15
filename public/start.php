@@ -17,11 +17,11 @@ $initApp(function (array $appBaseConfig) {
 
     $initServiceManager = require '../init/service-manager.php';
 
-    /** @var \Zend\ServiceManager\ServiceManager $serviceManager */
+    /** @var \Laminas\ServiceManager\ServiceManager $serviceManager */
     $serviceManager = $initServiceManager($appBaseConfig);
 
-    /** @var \Zend\Expressive\Application $app */
-    $app = $serviceManager->get(\Zend\Expressive\Application::class);
+    /** @var \Mezzio\Application $app */
+    $app = $serviceManager->get(\Mezzio\Application::class);
 
     $configMiddlewarePipeline = require '../config/middleware-pipeline.php';
     $configMiddlewarePipeline($app, $serviceManager);

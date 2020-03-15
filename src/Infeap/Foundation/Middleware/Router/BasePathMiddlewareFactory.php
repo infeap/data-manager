@@ -10,7 +10,7 @@
 
 namespace Infeap\Foundation\Middleware\Router;
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 class BasePathMiddlewareFactory
 {

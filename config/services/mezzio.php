@@ -9,11 +9,11 @@
  */
 
 return [
-    \Zend\Expressive\ConfigProvider::class,
-    \Zend\Expressive\Helper\ConfigProvider::class,
-    \Zend\Expressive\Router\ConfigProvider::class,
-    \Zend\Expressive\Router\FastRouteRouter\ConfigProvider::class,
-    \Zend\Expressive\Twig\ConfigProvider::class,
+    \Mezzio\ConfigProvider::class,
+    \Mezzio\Helper\ConfigProvider::class,
+    \Mezzio\Router\ConfigProvider::class,
+    \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
+    \Mezzio\Twig\ConfigProvider::class,
 
     'aliases' => [
         'config' => 'app_config',
@@ -21,7 +21,7 @@ return [
 
     'services' => [
         'app_config' => [
-            'zend-expressive' => [
+            'mezzio' => [
                 'error_handler' => [
                     'template_404' => 'page::error/404',
                     'template_error' => 'page::error/500',

@@ -8,7 +8,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-use Zend\ServiceManager\ServiceManager;
+use Laminas\ServiceManager\ServiceManager;
 
 /*
  * See init/app-array.php for available $app keys

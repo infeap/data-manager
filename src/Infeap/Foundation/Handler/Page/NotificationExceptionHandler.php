@@ -11,12 +11,12 @@
 namespace Infeap\Foundation\Handler\Page;
 
 use Infeap\Foundation\Exception\NotificationException;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Zend\Diactoros\Response\HtmlResponse;
-use Zend\Expressive\Template\TemplateRendererInterface;
 
 class NotificationExceptionHandler implements MiddlewareInterface
 {
