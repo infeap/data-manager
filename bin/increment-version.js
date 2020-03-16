@@ -26,7 +26,7 @@ try {
 
 let appPackage = require(appPackageFile)
 
-if (! appPackage.name || appPackage.name != 'infeap/data-manager') {
+if (! appPackage.name || appPackage.name != '@infeap/data-manager') {
     console.error(appPackageFile + ' does not belong to the Infeap Data Manager project')
     process.exit(2)
 }
