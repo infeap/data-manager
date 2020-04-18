@@ -7,8 +7,32 @@
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
-{% extends "@page/layout/base.twig" %}
+{% extends "@page/layout/message.twig" %}
 
-{% block body %}
-    page/error/500.twig
+{% block message_heading 'Error' %}
+
+{% block message_content %}
+    <p>The following error occurred on this page or function:</p>
+
+    <p><strong>{{ error.message }}</strong></p>
+
+    {% if app.config.debug %}
+        <hr>
+
+        <p><span class="badge badge-info">Debug output:</span></p>
+
+        <dl>
+            <dt>File</dt>
+            <dd>{{ error.file }}<code>:{{ error.line }}</code></dd>
+
+            <dt>Trace</dt>
+            <dd>
+                {% for traceItem in error.trace %}
+                    <div>{{ traceItem.file }}<code>:{{ traceItem.line }}</code></div>
+                {% endfor %}
+            </dd>
+        </dl>
+
+        {# {{ dump(error.previous) }} #}
+    {% endif %}
 {% endblock %}

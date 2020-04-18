@@ -7,8 +7,13 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-hr {
-    height: 2px;
-    border: none;
-    background-color: $body-color;
+.inf-spinner {
+    &[data-type="horizontal"] {
+        display: inline-flex;
+        align-items: center;
+
+        figcaption {
+            margin-left: 1rem;
+        }
+    }
 }

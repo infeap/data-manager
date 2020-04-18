@@ -19,13 +19,13 @@
             <link rel="stylesheet" href="{{ compiled_css('foundation') }}">
         {% endif %}
 
-        {% block head '' %}
+        <title>{% block title 'Infeap Data Manager' %}</title>
     </head>
 
-    <body>
+    <body class="{% block body_class '' %}">
         {% block body '' %}
 
-        <script src="{{ compiled_js('vendors~foundation') }}"></script>
+        <script src="{{ compiled_js('vendors~foundation~init') }}"></script>
         <script src="{{ compiled_js('foundation') }}"></script>
 
         {% block foot '' %}

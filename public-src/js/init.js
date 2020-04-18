@@ -7,8 +7,4 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-hr {
-    height: 2px;
-    border: none;
-    background-color: $body-color;
-}
+'use strict'

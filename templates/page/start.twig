@@ -7,8 +7,28 @@
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
-{% extends "@page/layout/base.twig" %}
+{% extends "@page/layout/message.twig" %}
 
-{% block body %}
-    page/start.twig
+{% block message_content %}
+    <div id="inf-start-spinner" class="text-center" style="margin: 6rem 0 4rem 0" hidden>
+        <figure class="inf-spinner" data-type="horizontal">
+            <div class="spinner-border" role="status"></div>
+
+            <figcaption>
+                Initializing ...
+            </figcaption>
+        </figure>
+    </div>
+
+    <script>
+        document.getElementById('inf-start-spinner').removeAttribute('hidden')
+    </script>
+
+    <noscript>
+        <h1>Error</h1>
+
+        <p>This application requires a web browser with activated JavaScript.</p>
+        <p>Maybe you are intentionally or unintentionally blocking JavaScript execution in your web browser.<br>
+            Please check your web browser's settings and plugins.</p>
+    </noscript>
 {% endblock %}

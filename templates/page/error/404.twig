@@ -7,8 +7,18 @@
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
-{% extends "@page/layout/base.twig" %}
+{% extends "@page/layout/message.twig" %}
 
-{% block body %}
-    page/error/404.twig
+{% block message_heading 'Page not found' %}
+
+{% block message_content %}
+    <p>The requested page or function has not been found on this server.</p>
+
+    <p>Possible causes:</p>
+
+    <ul>
+        <li>Your URL is incomplete or incorrect</li>
+        <li>The URL has been changed</li>
+        <li>It has been removed</li>
+    </ul>
 {% endblock %}

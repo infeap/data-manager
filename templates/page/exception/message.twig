@@ -7,8 +7,10 @@
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
-{% extends "@page/layout/base.twig" %}
+{% extends "@page/layout/message.twig" %}
 
-{% block body %}
-    page/exception/message.twig
+{% block message_heading '?' %}
+
+{% block message_content %}
+    <p>page/exception/message.twig</p>
 {% endblock %}
