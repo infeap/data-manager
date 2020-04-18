@@ -8,7 +8,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-use Infeap\Foundation\Handler\Page\NotificationExceptionHandler;
+use Infeap\Foundation\Handler\Page\MessageExceptionHandler;
 use Infeap\Foundation\Middleware\Router\BasePathMiddleware;
 use Infeap\Foundation\Middleware\Router\IndexFilesHandler;
 use Infeap\Foundation\Middleware\Router\TrailingSlashHandler;
@@ -29,7 +29,7 @@ use Mezzio\Router\Middleware\RouteMiddleware;
 return function (Application $app, ServiceManager $serviceManager) {
 
     $app->pipe(ErrorHandler::class);
-    $app->pipe(NotificationExceptionHandler::class);
+    $app->pipe(MessageExceptionHandler::class);
 
     $app->pipe(BasePathMiddleware::class);
     $app->pipe(ServerUrlMiddleware::class);
