@@ -16,4 +16,4 @@
 </IfModule>
 
 # Explain when rewrite engine is not available
-ErrorDocument 404 "<h1>Setup required</h1><p>The Apache HTTP Server module <b>mod_rewrite</b> must be installed and enabled to be used in the <b>.htaccess</b> file - but seems not to.</p><p>Please read the installation documentation on how to setup the .htaccess file and/or ask your server's administrator to enable it.</p>"
+ErrorDocument 404 /index.php

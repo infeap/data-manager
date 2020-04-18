@@ -37,8 +37,8 @@
     RewriteEngine On
 
     # Ignore index.html/.php once app files are setup
-    RewriteRule index\.html start.php [L]
-    RewriteRule index\.php start.php [L]
+    RewriteRule index\.html start.php [R=301,L]
+    RewriteRule index\.php start.php [R=301,L]
 
     # The following rule tells Apache that if the requested filename exists, simply serve it
     RewriteCond %{REQUEST_FILENAME} -s [OR]
@@ -57,7 +57,7 @@
 </IfModule>
 
 # Explain when rewrite engine is not available
-ErrorDocument 404 "<h1>Setup required</h1><p>The Apache HTTP Server module <b>mod_rewrite</b> must be installed and enabled to be used in <b>.htaccess</b> files - but seems not to.</p><p>Please ask your server's administrator to enable it.</p>"
+ErrorDocument 404 /index.php
 
 # Configure PHP or serve as a template for recommended php.ini settings
 <IfModule mod_php7.c>
