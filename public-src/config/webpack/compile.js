@@ -3,7 +3,7 @@
 const glob = require('glob')
 const path = require('path')
 
-const Autoprefixer = require('autoprefixer')
+const autoprefixer = require('autoprefixer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
@@ -91,7 +91,7 @@ module.exports = function (env) {
                             loader: 'postcss-loader',
                             options: {
                                 plugins: [
-                                    require('autoprefixer'),
+                                    autoprefixer,
                                 ],
                             },
                         },
@@ -114,7 +114,6 @@ module.exports = function (env) {
             ],
         },
         plugins: [
-            Autoprefixer,
             new MiniCssExtractPlugin({
                 filename: 'css/compiled/[name]' + env.vars.fileExtensionPrefix + '.css',
                 chunkFilename: 'css/compiled/[name]' + env.vars.fileExtensionPrefix + '.css?v=[hash]',
