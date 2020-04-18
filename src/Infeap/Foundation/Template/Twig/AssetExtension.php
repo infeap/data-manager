@@ -131,7 +131,12 @@ class AssetExtension extends AbstractExtension
         $compiledPath = sprintf('%1$s/compiled/%2$s.%1$s',
             $filenameExtension, $path);
 
-        $compiledUrl = $env->getFunction('asset')->getCallable()($compiledPath);
+        if ($context['app']['config']['develop']) {
+            $compiledUrl = $context['app']['config']['dev_server_url'] . $compiledPath;
+        } else {
+            $compiledUrl = $env->getFunction('asset')->getCallable()($compiledPath);
+        }
+
         $compiledUrl = $this->minifyAssetUrl($context, $compiledUrl);
         $compiledUrl = $this->appendFileVersion($context, $compiledUrl);
 

@@ -15,11 +15,18 @@
         <meta name="generator" content="Infeap Data Manager {{ app.version.number }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+        {% if not app.config.develop %}
+            <link rel="stylesheet" href="{{ compiled_css('foundation') }}">
+        {% endif %}
+
         {% block head '' %}
     </head>
 
     <body>
         {% block body '' %}
+
+        <script src="{{ compiled_js('vendors~foundation') }}"></script>
+        <script src="{{ compiled_js('foundation') }}"></script>
 
         {% block foot '' %}
     </body>

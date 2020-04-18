@@ -27,6 +27,8 @@
  * $app['config']['debug']
  * $app['config']['develop']
  *
+ * $app['config']['dev_server_url'] = For Webpack DevServer
+ *
  * $app['config']['cache_dir']
  * $app['config']['log_dir']
  *
@@ -136,6 +138,10 @@ return (function (): callable {
         str_replace('/', '-', $app['context']));
 
     $app['config'] = array_merge($app['config'], $appContextConfig);
+
+    if ($app['config']['develop'] && ! isset($app['config']['dev_server_url'])) {
+        $app['config']['dev_server_url'] = 'https://localhost:8080/';
+    }
 
     $initPhp($app);
 
