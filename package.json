@@ -48,6 +48,7 @@
     },
     "scripts": {
         "compile-to-deploy": "webpack --config public-src/config/webpack/compile.js --env.production",
-        "compile-to-debug": "webpack --config public-src/config/webpack/compile.js --env.debug"
+        "compile-to-debug": "webpack --config public-src/config/webpack/compile.js --env.debug",
+        "start-dev-server": "webpack-dev-server --config public-src/config/webpack/dev.js"
     }
 }
