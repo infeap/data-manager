@@ -28,7 +28,9 @@ class AssetExtension extends AbstractExtension
 
     public function minifyAssetUrl(array $context, string $url): string
     {
-        if ($context['app']['config']['debug']) {
+        $file = $this->getFilePath($context, $url);
+
+        if ($context['app']['config']['debug'] && is_file($file)) {
             return $url;
         } else {
             if (strpos($url, '?')) {
@@ -39,24 +41,23 @@ class AssetExtension extends AbstractExtension
                 $regexLimiter = ')$';
             }
 
-            return preg_replace('~\.([a-z0-9]+' . $regexLimiter . '~i', '.min.$1', $url);
+            $minifiedUrl = preg_replace('~\.([a-z0-9]+' . $regexLimiter . '~i', '.min.$1', $url);
+
+            $minifiedFile = $this->getFilePath($context, $minifiedUrl);
+
+            if (is_file($minifiedFile)) {
+                return $minifiedUrl;
+            } else {
+                return $url;
+            }
         }
     }
 
     public function appendFileVersion(array $context, string $url): string
     {
-        $basePath = $context['app']['base_path'];
-        $publicPath = substr($url, strpos($url, $basePath) + strlen($basePath));
+        $file = $this->getFilePath($context, $url);
 
-        if (strpos($publicPath, '?')) {
-            $publicPath = substr($publicPath, 0, strpos($publicPath, '?'));
-        } else if (strpos($publicPath, '#')) {
-            $publicPath = substr($publicPath, 0, strpos($publicPath, '#'));
-        }
-
-        $file = $context['app']['dir'] . '/public/' . $publicPath;
-
-        if (file_exists($file)) {
+        if (is_file($file)) {
             $anchorPos = strpos($url, '#');
 
             if ($anchorPos) {
@@ -83,6 +84,22 @@ class AssetExtension extends AbstractExtension
         } else {
             return $url;
         }
+    }
+
+    protected function getFilePath(array $context, string $url): string
+    {
+        $basePath = $context['app']['base_path'];
+        $publicPath = substr($url, strpos($url, $basePath) + strlen($basePath));
+
+        if (strpos($publicPath, '?')) {
+            $publicPath = substr($publicPath, 0, strpos($publicPath, '?'));
+        } else if (strpos($publicPath, '#')) {
+            $publicPath = substr($publicPath, 0, strpos($publicPath, '#'));
+        }
+
+        $file = $context['app']['dir'] . '/public/' . $publicPath;
+
+        return $file;
     }
 
     public function getFunctions(): array
