@@ -10,5 +10,5 @@
 
 namespace Infeap\Foundation\Exception;
 
-class NotificationException extends \RuntimeException
+class MessageException extends \RuntimeException
 { }

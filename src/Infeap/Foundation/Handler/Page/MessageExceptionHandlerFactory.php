@@ -13,12 +13,12 @@ namespace Infeap\Foundation\Handler\Page;
 use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Template\TemplateRendererInterface;
 
-class NotificationExceptionHandlerFactory
+class MessageExceptionHandlerFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new NotificationExceptionHandler(
+        return new MessageExceptionHandler(
             $serviceManager->get(TemplateRendererInterface::class));
     }
 

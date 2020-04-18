@@ -10,7 +10,7 @@
 
 namespace Infeap\Foundation\Handler\Page;
 
-use Infeap\Foundation\Exception\NotificationException;
+use Infeap\Foundation\Exception\MessageException;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -18,7 +18,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class NotificationExceptionHandler implements MiddlewareInterface
+class MessageExceptionHandler implements MiddlewareInterface
 {
 
     protected $template;
@@ -32,9 +32,9 @@ class NotificationExceptionHandler implements MiddlewareInterface
     {
         try {
             $response = $handler->handle($request);
-        } catch (NotificationException $e) {
-            $response = new HtmlResponse($this->template->render('page::exception/notification', [
-                'exception' => $e,
+        } catch (MessageException $exception) {
+            $response = new HtmlResponse($this->template->render('page::exception/message', [
+                'exception' => $exception,
             ]), 500);
         }
 

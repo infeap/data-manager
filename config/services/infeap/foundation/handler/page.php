@@ -10,6 +10,6 @@
 
 return [
     'factories' => [
-        \Infeap\Foundation\Handler\Page\NotificationExceptionHandler::class => \Infeap\Foundation\Handler\Page\NotificationExceptionHandlerFactory::class,
+        \Infeap\Foundation\Handler\Page\MessageExceptionHandler::class => \Infeap\Foundation\Handler\Page\MessageExceptionHandlerFactory::class,
     ],
 ];
