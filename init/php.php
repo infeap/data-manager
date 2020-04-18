@@ -13,7 +13,12 @@
  */
 return function (array $app) {
 
-    ini_set('error_reporting', E_ALL);
+    if ($app['config']['debug']) {
+        ini_set('error_reporting', E_ALL);
+    } else {
+        ini_set('error_reporting',E_ERROR | E_USER_ERROR | E_WARNING | E_USER_WARNING | E_PARSE);
+    }
+
     ini_set('display_errors', $app['config']['debug'] ? '1' : '0');
     ini_set('log_errors', $app['config']['debug'] ? '0' : '1');
 
