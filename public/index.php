@@ -1,4 +1,13 @@
 <!--
+    This file is part of the
+    Infeap Data Manager (https://www.infeap.org/data-manager)
+    open source project.
+
+    @copyright   2018-2020 Tobias Krebs and the Infeap Team
+    @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
+
+
+
     The official entry point to this application is start.php
 -->
 
@@ -6,9 +15,4 @@
 
 require '../init/app.php';
 
-?>
-
-<h1>Setup required</h1>
-
-<p>The Apache HTTP Server module <b>mod_rewrite</b> must be installed and enabled to be used in <b>.htaccess</b> files - but seems not to.</p>
-<p>Please ask your server's administrator to enable it.</p>
+require '../index.php';
