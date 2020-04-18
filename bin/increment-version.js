@@ -15,7 +15,7 @@ const path = require('path')
 
 let appDir = path.dirname(__dirname)
 
-let appPackageFile = path.join(appDir, '/package.json')
+let appPackageFile = path.join(appDir, 'package.json')
 
 try {
     fs.accessSync(appPackageFile, fs.R_OK)
@@ -26,12 +26,12 @@ try {
 
 let appPackage = require(appPackageFile)
 
-if (! appPackage.name || appPackage.name != '@infeap/data-manager') {
+if (! appPackage.name || appPackage.name !== '@infeap/data-manager') {
     console.error(appPackageFile + ' does not belong to the Infeap Data Manager project')
     process.exit(2)
 }
 
-let appVersionFile = path.join(appDir, '/version.json')
+let appVersionFile = path.join(appDir, 'version.json')
 
 try {
     fs.accessSync(appVersionFile, fs.R_OK | fs.W_OK)
