@@ -1,0 +1,21 @@
+/**
+ * This file is part of the
+ * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * open source project.
+ *
+ * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
+ */
+
+a, button, .btn {
+    display: inline-block;
+
+    &:focus {
+        outline: dotted 1px currentColor;
+    }
+
+    &:active {
+        outline: none;
+        transform: scale(0.96) translate(0, 0.05em);
+    }
+}

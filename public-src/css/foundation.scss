@@ -1,0 +1,45 @@
+/**
+ * This file is part of the
+ * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * open source project.
+ *
+ * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
+ */
+
+@import 'foundation/variables';
+
+/*!
+ * Bootstrap v4.4.1 (https://getbootstrap.com/)
+ * Copyright 2011-2019 The Bootstrap Authors
+ * Copyright 2011-2019 Twitter, Inc.
+ * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ */
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/root";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/type";
+@import "~bootstrap/scss/images";
+@import "~bootstrap/scss/code";
+
+@import "~bootstrap/scss/buttons";
+
+@import "~bootstrap/scss/utilities/clearfix";
+@import "~bootstrap/scss/utilities/screenreaders";
+
+@import "~bootstrap/scss/print";
+
+/*!
+ * Infeap Data Manager (https://www.infeap.org/data-manager)
+ *
+ * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
+ */
+
+@import 'foundation/buttons';
+@import 'foundation/html';
+@import 'foundation/message';
+@import 'foundation/type';
