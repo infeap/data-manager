@@ -19,10 +19,10 @@ return $initAppArray(function (array $app): callable {
 
     if (! (is_file($autoloadFile) && is_readable($autoloadFile))) {
         http_response_code(500);
-        exit('The application dependencies are not (yet) installed. Please read the installation documentation or use Composer to install.');
+        infeap_render_init_message('Dependencies required', 'The application dependencies are not (yet) installed. Please read the installation documentation or use Composer to install.');
     }
 
-    require $autoloadFile;
+    require_once $autoloadFile;
 
     return function (callable $callback) use ($app) {
 

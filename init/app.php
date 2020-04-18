@@ -8,12 +8,14 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-if (! defined('PHP_VERSION_ID') || PHP_VERSION_ID < 70200) {
+require 'message.php';
+
+if (! defined('PHP_VERSION_ID') || PHP_VERSION_ID < 70400) {
     if (function_exists('http_response_code')) {
         http_response_code(500);
     }
 
-    exit('PHP 7.2+ is required for this application to work (currently running PHP ' . PHP_VERSION . ')');
+    infeap_render_init_message('PHP setup required', 'PHP 7.4+ is required for this application to work (currently running PHP ' . PHP_VERSION . ').');
 }
 
-return require 'app-loading.php';
+return require 'app-load.php';
