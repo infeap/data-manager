@@ -75,12 +75,17 @@ ErrorDocument 404 /index.php
 
 </IfModule>
 
-# Configure output compression
-<IfModule mod_filter.c>
-<IfModule mod_deflate.c>
+# Add common (and commonly missing) web font mime types
+<IfModule mod_mime.c>
 
     AddType application/font-woff woff
     AddType application/font-woff2 woff2
+
+</IfModule>
+
+# Configure output compression
+<IfModule mod_filter.c>
+<IfModule mod_deflate.c>
 
     AddOutputFilterByType DEFLATE text/plain text/csv text/html text/xml text/css text/javascript application/javascript application/json image/svg+xml image/x-icon application/font-woff application/font-woff2 application/vnd.ms-fontobject
 
