@@ -13,7 +13,7 @@ const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
 
-let appDir = path.dirname(__dirname)
+let appDir = path.dirname(path.dirname(__dirname))
 
 let appPackageFile = path.join(appDir, 'package.json')
 

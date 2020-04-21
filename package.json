@@ -40,10 +40,10 @@
     ],
     "husky": {
         "hooks": {
-            "pre-commit": "node bin/increment-version.js && git add version.json",
-            "post-commit": "node bin/delete-cache.js",
-            "post-checkout": "node bin/delete-cache.js",
-            "post-merge": "node bin/delete-cache.js"
+            "pre-commit": "node bin/dev/increment-version.js && git add version.json",
+            "post-commit": "node bin/dev/delete-cache.js",
+            "post-checkout": "node bin/dev/delete-cache.js",
+            "post-merge": "node bin/dev/delete-cache.js"
         }
     },
     "scripts": {
