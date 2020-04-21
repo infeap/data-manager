@@ -36,6 +36,11 @@
 
     RewriteEngine On
 
+    # Enforce a HTTPS connection
+    # RewriteCond %{HTTP_HOST} ^data\.infeap\.org$ [NC]
+    # RewriteCond %{HTTPS} off
+    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
     # Ignore index.html/.php once app files are setup
     RewriteRule index\.html start.php [R=301,L]
     RewriteRule index\.php start.php [R=301,L]
