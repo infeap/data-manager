@@ -19,7 +19,8 @@ class ExceptionLanguageMiddlewareFactory
     public function __invoke(ServiceManager $serviceManager)
     {
         return new ExceptionLanguageMiddleware(
-            $serviceManager->get(LanguageService::class));
+            $serviceManager->get(LanguageService::class),
+        );
     }
 
 }

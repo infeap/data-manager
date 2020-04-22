@@ -19,7 +19,8 @@ class LanguageParamMiddlewareFactory
     public function __invoke(ServiceManager $serviceManager)
     {
         return new LanguageParamMiddleware(
-            $serviceManager->get(LanguageService::class));
+            $serviceManager->get(LanguageService::class),
+        );
     }
 
 }

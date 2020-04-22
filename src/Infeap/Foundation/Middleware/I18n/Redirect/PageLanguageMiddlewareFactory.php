@@ -19,7 +19,8 @@ class PageLanguageMiddlewareFactory
     public function __invoke(ServiceManager $serviceManager)
     {
         return new PageLanguageMiddleware(
-            $serviceManager->get(LanguageService::class));
+            $serviceManager->get(LanguageService::class),
+        );
     }
 
 }

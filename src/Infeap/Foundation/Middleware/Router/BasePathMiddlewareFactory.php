@@ -19,7 +19,8 @@ class BasePathMiddlewareFactory
     {
         return new BasePathMiddleware(
             $serviceManager->get('app_base_path'),
-            $serviceManager->get('app_request_path'));
+            $serviceManager->get('app_request_path'),
+        );
     }
 
 }

@@ -19,7 +19,8 @@ class NotFoundLanguageMiddlewareFactory
     public function __invoke(ServiceManager $serviceManager)
     {
         return new NotFoundLanguageMiddleware(
-            $serviceManager->get(LanguageService::class));
+            $serviceManager->get(LanguageService::class),
+        );
     }
 
 }

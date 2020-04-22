@@ -19,7 +19,8 @@ class StartHandlerFactory
     public function __invoke(ServiceManager $serviceManager)
     {
         return new StartHandler(
-            $serviceManager->get(TemplateRendererInterface::class));
+            $serviceManager->get(TemplateRendererInterface::class),
+        );
     }
 
 }
