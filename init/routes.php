@@ -11,14 +11,14 @@
 use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Application;
 
-return function (Application $app, ServiceManager $serviceManager) {
+return function (Application $application, ServiceManager $serviceManager) {
 
     $basePath = $serviceManager->get('app_base_path');
     $basePath = rtrim($basePath, '/');
 
     $initRoutesConfig = require 'routes-config.php';
 
-    $routesConfig = $initRoutesConfig($app, $serviceManager);
+    $routesConfig = $initRoutesConfig($application, $serviceManager);
 
     foreach ($routesConfig as $routeName => $routeConfig) {
         if (! is_array($routeConfig)) {
@@ -53,7 +53,7 @@ return function (Application $app, ServiceManager $serviceManager) {
                     $routeOptions = $inheritedRouteOptions;
                 }
 
-                $route = $app->route($basePath . $routePath, $routeMiddleware, $routeMethods, $routeName);
+                $route = $application->route($basePath . $routePath, $routeMiddleware, $routeMethods, $routeName);
 
                 if ($routeOptions && is_array($routeOptions)) {
                     $route->setOptions($routeOptions);

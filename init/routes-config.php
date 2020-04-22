@@ -13,7 +13,7 @@ use Laminas\ConfigAggregator\ConfigAggregator;
 use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Application;
 
-return function (Application $app, ServiceManager $serviceManager) {
+return function (Application $application, ServiceManager $serviceManager) {
 
     $app = [
         'dir' => $serviceManager->get('app_dir'),
@@ -62,6 +62,22 @@ return function (Application $app, ServiceManager $serviceManager) {
                                 $configProviders[] = $value;
                             }
                         } else {
+                            if (is_array($value)) {
+                                if (! isset($value['options'])) {
+                                    $value['options'] = [];
+                                }
+
+                                if (! isset($value['options']['type'])) {
+                                    $ds = preg_quote(DIRECTORY_SEPARATOR, '/');
+
+                                    preg_match("/${ds}config${ds}routes${ds}([^${ds}]+)${ds}/", $iteratedFile, $typeMatches);
+
+                                    if (isset($typeMatches[1])) {
+                                        $value['options']['type'] = $typeMatches[1];
+                                    }
+                                }
+                            }
+
                             $routesArray[$key] = $value;
                         }
                     }
