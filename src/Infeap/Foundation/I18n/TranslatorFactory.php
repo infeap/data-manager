@@ -12,14 +12,14 @@ namespace Infeap\Foundation\I18n;
 
 use Laminas\ServiceManager\ServiceManager;
 
-class LanguageServiceFactory
+class TranslatorFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new LanguageService(
-            $serviceManager->get('app_config')['supported_languages'],
-            $serviceManager->get('app_config')['fallback_language'],
+        return new Translator(
+            $serviceManager->get(LanguageService::class),
+            $serviceManager->get('app_config'),
         );
     }
 

@@ -31,6 +31,8 @@ class LanguageParamMiddleware implements MiddlewareInterface
         $languageParam = $request->getQueryParams()['lang'] ?? null;
 
         if ($languageParam && $this->languageService->isSupportedLanguage($languageParam)) {
+            $this->languageService->setCurrentLanguage($languageParam);
+
             $request = $request->withAttribute('language',
                 $this->languageService->normalizeLanguageTag($languageParam));
         }

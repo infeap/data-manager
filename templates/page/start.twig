@@ -15,7 +15,7 @@
             <div class="spinner-border" role="status"></div>
 
             <figcaption>
-                Initializing ...
+                {{ 'initializing'|t }} ...
             </figcaption>
         </figure>
     </div>
@@ -25,10 +25,10 @@
     </script>
 
     <noscript>
-        <h1>Error</h1>
+        <h1>{{ 'error'|t }}</h1>
 
-        <p>This application requires a web browser with activated JavaScript.</p>
-        <p>Maybe you are intentionally or unintentionally blocking JavaScript execution in your web browser.<br>
-            Please check your web browser's settings and plugins.</p>
+        <p>{{ 'noscript.message.1'|t }}</p>
+        <p>{{ 'noscript.message.2'|t }}<br>
+           {{ 'noscript.message.3'|t }}</p>
     </noscript>
 {% endblock %}

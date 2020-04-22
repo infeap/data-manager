@@ -9,10 +9,10 @@
 
 {% extends "@page/layout/message.twig" %}
 
-{% block message_heading 'Error' %}
+{% block message_heading 'error'|t %}
 
 {% block message_content %}
-    <p>The following error occurred on this page or function:</p>
+    <p>{{ 'error.500.message'|t }}</p>
 
     <p><strong>{{ error.message }}</strong></p>
 

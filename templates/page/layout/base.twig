@@ -8,18 +8,18 @@
 #}
 
 <!doctype html>
-<html lang="en">
+<html lang="{{ current_language() }}">
     <head>
         <meta charset="utf-8">
-        <meta name="application-name" content="Infeap Data Manager ">
-        <meta name="generator" content="Infeap Data Manager {{ app.version.number }}">
+        <meta name="application-name" content="Infeap {{ 'app.name'|t }}">
+        <meta name="generator" content="Infeap {{ 'app.name'|t }} {{ app.version.number }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% if not app.config.develop %}
             <link rel="stylesheet" href="{{ compiled_css('foundation') }}">
         {% endif %}
 
-        <title>{% block title 'Infeap Data Manager' %}</title>
+        <title>{% block title 'Infeap ' ~ 'app.name'|t %}</title>
     </head>
 
     <body class="{% block body_class '' %}">

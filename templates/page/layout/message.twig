@@ -36,7 +36,7 @@
                     <path d="M241.19,225.78a4.65,4.65,0,0,0-6.46,0c-.17.17-.06.28,0,.39l3,3.12a.29.29,0,0,0,.42,0l3-3.12C241.25,226.06,241.36,226,241.19,225.78Z" transform="translate(-225.88 -211.94)" />
                 </svg>
 
-                <figcaption>Data Manager</figcaption>
+                <figcaption>{{ 'app.name'|t }}</figcaption>
             </figure>
         </header>
 
@@ -51,12 +51,12 @@
         </main>
 
         <footer>
-            <a href="https://www.infeap.org/data-manager" target="_blank" rel="external noreferrer noopener">Infeap Website</a>
+            <a href="{{ 'app.website.url'|t }}" target="_blank" rel="external noreferrer noopener">Infeap {{ 'app.website'|t }}</a>
 
             {% if block('message_heading') is defined %}
-                <a href="https://www.infeap.org/data-manager/help?search={{ block('message_heading')|url_encode }}" target="_blank" rel="external noreferrer noopener">Help</a>
+                <a href="{{ 'app.help.url'|t }}?search={{ block('message_heading')|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help'|t }}</a>
             {% else %}
-                <a href="https://www.infeap.org/data-manager/help" target="_blank" rel="external noreferrer noopener">Help</a>
+                <a href="{{ 'app.help.url'|t }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help'|t }}</a>
             {% endif %}
         </footer>
     </article>

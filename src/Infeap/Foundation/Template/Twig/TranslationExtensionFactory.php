@@ -8,18 +8,20 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeap\Foundation\I18n;
+namespace Infeap\Foundation\Template\Twig;
 
+use Infeap\Foundation\I18n\LanguageService;
+use Infeap\Foundation\I18n\Translator;
 use Laminas\ServiceManager\ServiceManager;
 
-class LanguageServiceFactory
+class TranslationExtensionFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new LanguageService(
-            $serviceManager->get('app_config')['supported_languages'],
-            $serviceManager->get('app_config')['fallback_language'],
+        return new TranslationExtension(
+            $serviceManager->get(Translator::class),
+            $serviceManager->get(LanguageService::class),
         );
     }
 

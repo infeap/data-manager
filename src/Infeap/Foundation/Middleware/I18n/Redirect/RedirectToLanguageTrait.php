@@ -22,13 +22,19 @@ trait RedirectToLanguageTrait
 
     protected function redirectToLanguage(ServerRequestInterface $request, LanguageService $languageService): ?RedirectResponse
     {
-        if (! $request->getAttribute('language')) {
+        $currentLanguage = $request->getAttribute('language');
+
+        if (! $currentLanguage) {
+            $currentLanguage = $languageService->getCurrentLanguage();
+        }
+
+        if (! $currentLanguage) {
             $asLanguage = $this->getAcceptedAndSupportedLanguage($request, $languageService->getSupportedLanguages());
 
             if ($asLanguage) {
                 $redirectLanguage = $asLanguage->getPrimaryTag();
             } else {
-                $redirectLanguage = $languageService->getDefaultLanguage();
+                $redirectLanguage = $languageService->getFallbackLanguage();
             }
 
             return new RedirectResponse($this->getUriWithAdditionalQueryParams($request, ['lang' => $redirectLanguage]), 302);

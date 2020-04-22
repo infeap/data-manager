@@ -9,16 +9,16 @@
 
 {% extends "@page/layout/message.twig" %}
 
-{% block message_heading 'Page not found' %}
+{% block message_heading 'error.404.heading'|t %}
 
 {% block message_content %}
-    <p>The requested page or function has not been found on this server.</p>
+    <p>{{ 'error.404.message'|t }}</p>
 
-    <p>Possible causes:</p>
+    <p>{{ 'error.404.causes'|t }}</p>
 
     <ul>
-        <li>Your URL is incomplete or incorrect</li>
-        <li>The URL has been changed</li>
-        <li>It has been removed</li>
+        <li>{{ 'error.404.causes.1'|t }}</li>
+        <li>{{ 'error.404.causes.2'|t }}</li>
+        <li>{{ 'error.404.causes.3'|t }}</li>
     </ul>
 {% endblock %}

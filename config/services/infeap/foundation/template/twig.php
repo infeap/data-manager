@@ -12,4 +12,7 @@ return [
     'invokables' => [
         \Infeap\Foundation\Template\Twig\AssetExtension::class => \Infeap\Foundation\Template\Twig\AssetExtension::class,
     ],
+    'factories' => [
+        \Infeap\Foundation\Template\Twig\TranslationExtension::class => \Infeap\Foundation\Template\Twig\TranslationExtensionFactory::class,
+    ],
 ];

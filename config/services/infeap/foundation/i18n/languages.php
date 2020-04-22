@@ -22,7 +22,7 @@ return [
                 'en',
                 'de',
             ],
-            'default_language' => 'en',
+            'fallback_language' => 'en',
         ],
     ],
 ];

@@ -27,6 +27,7 @@ return function (array $app): array {
                     'cache_dir' => $app['checks']['cache_dir_is_writable'] ? $app['config']['cache_dir'] . '/templates/' : false,
                     'extensions' => [
                         \Infeap\Foundation\Template\Twig\AssetExtension::class,
+                        \Infeap\Foundation\Template\Twig\TranslationExtension::class,
                     ],
                     'globals' => [
                         'app' => $app,

@@ -14,15 +14,16 @@ class LanguageService
 {
 
     protected $supportedLanguages;
-    protected $defaultLanguage;
+    protected $fallbackLanguage;
+    protected $currentLanguage;
 
-    public function __construct(array $supportedLanguages, string $defaultLanguage)
+    public function __construct(array $supportedLanguages, string $fallbackLanguage)
     {
         $this->supportedLanguages = array_map(function (string $languageTag) {
             return $this->normalizeLanguageTag($languageTag);
         }, $supportedLanguages);
 
-        $this->defaultLanguage = $this->normalizeLanguageTag($defaultLanguage);
+        $this->fallbackLanguage = $this->normalizeLanguageTag($fallbackLanguage);
     }
 
     public function getSupportedLanguages(): array
@@ -30,9 +31,25 @@ class LanguageService
         return $this->supportedLanguages;
     }
 
-    public function getDefaultLanguage(): string
+    public function getFallbackLanguage(): string
     {
-        return $this->defaultLanguage;
+        return $this->fallbackLanguage;
+    }
+
+    public function getCurrentLanguage(): ?string
+    {
+        return $this->currentLanguage;
+    }
+
+    public function setCurrentLanguage(string $languageTag): bool
+    {
+        if (! $this->isSupportedLanguage($languageTag)) {
+            return false;
+        }
+
+        $this->currentLanguage = $this->normalizeLanguageTag($languageTag);
+
+        return true;
     }
 
     public function isSupportedLanguage(string $languageTag): bool
