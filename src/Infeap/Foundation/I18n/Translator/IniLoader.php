@@ -18,11 +18,9 @@ use Laminas\I18n\Exception;
 use Laminas\I18n\Translator\Loader\AbstractFileLoader;
 use Laminas\I18n\Translator\TextDomain;
 
-/**
- * PHP INI format loader.
- */
 class IniLoader extends AbstractFileLoader
 {
+
     /**
      * load(): defined by FileLoaderInterface.
      *
@@ -51,7 +49,7 @@ class IniLoader extends AbstractFileLoader
          * - Streamline translation message mapping
          */
 
-        $iniReader->setNestSeparator('-');
+        $iniReader->setNestSeparator('/');
         $iniReader->setProcessSections(false);
 
         $messages = $iniReader->fromFile($fromIncludePath);
@@ -60,4 +58,5 @@ class IniLoader extends AbstractFileLoader
 
         return $textDomain;
     }
+
 }

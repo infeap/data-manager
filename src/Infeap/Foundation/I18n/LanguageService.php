@@ -15,6 +15,7 @@ class LanguageService
 
     protected $supportedLanguages;
     protected $fallbackLanguage;
+
     protected $currentLanguage;
 
     public function __construct(array $supportedLanguages, string $fallbackLanguage)

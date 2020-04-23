@@ -80,7 +80,13 @@ class Translator
             $languageTag = null;
         }
 
-        return $this->getEngine()->translate($key, 'default', $languageTag);
+        $translation = $this->getEngine()->translate($key, 'default', $languageTag);
+
+        if ($translation === $key) {
+            $translation = '[' . $translation . ']';
+        }
+
+        return $translation;
     }
 
     public function translatePlural(string $key, int $number, string $languageTag = null): string
