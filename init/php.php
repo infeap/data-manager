@@ -11,7 +11,7 @@
 /*
  * See init/app-array.php for available $app keys
  */
-return function (array $app) {
+return function (array $app): void {
 
     if ($app['config']['debug']) {
         ini_set('error_reporting', E_ALL);

@@ -13,7 +13,7 @@ use Mezzio\Application;
 /*
  * See init/app-array.php for available $app keys
  */
-return function (array $app, array $routesConfig, Application $application) {
+return function (array $app, array $routesConfig, Application $application): void {
 
     $basePath = $app['base_path'];
     $basePath = rtrim($basePath, '/');

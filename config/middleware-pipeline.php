@@ -30,7 +30,7 @@ use Mezzio\Router\Middleware\ImplicitOptionsMiddleware;
 use Mezzio\Router\Middleware\MethodNotAllowedMiddleware;
 use Mezzio\Router\Middleware\RouteMiddleware;
 
-return function (Application $app, ServiceManager $serviceManager) {
+return function (Application $app, ServiceManager $serviceManager): void {
 
     $app->pipe(ErrorHandler::class);
     $app->pipe(MessageExceptionHandler::class);

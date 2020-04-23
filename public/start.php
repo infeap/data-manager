@@ -13,7 +13,7 @@ $initApp = require '../init/app.php';
 /*
  * See init/app-array.php for available $appBaseConfig keys
  */
-$initApp(function (array $appBaseConfig) {
+$initApp(function ($appBaseConfig) {
 
     $initServiceManager = require '../init/service-manager.php';
 
