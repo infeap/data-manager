@@ -10,16 +10,11 @@
 
 use Laminas\ConfigAggregator\ArrayProvider;
 use Laminas\ConfigAggregator\ConfigAggregator;
-use Laminas\ServiceManager\ServiceManager;
-use Mezzio\Application;
 
-return function (Application $application, ServiceManager $serviceManager) {
-
-    $app = [
-        'dir' => $serviceManager->get('app_dir'),
-        'config' => $serviceManager->get('app_config'),
-        'checks' => $serviceManager->get('app_checks'),
-    ];
+/*
+ * See init/app-array.php for available $app keys
+ */
+return function (array $app): array {
 
     $configCacheFile = sprintf('%s/config/routes.php',
         $app['config']['cache_dir']);

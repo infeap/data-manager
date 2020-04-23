@@ -8,17 +8,15 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-use Laminas\ServiceManager\ServiceManager;
 use Mezzio\Application;
 
-return function (Application $application, ServiceManager $serviceManager) {
+/*
+ * See init/app-array.php for available $app keys
+ */
+return function (array $app, array $routesConfig, Application $application) {
 
-    $basePath = $serviceManager->get('app_base_path');
+    $basePath = $app['base_path'];
     $basePath = rtrim($basePath, '/');
-
-    $initRoutesConfig = require 'routes-config.php';
-
-    $routesConfig = $initRoutesConfig($application, $serviceManager);
 
     foreach ($routesConfig as $routeName => $routeConfig) {
         if (! is_array($routeConfig)) {

@@ -20,6 +20,10 @@ $initApp(function (array $appBaseConfig) {
     /** @var \Laminas\ServiceManager\ServiceManager $serviceManager */
     $serviceManager = $initServiceManager($appBaseConfig);
 
+    $initRoutesConfig = require '../init/routes-config.php';
+
+    $routesConfig = $initRoutesConfig($appBaseConfig);
+
     /** @var \Mezzio\Application $app */
     $app = $serviceManager->get(\Mezzio\Application::class);
 
@@ -27,7 +31,7 @@ $initApp(function (array $appBaseConfig) {
     $configMiddlewarePipeline($app, $serviceManager);
 
     $initRoutes = require '../init/routes.php';
-    $initRoutes($app, $serviceManager);
+    $initRoutes($appBaseConfig, $routesConfig, $app);
 
     $app->run();
 
