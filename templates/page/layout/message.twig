@@ -50,14 +50,69 @@
             </section>
         </main>
 
-        <footer>
-            <a href="{{ 'app.website.url'|t }}" target="_blank" rel="external noreferrer noopener">Infeap {{ 'app.website.label'|t }}</a>
+        <footer {% if supported_languages()|length > 1 %}class="inf-has-language-picker"{% endif %}>
+            {% if supported_languages()|length > 1 %}
+                <div class="inf-language-picker">
+                    <form>
+                        {% for name, value in server_request('query_params') %}
+                            {% if name != 'lang' %}
+                                <input type="hidden" name="{{ name|e('html_attr') }}" value="{{ value|e('html_attr') }}">
+                            {% endif %}
+                        {% endfor %}
 
-            {% if block('message_heading') is defined %}
-                <a href="{{ 'app.help.url'|t }}?search={{ block('message_heading')|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
-            {% else %}
-                <a href="{{ 'app.help.url'|t }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
+                        <label for="inf-footer-language-picker-select">
+                            <svg class="inf-language-picker-icon" width="21" height="24" viewBox="0 0 21 24">
+                                <title>{{ 'language.label'|t }}{% if 'language.label'|t != 'Language' %} / Language{% endif %}</title>
+                                <polygon points="14.87 20.96 16.29 23.27 17.04 21.13 14.87 20.96" />
+                                <path d="M285.11,326.81c-.05-.05.07.42.24.59a1,1,0,0,0,.67.35,2.3,2.3,0,0,0,.82-.15,1.41,1.41,0,0,0,.68-.52.42.42,0,0,0,.05-.37.24.24,0,0,0-.28-.22,5.71,5.71,0,0,0-.75.18c-.2.06-.61.18-.79.22A1.22,1.22,0,0,1,285.11,326.81Z" transform="translate(-281.44 -318.78)" />
+                                <path d="M290.17,332.47c-.08,0-1.71-.7-1.94-.81s-.66-.28-.88-.37c.62-.94,1-1.64,1.06-1.75s.75-1.46.76-1.54a1.55,1.55,0,0,0,0-.43c0-.07-.25.06-.58.17s-.94.51-1.18.56-1,.33-1.4.46-1.13.35-1.44.43-.57.09-.74.14a1,1,0,0,0,.07.31.79.79,0,0,0,.39.29,1.72,1.72,0,0,0,.64,0,1.17,1.17,0,0,0,.42-.2c0-.06,0-.22,0-.27s.81-.22,1.09-.3a13.76,13.76,0,0,1,1.51-.44c-.05.16-.92,1.85-1.2,2.36s-1.9,2.73-2.25,3.12a15.88,15.88,0,0,1-1.12,1.23,1.35,1.35,0,0,0,.52-.06,9,9,0,0,0,1.44-1.46,24.19,24.19,0,0,0,1.83-2.44h0c.1,0,.88.67,1.09.81s1,.58,1.18.66.85.38.87.27A1.59,1.59,0,0,0,290.17,332.47Z" transform="translate(-281.44 -318.78)" />
+                                <path d="M286.39,340.87a3.57,3.57,0,0,0,.47.25,9.36,9.36,0,0,0,1.07.47,12.86,12.86,0,0,0,1.46.44c.27.06.56.11.85.15,0,0,.8.09,1,.09H292c.31,0,.6,0,.9-.08s.52-.08.78-.14.39-.08.58-.14l.59-.19.41-.16.38-.16.52-.25.44-.24c.12-.06.38-.26.52-.26a.27.27,0,0,1,.26.26c0,.25-.34.33-.5.44s-.36.19-.54.29a10.35,10.35,0,0,1-1,.46,11.22,11.22,0,0,1-1.37.42l-.5.11c-.08,0-1,.15-1.24.15H291c-.31,0-.63-.06-.93-.1s-.56-.1-.83-.16-.44-.1-.64-.16a8.71,8.71,0,0,1-1-.34,10.24,10.24,0,0,1-1.82-.9.23.23,0,0,1-.11-.22.25.25,0,0,1,.25-.25A1.59,1.59,0,0,1,286.39,340.87Z" transform="translate(-281.44 -318.78)" />
+                                <path d="M291.46,336,282,339.16V325.34l9.49-3.11Zm.53-14.22v14.43a.22.22,0,0,1-.06.13.18.18,0,0,1-.08.07c-.21.09-10,3.33-10.15,3.33a.26.26,0,0,1-.25-.18s0,0,0,0V325.13a.28.28,0,0,1,.06-.14.54.54,0,0,1,.27-.14c.15-.05,9.8-3.24,9.94-3.24S292,321.67,292,321.82Z" transform="translate(-281.44 -318.78)" />
+                                <path d="M299.9,336.11l-7.9-2.42V322.05l7.9-2.65Zm.53-17.05v17.37a.28.28,0,0,1-.28.29c-.11,0-.93-.28-1.07-.32l-3.29-1-.73-.23-.65-.19c-.93-.29-1.88-.57-2.81-.88a.38.38,0,0,1-.12-.16V321.8c0-.05,0-.1.08-.13s3.05-1.06,4.23-1.45c.31-.11,4.24-1.44,4.36-1.44A.27.27,0,0,1,300.43,319.06Z" transform="translate(-281.44 -318.78)" />
+                                <polygon points="21 20.96 10.45 17.65 10.49 3.21 21 6.5 21 20.96" />
+                                <path class="-letter" d="M297.12,328.44l-1,2.47,1.91.57Zm-.62-2.33,1.36.41,2.47,8.8-1.39-.42-.51-1.8-2.88-.87-.62,1.48-1.4-.42Z" transform="translate(-281.44 -318.78)" />
+                                <path d="M291.48,321.8l0-.08L283.8,319v5.42l7.68-2.52Z" transform="translate(-281.44 -318.78)" />
+                            </svg>
+                        </label>
+
+                        <select id="inf-footer-language-picker-select" name="lang">
+                            {% for supported_language in supported_languages() %}
+                                <option value="{{ supported_language }}" {% if supported_language == current_language() %}selected{% endif %}>
+                                    {{ supported_language|language_name(supported_language) }}
+                                </option>
+                            {% endfor %}
+                        </select>
+
+                        <button id="inf-footer-language-picker-submit" class="btn btn-link">{{ 'language.change'|t }}</button>
+
+                        <script>
+                            (function () {
+                                var submitButton = document.getElementById('inf-footer-language-picker-submit')
+
+                                if (submitButton.classList) {
+                                    submitButton.classList.add('sr-only', 'sr-only-focusable');
+
+                                    var languageSelect = document.getElementById('inf-footer-language-picker-select')
+
+                                    languageSelect.addEventListener('change', function () {
+                                        submitButton.click()
+                                    })
+                                }
+                            })()
+                        </script>
+                    </form>
+                </div>
             {% endif %}
+
+            <div>
+                <a href="{{ 'app.website.url'|t }}" target="_blank" rel="external noreferrer noopener">Infeap {{ 'app.website.label'|t }}</a>
+
+                {% if block('message_heading') is defined %}
+                    <a href="{{ 'app.help.url'|t }}?search={{ block('message_heading')|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
+                {% else %}
+                    <a href="{{ 'app.help.url'|t }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
+                {% endif %}
+            </div>
         </footer>
     </article>
 {% endblock %}

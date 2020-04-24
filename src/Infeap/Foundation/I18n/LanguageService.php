@@ -25,6 +25,10 @@ class LanguageService
         }, $supportedLanguages);
 
         $this->fallbackLanguage = $this->normalizeLanguageTag($fallbackLanguage);
+
+        if (function_exists('locale_set_default')) {
+            locale_set_default($fallbackLanguage);
+        }
     }
 
     public function getSupportedLanguages(): array
@@ -49,6 +53,10 @@ class LanguageService
         }
 
         $this->currentLanguage = $this->normalizeLanguageTag($languageTag);
+
+        if (function_exists('locale_set_default')) {
+            locale_set_default($this->currentLanguage);
+        }
 
         return true;
     }

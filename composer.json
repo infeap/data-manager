@@ -1,6 +1,12 @@
 {
     "name": "infeap/data-manager",
+    "type": "project",
+    "homepage": "https://www.infeap.org/data-manager",
+    "license": "GPL-3.0-only",
     "require": {
+        "php": "^7.4",
+        "ext-intl": "*",
+
         "laminas/laminas-cache": "^2.9.0",
         "laminas/laminas-config": "^3.3.0",
         "laminas/laminas-config-aggregator": "^1.1.1",
@@ -12,7 +18,8 @@
         "laminas/laminas-servicemanager": "^3.4.0",
         "mezzio/mezzio": "^3.2.1",
         "mezzio/mezzio-fastroute": "^3.0.3",
-        "mezzio/mezzio-twigrenderer": "^2.5.0"
+        "mezzio/mezzio-twigrenderer": "^2.5.0",
+        "twig/intl-extra": "^3.0.3"
     },
     "autoload": {
         "psr-4": {

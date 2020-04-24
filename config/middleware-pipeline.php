@@ -9,6 +9,7 @@
  */
 
 use Infeap\Foundation\Handler\Page\MessageExceptionHandler;
+use Infeap\Foundation\Middleware\Helper\ServerRequestMiddleware;
 use Infeap\Foundation\Middleware\I18n\LanguageParamMiddleware;
 use Infeap\Foundation\Middleware\I18n\Redirect\ExceptionLanguageMiddleware;
 use Infeap\Foundation\Middleware\I18n\Redirect\NotFoundLanguageMiddleware;
@@ -38,6 +39,7 @@ return function (Application $app, ServiceManager $serviceManager): void {
 
     $app->pipe(BasePathMiddleware::class);
     $app->pipe(LanguageParamMiddleware::class);
+    $app->pipe(ServerRequestMiddleware::class);
     $app->pipe(ServerUrlMiddleware::class);
 
     $app->pipe(RouteMiddleware::class);

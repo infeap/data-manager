@@ -18,4 +18,10 @@ if (! defined('PHP_VERSION_ID') || PHP_VERSION_ID < 70400) {
     infeap_render_init_message('PHP setup required', 'PHP 7.4+ is required for this application to work (currently running PHP ' . PHP_VERSION . ').');
 }
 
+if (! extension_loaded('intl')) {
+    http_response_code(500);
+
+    infeap_render_init_message('PHP "intl" extension required', 'The internationalization extension ("intl") for PHP is required for this application to work – but seems not to be installed.</p><p>Please ask your server\'s administrator to install it.');
+}
+
 return require 'app-load.php';

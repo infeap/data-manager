@@ -89,12 +89,16 @@ body {
         bottom: -3.5rem;
 
         display: flex;
+        align-items: center;
         justify-content: center;
+
+        &.inf-has-language-picker {
+            justify-content: space-between;
+        }
 
         a {
             position: relative;
             margin: 0 1.25rem;
-            color: $gray-500;
 
             &:before {
                 content: "› ";
@@ -102,10 +106,18 @@ body {
                 position: absolute;
                 left: -0.75em;
             }
+        }
+
+        a, .btn-link {
+            color: $gray-500;
 
             &:hover {
                 color: $cyan;
             }
+        }
+
+        .btn-link {
+            padding: 0;
         }
     }
 }

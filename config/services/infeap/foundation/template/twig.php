@@ -13,6 +13,7 @@ return [
         \Infeap\Foundation\Template\Twig\AssetExtension::class => \Infeap\Foundation\Template\Twig\AssetExtension::class,
     ],
     'factories' => [
+        \Infeap\Foundation\Template\Twig\ServerRequestExtension::class => \Infeap\Foundation\Template\Twig\ServerRequestExtensionFactory::class,
         \Infeap\Foundation\Template\Twig\TranslationExtension::class => \Infeap\Foundation\Template\Twig\TranslationExtensionFactory::class,
     ],
 ];
