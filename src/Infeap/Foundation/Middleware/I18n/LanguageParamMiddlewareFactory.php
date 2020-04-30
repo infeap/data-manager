@@ -11,6 +11,7 @@
 namespace Infeap\Foundation\Middleware\I18n;
 
 use Infeap\Foundation\I18n\LanguageService;
+use Infeap\Foundation\I18n\Translator;
 use Laminas\ServiceManager\ServiceManager;
 
 class LanguageParamMiddlewareFactory
@@ -20,6 +21,7 @@ class LanguageParamMiddlewareFactory
     {
         return new LanguageParamMiddleware(
             $serviceManager->get(LanguageService::class),
+            $serviceManager->get(Translator::class),
         );
     }
 

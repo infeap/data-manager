@@ -37,6 +37,10 @@ trait RedirectToLanguageTrait
                 $redirectLanguage = $languageService->getFallbackLanguage();
             }
 
+            if (! extension_loaded('intl')) {
+                $redirectLanguage = 'en'; // Polyfilled
+            }
+
             return new RedirectResponse($this->getUriWithAdditionalQueryParams($request, ['lang' => $redirectLanguage]), 302);
         }
 

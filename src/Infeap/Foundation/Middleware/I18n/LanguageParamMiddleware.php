@@ -10,7 +10,9 @@
 
 namespace Infeap\Foundation\Middleware\I18n;
 
+use Infeap\Foundation\Handler\Page\MessageException;
 use Infeap\Foundation\I18n\LanguageService;
+use Infeap\Foundation\I18n\Translator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -20,10 +22,12 @@ class LanguageParamMiddleware implements MiddlewareInterface
 {
 
     protected $languageService;
+    protected $translator;
 
-    public function __construct(LanguageService $languageService)
+    public function __construct(LanguageService $languageService, Translator $translator)
     {
         $this->languageService = $languageService;
+        $this->translator = $translator;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -35,6 +39,19 @@ class LanguageParamMiddleware implements MiddlewareInterface
 
             $request = $request->withAttribute('language',
                 $this->languageService->normalizeLanguageTag($languageParam));
+        }
+
+        if (! extension_loaded('intl')) {
+            $messageHeading = $this->translator->translate('message.intl.heading');
+            $messageDescription = $this->translator->translateList('message.intl.description');
+
+            if ($this->languageService->getCurrentLanguage()) {
+                if ($this->languageService->getCurrentLanguage() != 'en') {
+                    throw new MessageException($messageHeading, $messageDescription, 'warning');
+                }
+            } else if ($this->languageService->getFallbackLanguage() != 'en') {
+                throw new MessageException($messageHeading, $messageDescription, 'warning');
+            }
         }
 
         return $handler->handle($request);
