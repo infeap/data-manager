@@ -27,9 +27,11 @@ return function (array $app): array {
                     'cache_dir' => $app['checks']['cache_dir_is_writable'] ? $app['config']['cache_dir'] . '/templates/' : false,
                     'extensions' => [
                         \Twig\Extra\Intl\IntlExtension::class,
+                        \Twig\Extra\String\StringExtension::class,
 
                         \Infeap\Foundation\Template\Twig\AssetExtension::class,
                         \Infeap\Foundation\Template\Twig\ServerRequestExtension::class,
+                        \Infeap\Foundation\Template\Twig\StringExtension::class,
                         \Infeap\Foundation\Template\Twig\TranslationExtension::class,
                     ],
                     'globals' => [
@@ -41,6 +43,7 @@ return function (array $app): array {
         ],
         'invokables' => [
             \Twig\Extra\Intl\IntlExtension::class => \Twig\Extra\Intl\IntlExtension::class,
+            \Twig\Extra\String\StringExtension::class => \Twig\Extra\String\StringExtension::class,
         ],
     ];
 };
