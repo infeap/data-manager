@@ -31,9 +31,9 @@ class MessageExceptionHandler implements MiddlewareInterface
     {
         try {
             $response = $handler->handle($request);
-        } catch (MessageException $exception) {
+        } catch (MessageException $message) {
             $response = new HtmlResponse($this->template->render('page::exception/message', [
-                'exception' => $exception,
+                'message' => $message,
             ]), 500);
         }
 

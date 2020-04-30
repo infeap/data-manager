@@ -87,8 +87,19 @@ body {
         outline: solid 3px $body-bg;
         background: $body-bg;
 
+        &.text-info,
+        &.text-success {
+            top: -0.5rem;
+        }
+
         svg {
             filter: drop-shadow(0 0 2rem currentColor);
+        }
+
+        &.text-success {
+            svg {
+                filter: drop-shadow(0 0 1.5rem currentColor);
+            }
         }
     }
 
