@@ -5,7 +5,6 @@
     "license": "GPL-3.0-only",
     "require": {
         "php": "^7.4",
-        "ext-intl": "*",
 
         "laminas/laminas-cache": "^2.9.0",
         "laminas/laminas-config": "^3.3.0",
@@ -20,7 +19,15 @@
         "mezzio/mezzio-fastroute": "^3.0.3",
         "mezzio/mezzio-twigrenderer": "^2.5.0",
         "twig/intl-extra": "^3.0.3",
-        "twig/string-extra": "^3.0.3"
+        "twig/string-extra": "^3.0.3",
+
+        "symfony/polyfill-intl-grapheme": "^1.15.0",
+        "symfony/polyfill-intl-icu": "^1.15.0",
+        "symfony/polyfill-intl-messageformatter": "1.15.0",
+        "symfony/polyfill-intl-normalizer": "^1.15.0"
+    },
+    "suggest": {
+        "ext-intl": "Required for languages other than English"
     },
     "autoload": {
         "psr-4": {

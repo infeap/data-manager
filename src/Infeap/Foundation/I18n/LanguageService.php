@@ -26,8 +26,8 @@ class LanguageService
 
         $this->fallbackLanguage = $this->normalizeLanguageTag($fallbackLanguage);
 
-        if (function_exists('locale_set_default')) {
-            locale_set_default($fallbackLanguage);
+        if (class_exists('Locale')) {
+            \Locale::setDefault($fallbackLanguage);
         }
     }
 
@@ -54,8 +54,8 @@ class LanguageService
 
         $this->currentLanguage = $this->normalizeLanguageTag($languageTag);
 
-        if (function_exists('locale_set_default')) {
-            locale_set_default($this->currentLanguage);
+        if (class_exists('Locale')) {
+            \Locale::setDefault($this->currentLanguage);
         }
 
         return true;
