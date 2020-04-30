@@ -34,7 +34,7 @@ body {
             background: $body-bg;
             box-shadow: 0 0 0 2rem $body-bg;
 
-            transform: scale(0.75) translateX(-3.3rem);
+            transform: scale(0.75) translateX(-3.4rem);
             transform-origin: left center;
 
             @media (max-width: 700px) {
@@ -67,6 +67,8 @@ body {
     }
 
     main section {
+        position: relative;
+
         hr {
             margin-left: -2rem;
             margin-right: -2rem;
@@ -74,6 +76,19 @@ body {
 
         pre {
             max-width: calc(100vw - 2rem - 2px - 2rem - 2rem - 2px - 2rem);
+        }
+    }
+
+    .-type-symbol {
+        position: absolute;
+        left: -3.3rem;
+        top: -0.3rem;
+        margin: 0;
+        outline: solid 3px $body-bg;
+        background: $body-bg;
+
+        svg {
+            filter: drop-shadow(0 0 2rem currentColor);
         }
     }
 

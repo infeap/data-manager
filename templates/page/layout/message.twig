@@ -42,6 +42,8 @@
 
         <main>
             <section>
+                {% block message_symbol '' %}
+
                 {% if block('message_heading') is defined %}
                     <h1>{{ block('message_heading') }}</h1>
                 {% endif %}
