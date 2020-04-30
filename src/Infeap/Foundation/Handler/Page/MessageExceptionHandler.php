@@ -10,7 +10,6 @@
 
 namespace Infeap\Foundation\Handler\Page;
 
-use Infeap\Foundation\Exception\MessageException;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Mezzio\Template\TemplateRendererInterface;
 use Psr\Http\Message\ResponseInterface;

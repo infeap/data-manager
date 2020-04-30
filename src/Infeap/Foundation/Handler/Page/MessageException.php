@@ -8,7 +8,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeap\Foundation\Exception;
+namespace Infeap\Foundation\Handler\Page;
 
 class MessageException extends \RuntimeException
 { }
