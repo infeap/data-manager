@@ -31,8 +31,10 @@ class TranslationExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('t', [$this, 'translate']),
-            new TwigFilter('tp', [$this, 'translatePlural']),
+            new TwigFilter('trans', [$this, 'translate']),
+            new TwigFilter('trans_list', [$this, 'translateList']),
+            new TwigFilter('trans_plural', [$this, 'translatePlural']),
+            new TwigFilter('trans_plural_list', [$this, 'translatePluralList']),
         ];
     }
 
@@ -41,9 +43,19 @@ class TranslationExtension extends AbstractExtension
         return $this->translator->translate($key, $languageTag);
     }
 
+    public function translateList(string $key, string $languageTag = null): array
+    {
+        return $this->translator->translateList($key, $languageTag);
+    }
+
     public function translatePlural(string $key, int $number, string $languageTag = null): string
     {
         return $this->translator->translatePlural($key, $number, $languageTag);
+    }
+
+    public function translatePluralList(string $key, int $number, string $languageTag = null): array
+    {
+        return $this->translator->translatePluralList($key, $number, $languageTag);
     }
 
     public function getFunctions(): array

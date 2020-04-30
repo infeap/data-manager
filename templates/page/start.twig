@@ -15,7 +15,7 @@
             <div class="spinner-border" role="status"></div>
 
             <figcaption>
-                {{ 'initializing.label'|t }} ...
+                {{ 'initializing.label'|trans }} ...
             </figcaption>
         </figure>
     </div>
@@ -25,10 +25,10 @@
     </script>
 
     <noscript>
-        <h1>{{ 'error.label'|t }}</h1>
+        <h1>{{ 'error.label'|trans }}</h1>
 
-        <p>{{ 'noscript.messages.1'|t }}</p>
-        <p>{{ 'noscript.messages.2'|t }}<br>
-           {{ 'noscript.messages.3'|t }}</p>
+        <p>{{ 'noscript.messages.1'|trans }}</p>
+        <p>{{ 'noscript.messages.2'|trans }}<br>
+           {{ 'noscript.messages.3'|trans }}</p>
     </noscript>
 {% endblock %}

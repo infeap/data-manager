@@ -17,16 +17,16 @@
     </figure>
 {% endblock %}
 
-{% block message_heading 'error.404.heading'|t %}
+{% block message_heading 'error.404.heading'|trans %}
 
 {% block message_content %}
-    <p>{{ 'error.404.message'|t }}</p>
+    <p>{{ 'error.404.message'|trans }}</p>
 
-    <p>{{ 'error.404.causes.heading'|t }}</p>
+    <p>{{ 'error.404.causes.heading'|trans }}</p>
 
     <ul>
-        <li>{{ 'error.404.causes.1'|t }}</li>
-        <li>{{ 'error.404.causes.2'|t }}</li>
-        <li>{{ 'error.404.causes.3'|t }}</li>
+        {% for error_cause in 'error.404.causes'|trans_list %}
+            <li>{{ error_cause }}</li>
+        {% endfor %}
     </ul>
 {% endblock %}

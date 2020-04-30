@@ -36,7 +36,7 @@
                     <path d="M241.19,225.78a4.65,4.65,0,0,0-6.46,0c-.17.17-.06.28,0,.39l3,3.12a.29.29,0,0,0,.42,0l3-3.12C241.25,226.06,241.36,226,241.19,225.78Z" transform="translate(-225.88 -211.94)" />
                 </svg>
 
-                <figcaption>{{ 'app.name'|t }}</figcaption>
+                <figcaption>{{ 'app.name'|trans }}</figcaption>
             </figure>
         </header>
 
@@ -64,7 +64,7 @@
 
                         <label for="inf-footer-language-picker-select">
                             <svg width="21" height="24" viewBox="0 0 21 24" fill="currentColor">
-                                <title>{{ 'language.label'|t }}{% if 'language.label'|t != 'Language' %} / Language{% endif %}</title>
+                                <title>{{ 'language.label'|trans }}{% if 'language.label'|trans != 'Language' %} / Language{% endif %}</title>
                                 <polygon points="14.87 20.96 16.29 23.27 17.04 21.13 14.87 20.96" />
                                 <path d="M285.11,326.81c-.05-.05.07.42.24.59a1,1,0,0,0,.67.35,2.3,2.3,0,0,0,.82-.15,1.41,1.41,0,0,0,.68-.52.42.42,0,0,0,.05-.37.24.24,0,0,0-.28-.22,5.71,5.71,0,0,0-.75.18c-.2.06-.61.18-.79.22A1.22,1.22,0,0,1,285.11,326.81Z" transform="translate(-281.44 -318.78)" />
                                 <path d="M290.17,332.47c-.08,0-1.71-.7-1.94-.81s-.66-.28-.88-.37c.62-.94,1-1.64,1.06-1.75s.75-1.46.76-1.54a1.55,1.55,0,0,0,0-.43c0-.07-.25.06-.58.17s-.94.51-1.18.56-1,.33-1.4.46-1.13.35-1.44.43-.57.09-.74.14a1,1,0,0,0,.07.31.79.79,0,0,0,.39.29,1.72,1.72,0,0,0,.64,0,1.17,1.17,0,0,0,.42-.2c0-.06,0-.22,0-.27s.81-.22,1.09-.3a13.76,13.76,0,0,1,1.51-.44c-.05.16-.92,1.85-1.2,2.36s-1.9,2.73-2.25,3.12a15.88,15.88,0,0,1-1.12,1.23,1.35,1.35,0,0,0,.52-.06,9,9,0,0,0,1.44-1.46,24.19,24.19,0,0,0,1.83-2.44h0c.1,0,.88.67,1.09.81s1,.58,1.18.66.85.38.87.27A1.59,1.59,0,0,0,290.17,332.47Z" transform="translate(-281.44 -318.78)" />
@@ -85,7 +85,7 @@
                             {% endfor %}
                         </select>
 
-                        <button id="inf-footer-language-picker-submit" class="btn btn-link">{{ 'language.change'|t }}</button>
+                        <button id="inf-footer-language-picker-submit" class="btn btn-link">{{ 'language.change'|trans }}</button>
 
                         <script>
                             (function () {
@@ -107,14 +107,14 @@
             {% endif %}
 
             <div>
-                <a href="{{ 'app.website.url'|t }}" target="_blank" rel="external noreferrer noopener">Infeap {{ 'app.website.label'|t }}</a>
+                <a href="{{ 'app.website.url'|trans }}" target="_blank" rel="external noreferrer noopener">Infeap {{ 'app.website.label'|trans }}</a>
 
                 {% if block('help_search_term') is defined %}
-                    <a href="{{ 'app.help.url'|t }}?search={{ block('help_search_term')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
+                    <a href="{{ 'app.help.url'|trans }}?search={{ block('help_search_term')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>
                 {% elseif block('message_heading') is defined %}
-                    <a href="{{ 'app.help.url'|t }}?search={{ block('message_heading')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
+                    <a href="{{ 'app.help.url'|trans }}?search={{ block('message_heading')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>
                 {% else %}
-                    <a href="{{ 'app.help.url'|t }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|t }}</a>
+                    <a href="{{ 'app.help.url'|trans }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>
                 {% endif %}
             </div>
         </footer>

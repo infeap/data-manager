@@ -17,10 +17,10 @@
     </figure>
 {% endblock %}
 
-{% block message_heading 'error.label'|t %}
+{% block message_heading 'error.label'|trans %}
 
 {% block message_content %}
-    <p>{{ 'error.500.message'|t }}</p>
+    <p>{{ 'error.500.message'|trans }}</p>
 
     <p><strong>{{ error.message }}</strong></p>
 

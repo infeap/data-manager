@@ -89,6 +89,27 @@ class Translator
         return $translation;
     }
 
+    public function translateList(string $key, string $languageTag = null): array
+    {
+        $translationList = [];
+
+        $i = 1;
+
+        while ($i < 1000) {
+            $translationKey = $key . '.' . $i;
+            $translation = $this->translate($translationKey, $languageTag);
+
+            if ($translation != '[' . $translationKey . ']') {
+                $translationList[] = $translation;
+                $i++;
+            } else {
+                break;
+            }
+        }
+
+        return $translationList;
+    }
+
     public function translatePlural(string $key, int $number, string $languageTag = null): string
     {
         if ($number == 1) {
@@ -98,6 +119,32 @@ class Translator
         }
 
         return $this->translate($key, $languageTag);
+    }
+
+    public function translatePluralList(string $key, int $number, string $languageTag = null): array
+    {
+        $translationList = [];
+
+        $i = 1;
+
+        while ($i < 1000) {
+            if ($number == 1) {
+                $translationKey = $key . '.singular.' . $i;
+            } else {
+                $translationKey = $key . '.plural.' . $i;
+            }
+
+            $translation = $this->translate($translationKey, $languageTag);
+
+            if ($translation != '[' . $translationKey . ']') {
+                $translationList[] = $translation;
+                $i++;
+            } else {
+                break;
+            }
+        }
+
+        return $translationList;
     }
 
 }
