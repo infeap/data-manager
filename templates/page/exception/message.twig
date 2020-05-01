@@ -33,9 +33,7 @@
 {% block message_heading message.heading %}
 
 {% block message_content %}
-    {% if message.descriptionLines %}
-        {% for line in message.descriptionLines %}
-            <p>{{ line }}</p>
-        {% endfor %}
-    {% endif %}
+    {% for line in message.descriptionLines %}
+        <p>{{ line }}</p>
+    {% endfor %}
 {% endblock %}

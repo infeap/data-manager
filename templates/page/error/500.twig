@@ -27,22 +27,43 @@
     {% if app.config.debug %}
         <hr>
 
-        <p><span class="badge badge-info">Debug output:</span></p>
+        <p><span class="badge badge-info">{{ 'error.500.debug.heading'|trans }}:</span></p>
 
-        <dl>
-            <dt>File</dt>
-            <dd>{{ error.file }}<code>:{{ error.line }}</code></dd>
+        {% macro error_details(error) %}
+            <dl>
+                <dt>{{ 'error.500.debug.type'|trans }}</dt>
+                <dd>{{ error|type }} (Code <code>{{ error.code }}</code>)</dd>
 
-            <dt>Trace</dt>
-            <dd>
-                {% for traceItem in error.trace %}
-                    <div>{{ traceItem.file }}<code>:{{ traceItem.line }}</code></div>
-                {% endfor %}
-            </dd>
-        </dl>
+                <dt>{{ 'error.500.debug.file'|trans }}</dt>
+                <dd>{{ error.file|replace({(app.dir): ''}) }}<code>:{{ error.line }}</code></dd>
 
-        {# {{ dump(error.previous) }} #}
+                <dt>Trace</dt>
+                <dd class="inf-error-trace">
+                    {% for traceItem in error.trace %}
+                        <div>{{ traceItem.file|replace({(app.dir): ''}) }}<code>:{{ traceItem.line }}</code></div>
+                    {% endfor %}
+                </dd>
+            </dl>
+
+            {% if error.previous %}
+                <hr>
+
+                <p><span class="badge badge-secondary">{{ 'error.500.debug.previous'|trans }}:</span></p>
+
+                <p><b>{{ error.previous.message }}</b></p>
+
+                {{ _self.error_details(error.previous) }}
+            {% endif %}
+        {% endmacro %}
+
+        {{ _self.error_details(error) }}
     {% endif %}
 {% endblock %}
 
 {% block help_search_term error.message %}
+
+{% block foot %}
+    {% if app.config.debug %}
+        <script src="{{ compiled_js('error') }}"></script>
+    {% endif %}
+{% endblock %}

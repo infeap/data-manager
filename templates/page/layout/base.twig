@@ -25,7 +25,11 @@
     <body class="{% block body_class '' %}">
         {% block body '' %}
 
-        <script src="{{ compiled_js('vendors~foundation~init') }}"></script>
+        {% if app.config.develop %}
+            <script src="{{ compiled_js('vendors~error~foundation~init') }}"></script>
+        {% endif %}
+
+        <script src="{{ compiled_js('vendors~error') }}"></script>
         <script src="{{ compiled_js('foundation') }}"></script>
 
         {% block foot '' %}

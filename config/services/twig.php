@@ -33,6 +33,7 @@ return function (array $app): array {
                         \Infeap\Foundation\Template\Twig\ServerRequestExtension::class,
                         \Infeap\Foundation\Template\Twig\StringExtension::class,
                         \Infeap\Foundation\Template\Twig\TranslationExtension::class,
+                        \Infeap\Foundation\Template\Twig\TypeExtension::class,
                     ],
                     'globals' => [
                         'app' => $app,

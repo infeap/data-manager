@@ -12,6 +12,7 @@ return [
     'invokables' => [
         \Infeap\Foundation\Template\Twig\AssetExtension::class => \Infeap\Foundation\Template\Twig\AssetExtension::class,
         \Infeap\Foundation\Template\Twig\StringExtension::class => \Infeap\Foundation\Template\Twig\StringExtension::class,
+        \Infeap\Foundation\Template\Twig\TypeExtension::class => \Infeap\Foundation\Template\Twig\TypeExtension::class,
     ],
     'factories' => [
         \Infeap\Foundation\Template\Twig\ServerRequestExtension::class => \Infeap\Foundation\Template\Twig\ServerRequestExtensionFactory::class,
