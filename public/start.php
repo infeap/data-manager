@@ -21,14 +21,13 @@ $initApp(function ($appBaseConfig) {
     $serviceManager = $initServiceManager($appBaseConfig);
 
     $initRoutesConfig = require '../init/routes-config.php';
-
     $routesConfig = $initRoutesConfig($appBaseConfig);
 
     /** @var \Mezzio\Application $app */
     $app = $serviceManager->get(\Mezzio\Application::class);
 
-    $configMiddlewarePipeline = require '../config/middleware-pipeline.php';
-    $configMiddlewarePipeline($app, $serviceManager);
+    $initMiddlewarePipeline = require '../init/middleware-pipeline.php';
+    $initMiddlewarePipeline($appBaseConfig, $routesConfig, $app);
 
     $initRoutes = require '../init/routes.php';
     $initRoutes($appBaseConfig, $routesConfig, $app);

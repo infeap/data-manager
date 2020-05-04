@@ -10,3 +10,5 @@
 'use strict'
 
 import '../css/foundation.scss'
+
+import './init/app-array'

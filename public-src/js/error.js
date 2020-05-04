@@ -9,4 +9,4 @@
 
 'use strict'
 
-import './error/trace'
+import './error/traces'

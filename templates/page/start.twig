@@ -7,32 +7,34 @@
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
-{% extends "@page/layout/message.twig" %}
+{% extends "@page/layout/basic-message.twig" %}
 
 {% block message_content %}
-    <div id="inf-start-spinner" class="text-center" style="margin: 6rem 0 4rem 0" hidden>
-        <figure class="inf-spinner" data-type="horizontal">
-            <div class="spinner-border" role="status"></div>
+    <div id="inf-start">
+        <div id="inf-start-spinner" class="text-center" style="margin: 6rem 0 4rem 0" hidden>
+            <figure class="inf-spinner" data-type="horizontal">
+                <div class="spinner-border" role="status"></div>
 
-            <figcaption>
-                {{ 'initializing.label'|trans }} ...
-            </figcaption>
-        </figure>
+                <figcaption>
+                    {{ 'initializing.label'|trans }}
+                </figcaption>
+            </figure>
+        </div>
+
+        <script>
+            document.getElementById('inf-start-spinner').removeAttribute('hidden')
+        </script>
+
+        <noscript>
+            <h1>{{ 'error.label'|trans }}</h1>
+
+            <p>{{ 'noscript.messages.1'|trans }}</p>
+            <p>{{ 'noscript.messages.2'|trans }}<br>
+               {{ 'noscript.messages.3'|trans }}</p>
+        </noscript>
     </div>
-
-    <script>
-        document.getElementById('inf-start-spinner').removeAttribute('hidden')
-    </script>
-
-    <noscript>
-        <h1>{{ 'error.label'|trans }}</h1>
-
-        <p>{{ 'noscript.messages.1'|trans }}</p>
-        <p>{{ 'noscript.messages.2'|trans }}<br>
-           {{ 'noscript.messages.3'|trans }}</p>
-    </noscript>
 {% endblock %}
 
 {% block foot %}
-    <script src="{{ compiled_js('init') }}"></script>
+    <script src="{{ compiled_js('start') }}"></script>
 {% endblock %}

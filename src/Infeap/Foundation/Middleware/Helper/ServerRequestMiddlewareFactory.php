@@ -10,7 +10,7 @@
 
 namespace Infeap\Foundation\Middleware\Helper;
 
-use Infeap\Foundation\Http\Message\Helper\ServerRequestHelper;
+use Infeap\Foundation\Http\Request\Helper\ServerRequestHelper;
 use Laminas\ServiceManager\ServiceManager;
 
 class ServerRequestMiddlewareFactory

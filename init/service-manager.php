@@ -16,7 +16,6 @@ use Laminas\ServiceManager\ServiceManager;
 return function (array $app): ServiceManager {
 
     $initServiceConfig = require 'service-config.php';
-
     $serviceConfig = $initServiceConfig($app);
 
     $serviceManagerConfig = $serviceConfig['dependencies'];

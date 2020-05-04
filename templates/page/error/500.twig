@@ -7,7 +7,7 @@
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
-{% extends "@page/layout/message.twig" %}
+{% extends "@page/layout/basic-message.twig" %}
 
 {% block message_symbol %}
     <figure class="-type-symbol text-danger" aria-hidden="true">
@@ -64,6 +64,8 @@
 
 {% block foot %}
     {% if app.config.debug %}
-        <script src="{{ compiled_js('error') }}"></script>
+        <script src="{{ compiled_js('vendors~error') }}"></script>
     {% endif %}
+
+    <script src="{{ compiled_js('error') }}"></script>
 {% endblock %}

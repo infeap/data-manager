@@ -10,7 +10,7 @@
 
 namespace Infeap\Foundation\Middleware\I18n\Redirect;
 
-use Infeap\Foundation\Http\Message\AcceptLanguageTrait;
+use Infeap\Foundation\Http\Message\Request\AcceptLanguageTrait;
 use Infeap\Foundation\Http\Message\UriToolsTrait;
 use Infeap\Foundation\I18n\LanguageService;
 use Laminas\Diactoros\Response\RedirectResponse;

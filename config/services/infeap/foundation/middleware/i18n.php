@@ -11,5 +11,6 @@
 return [
     'factories' => [
         \Infeap\Foundation\Middleware\I18n\LanguageParamMiddleware::class => \Infeap\Foundation\Middleware\I18n\LanguageParamMiddlewareFactory::class,
+        \Infeap\Foundation\Middleware\I18n\Redirect\PageLanguageMiddleware::class => \Infeap\Foundation\Middleware\I18n\Redirect\PageLanguageMiddlewareFactory::class,
     ],
 ];

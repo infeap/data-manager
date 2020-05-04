@@ -131,7 +131,8 @@ module.exports = function (env) {
         ],
         resolve: {
             alias: {
-                'vue$': 'vue/dist/vue.esm.js',
+                'jquery-slim$': 'jquery/dist/jquery.slim',
+                'vue$': 'vue/dist/vue.runtime.esm',
             },
         },
         optimization: {

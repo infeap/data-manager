@@ -23,6 +23,8 @@ class Translator
 
     protected ?TranslationEngine $engine = null;
 
+    protected ?array $textDomains = null;
+
     public function __construct(LanguageService $languageService, array $appConfig)
     {
         $this->languageService = $languageService;
@@ -34,8 +36,13 @@ class Translator
         if (! $this->engine) {
             $this->engine = new TranslationEngine();
 
+            $this->textDomains = [];
+
             foreach ($this->appConfig['l10n_files'] as $l10nFile) {
-                $this->engine->addTranslationFilePattern(IniLoader::class, $this->appConfig['l10n_dir'], '%s/' . $l10nFile);
+                $textDomain = explode(DIRECTORY_SEPARATOR, $l10nFile, 2)[0];
+                $this->textDomains[] = $textDomain;
+
+                $this->engine->addTranslationFilePattern(IniLoader::class, $this->appConfig['l10n_dir'], '%s/' . $l10nFile, $textDomain);
             }
 
             if ($this->languageService->getCurrentLanguage()) {
@@ -64,23 +71,27 @@ class Translator
 
             if ($this->appConfig['debug'] || $this->appConfig['develop']) {
                 if ($this->languageService->getCurrentLanguage()) {
-                    $this->engine->clearCache('default', $this->languageService->getCurrentLanguage());
+                    foreach ($this->textDomains as $textDomain) {
+                        $this->engine->clearCache($textDomain, $this->languageService->getCurrentLanguage());
+                    }
                 }
 
-                $this->engine->clearCache('default', $this->languageService->getFallbackLanguage());
+                foreach ($this->textDomains as $textDomain) {
+                    $this->engine->clearCache($textDomain, $this->languageService->getFallbackLanguage());
+                }
             }
         }
 
         return $this->engine;
     }
 
-    public function translate(string $key, string $languageTag = null): string
+    public function translate(string $key, string $textDomain = 'foundation', string $languageTag = null): string
     {
         if ($languageTag && ! $this->languageService->isSupportedLanguage($languageTag)) {
             $languageTag = null;
         }
 
-        $translation = $this->getEngine()->translate($key, 'default', $languageTag);
+        $translation = $this->getEngine()->translate($key, $textDomain, $languageTag);
 
         if ($translation === $key) {
             $translation = '[' . $translation . ']';
@@ -89,7 +100,7 @@ class Translator
         return $translation;
     }
 
-    public function translateList(string $key, string $languageTag = null): array
+    public function translateList(string $key, string $textDomain = 'foundation', string $languageTag = null): array
     {
         $translationList = [];
 
@@ -97,7 +108,7 @@ class Translator
 
         while ($i < 1000) {
             $translationKey = $key . '.' . $i;
-            $translation = $this->translate($translationKey, $languageTag);
+            $translation = $this->translate($translationKey, $textDomain, $languageTag);
 
             if ($translation != '[' . $translationKey . ']') {
                 $translationList[] = $translation;
@@ -110,7 +121,7 @@ class Translator
         return $translationList;
     }
 
-    public function translatePlural(string $key, int $number, string $languageTag = null): string
+    public function translatePlural(string $key, int $number, string $textDomain = 'foundation', string $languageTag = null): string
     {
         if ($number == 1) {
             $key .= '.singular';
@@ -118,10 +129,10 @@ class Translator
             $key .= '.plural';
         }
 
-        return $this->translate($key, $languageTag);
+        return $this->translate($key, $textDomain, $languageTag);
     }
 
-    public function translatePluralList(string $key, int $number, string $languageTag = null): array
+    public function translatePluralList(string $key, int $number, string $textDomain = 'foundation', string $languageTag = null): array
     {
         $translationList = [];
 
@@ -134,7 +145,7 @@ class Translator
                 $translationKey = $key . '.plural.' . $i;
             }
 
-            $translation = $this->translate($translationKey, $languageTag);
+            $translation = $this->translate($translationKey, $textDomain, $languageTag);
 
             if ($translation != '[' . $translationKey . ']') {
                 $translationList[] = $translation;
@@ -145,6 +156,23 @@ class Translator
         }
 
         return $translationList;
+    }
+
+    public function getAllMessages(string $textDomain = 'foundation', string $languageTag = null)
+    {
+        return $this->getEngine()->getAllMessages($textDomain, $languageTag);
+    }
+
+    public function getTextDomains(): array
+    {
+        $this->getEngine(); // Initialize text domains if necessary
+
+        return $this->textDomains;
+    }
+
+    public function hasTextDomain(string $textDomain): bool
+    {
+        return in_array($textDomain, $this->getTextDomains());
     }
 
 }

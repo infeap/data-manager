@@ -13,6 +13,7 @@
         <meta charset="utf-8">
         <meta name="application-name" content="Infeap {{ 'app.name'|trans }}">
         <meta name="generator" content="Infeap {{ 'app.name'|trans }} {{ app.version.number }}">
+        <meta name="base-path" content="{{ app.base_path }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% if not app.config.develop %}
@@ -25,11 +26,7 @@
     <body class="{% block body_class '' %}">
         {% block body '' %}
 
-        {% if app.config.develop %}
-            <script src="{{ compiled_js('vendors~error~foundation~init') }}"></script>
-        {% endif %}
-
-        <script src="{{ compiled_js('vendors~error') }}"></script>
+        <script src="{{ compiled_js('vendors~error~foundation~start') }}"></script>
         <script src="{{ compiled_js('foundation') }}"></script>
 
         {% block foot '' %}

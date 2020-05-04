@@ -10,10 +10,6 @@
 
 return [
     'factories' => [
-        \Infeap\Foundation\Middleware\I18n\Redirect\ExceptionLanguageMiddleware::class => \Infeap\Foundation\Middleware\I18n\Redirect\ExceptionLanguageMiddlewareFactory::class,
-        \Infeap\Foundation\Middleware\I18n\Redirect\NotFoundLanguageMiddleware::class => \Infeap\Foundation\Middleware\I18n\Redirect\NotFoundLanguageMiddlewareFactory::class,
-        \Infeap\Foundation\Middleware\I18n\Redirect\PageLanguageMiddleware::class => \Infeap\Foundation\Middleware\I18n\Redirect\PageLanguageMiddlewareFactory::class,
-
         \Infeap\Foundation\I18n\LanguageService::class => \Infeap\Foundation\I18n\LanguageServiceFactory::class,
     ],
     'services' => [

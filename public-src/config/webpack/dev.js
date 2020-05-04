@@ -39,6 +39,7 @@ module.exports = function (env) {
             filename: 'js/compiled/[name].js',
             chunkFilename: 'js/compiled/[name].js?v=[hash]',
             path: path.resolve('public'),
+            publicPath: 'https://localhost:8080/',
         },
         module: {
             rules: [
@@ -118,7 +119,8 @@ module.exports = function (env) {
         ],
         resolve: {
             alias: {
-                'vue$': 'vue/dist/vue.esm.js',
+                'jquery-slim$': 'jquery/dist/jquery.slim',
+                'vue$': 'vue/dist/vue.runtime.esm',
             },
         },
         optimization: {

@@ -10,7 +10,8 @@
 
 namespace Infeap\Foundation\Middleware\I18n;
 
-use Infeap\Foundation\Handler\Page\MessageException;
+use Infeap\Foundation\Http\Message\Response\StatusCode;
+use Infeap\Foundation\Http\Response\BasicMessageResponse;
 use Infeap\Foundation\I18n\LanguageService;
 use Infeap\Foundation\I18n\Translator;
 use Psr\Http\Message\ResponseInterface;
@@ -42,15 +43,19 @@ class LanguageParamMiddleware implements MiddlewareInterface
         }
 
         if (! extension_loaded('intl')) {
-            $messageHeading = $this->translator->translate('message.intl.heading');
-            $messageDescription = $this->translator->translateList('message.intl.description');
+            $messageResponse = new BasicMessageResponse([
+                'type' => 'warning',
+                'status' => StatusCode::NOT_IMPLEMENTED,
+                'heading' => $this->translator->translate('message.intl.heading'),
+                'description' => $this->translator->translateList('message.intl.description'),
+            ]);
 
             if ($this->languageService->getCurrentLanguage()) {
                 if ($this->languageService->getCurrentLanguage() != 'en') {
-                    throw new MessageException($messageHeading, $messageDescription, 'warning');
+                    return $messageResponse;
                 }
             } else if ($this->languageService->getFallbackLanguage() != 'en') {
-                throw new MessageException($messageHeading, $messageDescription, 'warning');
+                return $messageResponse;
             }
         }
 

@@ -10,7 +10,7 @@
 
 namespace Infeap\Foundation\Template;
 
-use Infeap\Foundation\Http\Message\Helper\ServerRequestHelper;
+use Infeap\Foundation\Http\Request\Helper\ServerRequestHelper;
 
 class ServerRequest
 {

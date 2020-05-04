@@ -18,43 +18,37 @@ return function (array $app, array $routesConfig, Application $application): voi
     $basePath = $app['base_path'];
     $basePath = rtrim($basePath, '/');
 
+    $routeMethods = ['get', 'head', 'post', 'put', 'patch', 'delete'];
+
     foreach ($routesConfig as $routeName => $routeConfig) {
-        if (! is_array($routeConfig)) {
+        if (! (is_string($routeName) && is_array($routeConfig))) {
             continue;
         }
 
-        $routePath = $routeConfig['path'] ?? false;
+        $routePath = $routeConfig['path'] ?? null;
 
-        if ($routePath) {
-            unset($routeConfig['path']);
+        if (! $routePath) {
+            continue;
+        }
 
-            if (isset($routeConfig['options'])) {
-                $inheritedRouteOptions = $routeConfig['options'];
-                unset($routeConfig['options']);
-            } else {
-                $inheritedRouteOptions = null;
-            }
+        $routeOptions = $routeConfig['options'] ?? null;
 
-            foreach ($routeConfig as $routeMethod => $routeMiddleware) {
-                if ($routeMethod == 'any') {
-                    $routeMethods = null;
-                } else {
-                    $routeMethods = array_map(function ($routeMethod) {
-                        return trim($routeMethod);
-                    }, explode(',', $routeMethod));
+        foreach ($routeMethods as $routeMethod) {
+            $routeMethodMiddleware = $routeConfig[$routeMethod] ?? null;
+
+            if ($routeMethodMiddleware && is_array($routeMethodMiddleware)) {
+                $routeMethodOptions = $routeMethodMiddleware['options'] ?? null;
+
+                if ($routeMethodOptions) {
+                    unset($routeMethodMiddleware['options']);
+                } else if ($routeOptions) {
+                    $routeMethodOptions = $routeOptions;
                 }
 
-                if (is_array($routeMiddleware) && isset($routeMiddleware['options'])) {
-                    $routeOptions = $routeMiddleware['options'];
-                    unset($routeMiddleware['options']);
-                } else {
-                    $routeOptions = $inheritedRouteOptions;
-                }
+                $route = $application->route($basePath . $routePath, $routeMethodMiddleware, [$routeMethod], $routeName);
 
-                $route = $application->route($basePath . $routePath, $routeMiddleware, $routeMethods, $routeName);
-
-                if ($routeOptions && is_array($routeOptions)) {
-                    $route->setOptions($routeOptions);
+                if ($routeMethodOptions) {
+                    $route->setOptions($routeMethodOptions);
                 }
 
                 // Only use route name once for multiple methods

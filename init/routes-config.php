@@ -37,49 +37,53 @@ return function (array $app): array {
     $configProviders = [];
 
     if (! is_file($configCacheFile)) {
+        $flattenedIteratedFiles = [];
+
         foreach (new RecursiveIteratorIterator(
              new RecursiveDirectoryIterator($app['dir'] . '/config/routes/',
                  FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
 
             if (preg_match('~\.php$~', $iteratedFile)) {
-                $routes = include $iteratedFile;
+                $flattenedIteratedFiles[] = $iteratedFile;
+            }
+        }
 
-                if (is_callable($routes)) {
-                    $routes = $routes($app);
+        /*
+         * Sort route config files by directory depth
+         */
+        usort($flattenedIteratedFiles, function (string $fileA, string $fileB): int {
+            $directoryDepthA = substr_count($fileA, DIRECTORY_SEPARATOR);
+            $directoryDepthB = substr_count($fileB, DIRECTORY_SEPARATOR);
+
+            if ($directoryDepthA == $directoryDepthB) {
+                return strcmp($fileA, $fileB);
+            }
+
+            return ($directoryDepthA > $directoryDepthB) ? 1 : -1;
+        });
+
+        foreach ($flattenedIteratedFiles as $iteratedFile) {
+            $config = include $iteratedFile;
+
+            if (is_callable($config)) {
+                $config = $config($app);
+            }
+
+            if (is_array($config)) {
+                $configArray = [];
+
+                foreach ($config as $key => $value) {
+                    if (is_numeric($key)) {
+                        if (class_exists($value)) {
+                            $configProviders[] = $value;
+                        }
+                    } else {
+                        $configArray[$key] = $value;
+                    }
                 }
 
-                if (is_array($routes)) {
-                    $routesArray = [];
-
-                    foreach ($routes as $key => $value) {
-                        if (is_numeric($key)) {
-                            if (class_exists($value)) {
-                                $configProviders[] = $value;
-                            }
-                        } else {
-                            if (is_array($value)) {
-                                if (! isset($value['options'])) {
-                                    $value['options'] = [];
-                                }
-
-                                if (! isset($value['options']['type'])) {
-                                    $ds = preg_quote(DIRECTORY_SEPARATOR, '/');
-
-                                    preg_match("/${ds}config${ds}routes${ds}([^${ds}]+)${ds}/", $iteratedFile, $typeMatches);
-
-                                    if (isset($typeMatches[1])) {
-                                        $value['options']['type'] = $typeMatches[1];
-                                    }
-                                }
-                            }
-
-                            $routesArray[$key] = $value;
-                        }
-                    }
-
-                    if ($routesArray) {
-                        $configProviders[] = new ArrayProvider($routesArray);
-                    }
+                if ($configArray) {
+                    $configProviders[] = new ArrayProvider($configArray);
                 }
             }
         }

@@ -36,7 +36,19 @@ return function (array $app): array {
                         \Infeap\Foundation\Template\Twig\TypeExtension::class,
                     ],
                     'globals' => [
-                        'app' => $app,
+                        'app' => [
+                            'dir' => $app['dir'],
+                            'base_path' => $app['base_path'],
+                            'request_path' => $app['request_path'],
+                            'config' => [
+                                'debug' => $app['config']['debug'],
+                                'develop' => $app['config']['develop'],
+                                'dev_server_url' => $app['config']['dev_server_url'],
+                                'hash' => $app['config']['hash'],
+                            ],
+                            'version' => $app['version'],
+                            'context' => $app['context'],
+                        ],
                     ],
                     'strict_variables' => false,
                 ],

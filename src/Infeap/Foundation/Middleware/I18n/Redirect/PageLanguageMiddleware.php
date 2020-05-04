@@ -11,7 +11,6 @@
 namespace Infeap\Foundation\Middleware\I18n\Redirect;
 
 use Infeap\Foundation\I18n\LanguageService;
-use Mezzio\Router\RouteResult;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -30,22 +29,10 @@ class PageLanguageMiddleware implements MiddlewareInterface
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $routeResult = $request->getAttribute(RouteResult::class);
+        $redirectToLanguage = $this->redirectToLanguage($request, $this->languageService);
 
-        if ($routeResult) {
-            $matchedRoute = $routeResult->getMatchedRoute();
-
-            if ($matchedRoute) {
-                $routeType = $matchedRoute->getOptions()['type'] ?? null;
-
-                if ($routeType == 'page') {
-                    $redirectToLanguage = $this->redirectToLanguage($request, $this->languageService);
-
-                    if ($redirectToLanguage) {
-                        return $redirectToLanguage;
-                    }
-                }
-            }
+        if ($redirectToLanguage) {
+            return $redirectToLanguage;
         }
 
         return $handler->handle($request);

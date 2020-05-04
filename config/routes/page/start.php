@@ -9,7 +9,7 @@
  */
 
 return [
-    'start' => [
+    'page/start' => [
         'path' => '/',
         'get' => [
             \Infeap\Data\Handler\Page\StartHandler::class,
