@@ -151,7 +151,9 @@ return function (array $app, array $routesConfig, Application $application): voi
         $middlewarePipelineLogFile = sprintf('%s/debug/last-middleware-pipeline.php',
             $app['config']['log_dir']);
 
-        if (is_writable($middlewarePipelineLogFile)) {
+        if ((is_file($middlewarePipelineLogFile) && is_writable($middlewarePipelineLogFile)) ||
+            (! is_file($middlewarePipelineLogFile) && is_writable(dirname($middlewarePipelineLogFile)))) {
+
             file_put_contents($middlewarePipelineLogFile, "<?php\n\nreturn " . var_export($middlewarePipelineLog, true) . ";\n");
         }
     }
