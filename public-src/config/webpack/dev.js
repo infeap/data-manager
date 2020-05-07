@@ -118,8 +118,8 @@ module.exports = function (env) {
         plugins: [
             new VueLoaderPlugin(),
             new webpack.DefinePlugin({
-                DEBUG_BUILD: true,
-                DEVELOP_MODE: true,
+                __debug__: true,
+                __develop__: true,
             }),
         ],
         resolve: {

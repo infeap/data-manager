@@ -130,8 +130,8 @@ module.exports = function (env) {
             }),
             new VueLoaderPlugin(),
             new webpack.DefinePlugin({
-                DEBUG_BUILD: env.vars.mode == 'development',
-                DEVELOP_MODE: false,
+                __debug__: env.vars.mode == 'development',
+                __develop__: false,
             }),
         ],
         resolve: {

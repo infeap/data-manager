@@ -21,7 +21,7 @@ const app = {
     },
 }
 
-if (! DEVELOP_MODE) {
+if (! __develop__) {
     __webpack_public_path__ = app.basePath
 }
 

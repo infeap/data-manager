@@ -11,26 +11,26 @@ import $ from 'jquery-slim'
 
 $(document).ready(() => {
 
-    $('.inf-error-trace').each((i, traceElement) => {
-        let $traceElement = $(traceElement)
-        let $traceItems = $traceElement.children()
+    $('.inf-error-trace').each((i, traceContainer) => {
+        let $traceContainer = $(traceContainer)
+        let $traceElements = $traceContainer.children()
 
-        let showTraceItemsCount = 3
+        let showTraceElements = 3
 
-        $traceItems.each((j, traceItem) => {
-            if (j >= showTraceItemsCount) {
-                $(traceItem).addClass('sr-only')
+        $traceElements.each((j, traceElement) => {
+            if (j >= showTraceElements) {
+                $(traceElement).addClass('sr-only')
             }
         })
 
-        let $showMoreLink = $('<a href="#" aria-hidden="true">... +' + ($traceItems.length - showTraceItemsCount) + '</a>')
+        let $showMoreLink = $('<a href="#" aria-hidden="true">... +' + ($traceElements.length - showTraceElements) + '</a>')
 
-        $traceElement.append($showMoreLink)
+        $traceContainer.append($showMoreLink)
 
         $showMoreLink.on('click', (event) => {
             event.preventDefault()
 
-            $traceElement.find('.sr-only').removeClass('sr-only')
+            $traceContainer.find('.sr-only').removeClass('sr-only')
 
             $showMoreLink.remove()
         })
