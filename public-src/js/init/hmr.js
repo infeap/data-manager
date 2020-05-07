@@ -7,9 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-'use strict'
-
-import '../css/foundation.scss'
-
-import './init/app-array'
-import './init/hmr'
+if (__develop__) {
+    if (module.hot) {
+        module.hot.accept()
+    }
+}
