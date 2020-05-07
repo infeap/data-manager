@@ -2,7 +2,7 @@
 /**
  * This file is part of the
  * Infeap Data Manager (https://www.infeap.org/data-manager)
- * open source project.
+ * open source project
  *
  * It is an extension of
  * @see \Laminas\Config\Reader\Ini

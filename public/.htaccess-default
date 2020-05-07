@@ -1,6 +1,6 @@
 # This file is part of the
 # Infeap Data Manager (https://www.infeap.org/data-manager)
-# open source project.
+# open source project
 
 # Configure web server environments
 <IfVersion >= 2.4>

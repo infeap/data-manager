@@ -2,7 +2,7 @@
 /**
  * This file is part of the
  * Infeap Data Manager (https://www.infeap.org/data-manager)
- * open source project.
+ * open source project
  *
  * It is a modified version of
  * @see \Laminas\I18n\Translator\Loader\Ini
