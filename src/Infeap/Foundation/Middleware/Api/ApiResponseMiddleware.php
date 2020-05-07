@@ -21,10 +21,12 @@ class ApiResponseMiddleware implements MiddlewareInterface
 {
 
     protected $isDebugMode;
+    protected $appDir;
 
-    public function __construct(bool $isDebugMode)
+    public function __construct(bool $isDebugMode, string $appDir)
     {
         $this->isDebugMode = $isDebugMode;
+        $this->appDir = $appDir;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
@@ -42,32 +44,44 @@ class ApiResponseMiddleware implements MiddlewareInterface
                 $responseData['details'] = $response->getDetails();
             }
 
-            if ($this->isDebugMode) {
+            if ($response->getDebug() && $this->isDebugMode) {
                 $responseData['debug'] = $response->getDebug();
 
-                $exception = $responseData['debug']['exception'] ?? null;
+                $error = $responseData['debug']['error'] ?? null;
 
-                if ($exception && $exception instanceof \Throwable) {
-                    $parseException = function (\Throwable $exception) use (&$parseException): array {
-                        $exceptionData = [
-                            'type' => get_class($exception),
-                            'message' => $exception->getMessage(),
-                            'code' => $exception->getCode(),
-                            'file' => $exception->getFile(),
-                            'line' => $exception->getLine(),
-                            'trace' => $exception->getTrace(),
+                if ($error && $error instanceof \Throwable) {
+                    $parseError = function (\Throwable $error) use (&$parseError): array {
+                        $errorData = [
+                            'message' => $error->getMessage(),
+                            'type' => get_class($error),
+                            'code' => $error->getCode(),
+                            'file' => str_replace($this->appDir . '/', '', $error->getFile()),
+                            'line' => $error->getLine(),
                         ];
 
-                        $previousException = $exception->getPrevious();
+                        $trace = $error->getTrace();
 
-                        if ($previousException) {
-                            $exceptionData['previous'] = $parseException($previousException);
+                        if ($trace) {
+                            $errorData['trace'] = [];
+
+                            foreach ($trace as $traceElement) {
+                                $errorData['trace'][] = [
+                                    'file' => str_replace($this->appDir . '/', '', $traceElement['file']),
+                                    'line' => $traceElement['line'],
+                                ];
+                            }
                         }
 
-                        return $exceptionData;
+                        $previousError = $error->getPrevious();
+
+                        if ($previousError) {
+                            $errorData['previous'] = $parseError($previousError);
+                        }
+
+                        return $errorData;
                     };
 
-                    $responseData['debug']['exception'] = $parseException($exception);
+                    $responseData['debug']['error'] = $parseError($error);
                 }
             }
 

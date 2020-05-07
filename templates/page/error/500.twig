@@ -20,27 +20,36 @@
 {% block message_heading 'error.label'|trans %}
 
 {% block message_content %}
-    <p>{{ 'error.500.message'|trans }}</p>
+    <p>{{ 'error.500.messages.1'|trans }}</p>
 
-    <p><strong>{{ error.message }}</strong></p>
+    {% if not app.config.debug %}
+        <p>{{ 'error.500.messages.2'|trans }}</p>
+
+        {% if error_id %}
+            <p>{{ 'error.500.messages.3'|trans|replace({'{error-id}': '<code>' ~ error_id ~ '</code>'})|raw }}</p>
+        {% endif %}
+    {% endif %}
 
     {% if app.config.debug %}
         <hr>
 
-        <p><span class="badge badge-info">{{ 'error.500.debug.heading'|trans }}:</span></p>
+        <p><span class="badge badge-info">{{ 'error.500.debug.heading'|trans }}</span></p>
 
         {% macro error_details(error) %}
             <dl>
-                <dt>{{ 'error.500.debug.type'|trans }}</dt>
+                <dt>{{ 'error.500.debug.message'|trans }}:</dt>
+                <dd>{{ error.message }}</dd>
+
+                <dt>{{ 'error.500.debug.type'|trans }}:</dt>
                 <dd>{{ error|type }} (Code <code>{{ error.code }}</code>)</dd>
 
-                <dt>{{ 'error.500.debug.file'|trans }}</dt>
-                <dd>{{ error.file|replace({(app.dir): ''}) }}<code>:{{ error.line }}</code></dd>
+                <dt>{{ 'error.500.debug.file'|trans }}:</dt>
+                <dd>{{ error.file|replace({(app.dir) ~ '/': ''}) }}<code>:{{ error.line }}</code></dd>
 
-                <dt>Trace</dt>
+                <dt>{{ 'error.500.debug.trace'|trans }}:</dt>
                 <dd class="inf-error-trace">
-                    {% for traceItem in error.trace %}
-                        <div>{{ traceItem.file|replace({(app.dir): ''}) }}<code>:{{ traceItem.line }}</code></div>
+                    {% for trace_element in error.trace %}
+                        <div>{{ trace_element.file|replace({(app.dir) ~ '/': ''}) }}<code>:{{ trace_element.line }}</code></div>
                     {% endfor %}
                 </dd>
             </dl>
@@ -60,10 +69,14 @@
     {% endif %}
 {% endblock %}
 
-{% block help_search_term error.message %}
+{% block help_search_term -%}
+    {% if app.config.debug and error.message -%}
+        {{ error.message }}
+    {%- endif %}
+{%- endblock %}
 
 {% block foot %}
-    {% if app.config.debug %}
+    {% if app.config.develop %}
         <script src="{{ compiled_js('vendors~error') }}"></script>
     {% endif %}
 

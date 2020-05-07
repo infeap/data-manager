@@ -8,17 +8,17 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeap\Foundation\Middleware\Api;
+namespace Infeap\Foundation\Middleware\Error\Logging;
 
 use Laminas\ServiceManager\ServiceManager;
 
-class ApiResponseMiddlewareFactory
+class ListenerFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new ApiResponseMiddleware(
-            $serviceManager->get('app_config')['debug'],
+        return new Listener(
+            $serviceManager->get('app_config')['log_dir'],
             $serviceManager->get('app_dir'),
         );
     }

@@ -8,18 +8,20 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeap\Foundation\Middleware\Api;
+namespace Infeap\Foundation\Middleware\Page;
 
 use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stratigility\Middleware\ErrorHandler;
+use Psr\Http\Message\ResponseInterface;
 
-class ApiResponseMiddlewareFactory
+class ErrorHandlerFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new ApiResponseMiddleware(
-            $serviceManager->get('app_config')['debug'],
-            $serviceManager->get('app_dir'),
+        return new ErrorHandler(
+            $serviceManager->get(ResponseInterface::class),
+            $serviceManager->get(ErrorResponseGenerator::class),
         );
     }
 

@@ -11,5 +11,7 @@
 return [
     'factories' => [
         \Infeap\Foundation\Middleware\Page\BasicMessageMiddleware::class => \Infeap\Foundation\Middleware\Page\BasicMessageMiddlewareFactory::class,
+        \Infeap\Foundation\Middleware\Page\ErrorHandler::class => \Infeap\Foundation\Middleware\Page\ErrorHandlerFactory::class,
+        \Infeap\Foundation\Middleware\Page\ErrorResponseGenerator::class => \Infeap\Foundation\Middleware\Page\ErrorResponseGeneratorFactory::class,
     ],
 ];

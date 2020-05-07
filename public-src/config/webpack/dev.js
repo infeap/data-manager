@@ -14,6 +14,7 @@ const path = require('path')
 
 const autoprefixer = require('autoprefixer')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const webpack = require('webpack')
 
 module.exports = function (env) {
 
@@ -116,6 +117,10 @@ module.exports = function (env) {
         },
         plugins: [
             new VueLoaderPlugin(),
+            new webpack.DefinePlugin({
+                DEBUG_BUILD: true,
+                DEVELOP_MODE: true,
+            }),
         ],
         resolve: {
             alias: {

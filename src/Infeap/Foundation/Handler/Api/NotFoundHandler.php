@@ -24,7 +24,7 @@ class NotFoundHandler implements RequestHandlerInterface
         return new ApiResponse([
             'status' => StatusCode::NOT_FOUND,
             'key' => 'error.404',
-            'debug' => [
+            'details' => [
                 'message' => 'The requested API endpoint has not been found',
             ],
         ]);

@@ -15,6 +15,7 @@ const path = require('path')
 const autoprefixer = require('autoprefixer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const webpack = require('webpack')
 
 module.exports = function (env) {
 
@@ -128,6 +129,10 @@ module.exports = function (env) {
                 chunkFilename: 'css/compiled/[name]' + env.vars.fileExtensionPrefix + '.css?v=[hash]',
             }),
             new VueLoaderPlugin(),
+            new webpack.DefinePlugin({
+                DEBUG_BUILD: env.vars.mode == 'development',
+                DEVELOP_MODE: false,
+            }),
         ],
         resolve: {
             alias: {

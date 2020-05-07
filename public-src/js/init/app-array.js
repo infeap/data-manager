@@ -19,15 +19,10 @@ const app = {
 
         return basePath
     },
-    get version() {
-        // number
-    },
-    get config() {
-        // debug        from Webpack or meta?
-        // develop      from Webpack or meta?
-    },
 }
 
-// __webpack_public_path__ = app.basePath
+if (! DEVELOP_MODE) {
+    __webpack_public_path__ = app.basePath
+}
 
 export default app

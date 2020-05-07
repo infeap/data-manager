@@ -39,7 +39,7 @@ class TranslationsHandler implements RequestHandlerInterface
             return new ApiResponse([
                 'status' => StatusCode::NOT_FOUND,
                 'key' => 'error.translations.text_domain.not_found',
-                'debug' => [
+                'details' => [
                     'message' => 'The requested text domain has not been found',
                 ],
             ]);
@@ -51,7 +51,7 @@ class TranslationsHandler implements RequestHandlerInterface
             return new ApiResponse([
                 'status' => StatusCode::FORBIDDEN,
                 'key' => 'error.translations.text_domain.forbidden',
-                'debug' => [
+                'details' => [
                     'message' => 'The requested text domain is not public, only "js-*" are',
                 ],
             ]);

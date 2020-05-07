@@ -12,7 +12,13 @@
     <head>
         <meta charset="utf-8">
         <meta name="application-name" content="Infeap {{ 'app.name'|trans }}">
-        <meta name="generator" content="Infeap {{ 'app.name'|trans }} {{ app.version.number }}">
+
+        {% if app.config.debug %}
+            <meta name="generator" content="Infeap {{ 'app.name'|trans }} {{ app.version.number }} ({{ app.version.branch }})">
+        {% else %}
+            <meta name="generator" content="Infeap {{ 'app.name'|trans }}">
+        {% endif %}
+
         <meta name="base-path" content="{{ app.base_path }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 

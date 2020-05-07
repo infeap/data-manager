@@ -16,4 +16,9 @@ return [
     'invokables' => [
         \Infeap\Foundation\Middleware\Api\ErrorResponseGenerator::class => \Infeap\Foundation\Middleware\Api\ErrorResponseGenerator::class,
     ],
+    'delegators' => [
+        \Infeap\Foundation\Middleware\Api\ErrorHandler::class => [
+            \Infeap\Foundation\Middleware\Error\Logging\ListenerDelegatorFactory::class,
+        ],
+    ],
 ];

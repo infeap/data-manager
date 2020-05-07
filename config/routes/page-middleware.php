@@ -11,7 +11,7 @@
 return [
     '^(?!/api/).*' => [
         'before' => [
-            \Laminas\Stratigility\Middleware\ErrorHandler::class,
+            \Infeap\Foundation\Middleware\Page\ErrorHandler::class,
             \Infeap\Foundation\Middleware\Page\BasicMessageMiddleware::class,
 
             \Infeap\Foundation\Middleware\I18n\LanguageParamMiddleware::class,

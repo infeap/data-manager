@@ -18,16 +18,16 @@ use Psr\Http\Message\ServerRequestInterface;
 class ErrorResponseGenerator
 {
 
-    public function __invoke(\Throwable $exception, ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function __invoke(\Throwable $error, ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         return new ApiResponse([
             'status' => StatusCode::INTERNAL_SERVER_ERROR,
-            'key' => 'error.500',
-            'details' => [
-                'message' => $exception->getMessage(),
+            'headers' => [
+                'Inf-Error-ID' => uniqid(),
             ],
+            'key' => 'error.500',
             'debug' => [
-                'exception' => $exception,
+                'error' => $error,
             ],
         ]);
     }

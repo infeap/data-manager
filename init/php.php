@@ -22,7 +22,7 @@ return function (array $app): void {
     ini_set('display_errors', $app['config']['debug'] ? '1' : '0');
     ini_set('log_errors', $app['config']['debug'] ? '0' : '1');
 
-    ini_set('error_log', $app['config']['log_dir'] . '/php-errors.txt');
+    ini_set('error_log', $app['config']['log_dir'] . '/errors.txt');
 
     ini_set('ignore_repeated_errors', '1');
     ini_set('html_errors', $app['config']['debug'] ? '1' : '0');
