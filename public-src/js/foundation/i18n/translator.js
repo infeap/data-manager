@@ -7,7 +7,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-import app from '../../init/app-array'
+import infetch from '../http/request/infetch'
 import language from './language'
 
 let loadedTranslations = {}
@@ -18,20 +18,17 @@ export default {
             languageTag = language.documentLanguage
         }
 
-        return fetch(app.basePath + 'api/v1/translations/' + languageTag + '/' + textDomain)
+        return infetch.get('/api/v1/translations/' + languageTag + '/' + textDomain)
             .then((response) => {
-                // ToDo: Check HTTP status code
-                return response.json()
-            })
-            .then((responseTranslations) => {
-                if (! loadedTranslations[languageTag]) {
-                    loadedTranslations[languageTag] = {}
-                }
+                if (response.parsedBody) {
+                    if (! loadedTranslations[languageTag]) {
+                        loadedTranslations[languageTag] = {}
+                    }
 
-                loadedTranslations[languageTag][textDomain] = responseTranslations
-            })
-            .catch(() => {
-                // ToDo: Handle failed request
+                    loadedTranslations[languageTag][textDomain] = response.parsedBody
+                } else {
+                    throw new Error('Unable to parse response body')
+                }
             })
     },
     translate(key, textDomain = 'js-main-vm', languageTag = null) {

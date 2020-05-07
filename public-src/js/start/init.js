@@ -35,6 +35,9 @@ $(document).ready(() => {
                     })
                 }
             )
+        }).catch((error) => {
+            console.warn('[Infeap Data Manager] Unable to load main VM translations',
+                error.response && error.response.parsedBody ? error.response.parsedBody : error)
         })
     } else {
         console.warn('[Infeap Data Manager] #inf-start element required to init main UI')

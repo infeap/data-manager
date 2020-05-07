@@ -77,7 +77,7 @@
 
 {% block foot %}
     {% if app.config.develop %}
-        <script src="{{ compiled_js('vendors~error') }}"></script>
+        <script src="{{ compiled_js('vendors~error-start') }}"></script>
     {% endif %}
 
     <script src="{{ compiled_js('error') }}"></script>
