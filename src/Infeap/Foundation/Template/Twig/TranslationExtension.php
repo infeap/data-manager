@@ -38,22 +38,22 @@ class TranslationExtension extends AbstractExtension
         ];
     }
 
-    public function translate(string $key, string $textDomain = 'foundation', string $languageTag = null): string
+    public function translate(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
         return $this->translator->translate($key, $textDomain, $languageTag);
     }
 
-    public function translateList(string $key, string $textDomain = 'foundation', string $languageTag = null): array
+    public function translateList(string $key, string $textDomain = 'foundation', ?string $languageTag = null): array
     {
         return $this->translator->translateList($key, $textDomain, $languageTag);
     }
 
-    public function translatePlural(string $key, int $number, string $textDomain = 'foundation', string $languageTag = null): string
+    public function translatePlural(string $key, int $number, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
         return $this->translator->translatePlural($key, $number, $textDomain, $languageTag);
     }
 
-    public function translatePluralList(string $key, int $number, string $textDomain = 'foundation', string $languageTag = null): array
+    public function translatePluralList(string $key, int $number, string $textDomain = 'foundation', ?string $languageTag = null): array
     {
         return $this->translator->translatePluralList($key, $number, $textDomain, $languageTag);
     }

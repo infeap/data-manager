@@ -85,7 +85,24 @@ class Translator
         return $this->engine;
     }
 
-    public function translate(string $key, string $textDomain = 'foundation', string $languageTag = null): string
+    public function hasTextDomain(string $textDomain): bool
+    {
+        return in_array($textDomain, $this->getTextDomains());
+    }
+
+    public function getTextDomains(): array
+    {
+        $this->getEngine(); // Initialize text domains if necessary
+
+        return $this->textDomains;
+    }
+
+    public function getAllMessages(string $textDomain = 'foundation', ?string $languageTag = null)
+    {
+        return $this->getEngine()->getAllMessages($textDomain, $languageTag);
+    }
+
+    public function translate(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
         if ($languageTag && ! $this->languageService->isSupportedLanguage($languageTag)) {
             $languageTag = null;
@@ -100,7 +117,7 @@ class Translator
         return $translation;
     }
 
-    public function translateList(string $key, string $textDomain = 'foundation', string $languageTag = null): array
+    public function translateList(string $key, string $textDomain = 'foundation', ?string $languageTag = null): array
     {
         $translationList = [];
 
@@ -121,7 +138,7 @@ class Translator
         return $translationList;
     }
 
-    public function translatePlural(string $key, int $number, string $textDomain = 'foundation', string $languageTag = null): string
+    public function translatePlural(string $key, int $number, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
         if ($number == 1) {
             $key .= '.singular';
@@ -132,7 +149,7 @@ class Translator
         return $this->translate($key, $textDomain, $languageTag);
     }
 
-    public function translatePluralList(string $key, int $number, string $textDomain = 'foundation', string $languageTag = null): array
+    public function translatePluralList(string $key, int $number, string $textDomain = 'foundation', ?string $languageTag = null): array
     {
         $translationList = [];
 
@@ -156,23 +173,6 @@ class Translator
         }
 
         return $translationList;
-    }
-
-    public function getAllMessages(string $textDomain = 'foundation', string $languageTag = null)
-    {
-        return $this->getEngine()->getAllMessages($textDomain, $languageTag);
-    }
-
-    public function getTextDomains(): array
-    {
-        $this->getEngine(); // Initialize text domains if necessary
-
-        return $this->textDomains;
-    }
-
-    public function hasTextDomain(string $textDomain): bool
-    {
-        return in_array($textDomain, $this->getTextDomains());
     }
 
 }

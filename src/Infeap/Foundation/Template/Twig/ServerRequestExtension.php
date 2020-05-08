@@ -32,7 +32,7 @@ class ServerRequestExtension extends AbstractExtension
         ];
     }
 
-    public function getTemplateServerRequest(string $property = null)
+    public function getTemplateServerRequest(?string $property = null)
     {
         switch ($property) {
             case 'query_params':
