@@ -1,9 +1,9 @@
 /**
  * This file is part of the
- * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
  *
- * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @copyright   2018-2020 Tobias Krebs and the Infeav Team
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
@@ -36,10 +36,10 @@ $(document).ready(() => {
                 }
             )
         }).catch((error) => {
-            console.warn('[Infeap Data Manager] Unable to load main VM translations',
+            console.warn('[Infeav Data Manager] Unable to load main VM translations',
                 error.response && error.response.parsedBody ? error.response.parsedBody : error)
         })
     } else {
-        console.warn('[Infeap Data Manager] #inf-start element required to init main UI')
+        console.warn('[Infeav Data Manager] #inf-start element required to init main UI')
     }
 })

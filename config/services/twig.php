@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of the
- * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
  *
- * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @copyright   2018-2020 Tobias Krebs and the Infeav Team
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
@@ -29,11 +29,11 @@ return function (array $app): array {
                         \Twig\Extra\Intl\IntlExtension::class,
                         \Twig\Extra\String\StringExtension::class,
 
-                        \Infeap\Foundation\Template\Twig\AssetExtension::class,
-                        \Infeap\Foundation\Template\Twig\ServerRequestExtension::class,
-                        \Infeap\Foundation\Template\Twig\StringExtension::class,
-                        \Infeap\Foundation\Template\Twig\TranslationExtension::class,
-                        \Infeap\Foundation\Template\Twig\TypeExtension::class,
+                        \Infeav\Foundation\Template\Twig\AssetExtension::class,
+                        \Infeav\Foundation\Template\Twig\ServerRequestExtension::class,
+                        \Infeav\Foundation\Template\Twig\StringExtension::class,
+                        \Infeav\Foundation\Template\Twig\TranslationExtension::class,
+                        \Infeav\Foundation\Template\Twig\TypeExtension::class,
                     ],
                     'globals' => [
                         'app' => [

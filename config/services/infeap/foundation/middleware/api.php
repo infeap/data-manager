@@ -1,24 +1,24 @@
 <?php
 /**
  * This file is part of the
- * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
  *
- * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @copyright   2018-2020 Tobias Krebs and the Infeav Team
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
 return [
     'factories' => [
-        \Infeap\Foundation\Middleware\Api\ApiResponseMiddleware::class => \Infeap\Foundation\Middleware\Api\ApiResponseMiddlewareFactory::class,
-        \Infeap\Foundation\Middleware\Api\ErrorHandler::class => \Infeap\Foundation\Middleware\Api\ErrorHandlerFactory::class,
+        \Infeav\Foundation\Middleware\Api\ApiResponseMiddleware::class => \Infeav\Foundation\Middleware\Api\ApiResponseMiddlewareFactory::class,
+        \Infeav\Foundation\Middleware\Api\ErrorHandler::class => \Infeav\Foundation\Middleware\Api\ErrorHandlerFactory::class,
     ],
     'invokables' => [
-        \Infeap\Foundation\Middleware\Api\ErrorResponseGenerator::class => \Infeap\Foundation\Middleware\Api\ErrorResponseGenerator::class,
+        \Infeav\Foundation\Middleware\Api\ErrorResponseGenerator::class => \Infeav\Foundation\Middleware\Api\ErrorResponseGenerator::class,
     ],
     'delegators' => [
-        \Infeap\Foundation\Middleware\Api\ErrorHandler::class => [
-            \Infeap\Foundation\Middleware\Error\Logging\ListenerDelegatorFactory::class,
+        \Infeav\Foundation\Middleware\Api\ErrorHandler::class => [
+            \Infeav\Foundation\Middleware\Error\Logging\ListenerDelegatorFactory::class,
         ],
     ],
 ];

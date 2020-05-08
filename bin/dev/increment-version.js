@@ -1,9 +1,9 @@
 /**
  * This file is part of the
- * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
  *
- * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @copyright   2018-2020 Tobias Krebs and the Infeav Team
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
@@ -26,8 +26,8 @@ try {
 
 let appPackage = require(appPackageFile)
 
-if (! appPackage.name || appPackage.name !== '@infeap/data-manager') {
-    console.error(appPackageFile + ' does not belong to the Infeap Data Manager project')
+if (! appPackage.name || appPackage.name !== '@infeav/data-manager') {
+    console.error(appPackageFile + ' does not belong to the Infeav Data Manager project')
     process.exit(2)
 }
 

@@ -1,5 +1,5 @@
 {
-    "name": "@infeap/data-manager",
+    "name": "@infeav/data-manager",
     "devDependencies": {
         "git-branch": "^2.0.1",
         "glob": "^7.1.6",

@@ -1,7 +1,7 @@
 {
-    "name": "infeap/data-manager",
+    "name": "infeav/data-manager",
     "type": "project",
-    "homepage": "https://www.infeap.org/data-manager",
+    "homepage": "https://www.infeav.org/data-manager",
     "license": "GPL-3.0-only",
     "require": {
         "php": "^7.4",
@@ -31,7 +31,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Infeap\\": "src/Infeap/"
+            "Infeav\\": "src/Infeav/"
         }
     }
 }

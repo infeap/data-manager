@@ -1,26 +1,26 @@
 <?php
 /**
  * This file is part of the
- * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
  *
- * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @copyright   2018-2020 Tobias Krebs and the Infeav Team
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
 return [
     '^/api/' => [
         'before' => [
-            \Infeap\Foundation\Middleware\Api\ApiResponseMiddleware::class,
-            \Infeap\Foundation\Middleware\Api\ErrorHandler::class,
+            \Infeav\Foundation\Middleware\Api\ApiResponseMiddleware::class,
+            \Infeav\Foundation\Middleware\Api\ErrorHandler::class,
         ],
         'target' => [
             \Mezzio\Router\Middleware\RouteMiddleware::class,
         ],
         'end' => [
-            \Infeap\Foundation\Middleware\Router\TrailingSlashMiddleware::class,
+            \Infeav\Foundation\Middleware\Router\TrailingSlashMiddleware::class,
 
-            \Infeap\Foundation\Handler\Api\NotFoundHandler::class,
+            \Infeav\Foundation\Handler\Api\NotFoundHandler::class,
         ],
     ],
 ];

@@ -1,10 +1,10 @@
 <?php
 /**
  * This file is part of the
- * Infeap Data Manager (https://www.infeap.org/data-manager)
+ * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
  *
- * @copyright   2018-2020 Tobias Krebs and the Infeap Team
+ * @copyright   2018-2020 Tobias Krebs and the Infeav Team
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
@@ -70,29 +70,29 @@ return (function (): callable {
 
     if (! (is_file($appVersionFile) && is_readable($appVersionFile))) {
         http_response_code(500);
-        infeap_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the version.json file is missing or not readable.');
+        infeav_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the version.json file is missing or not readable.');
     }
 
     $app['version'] = json_decode(file_get_contents($appVersionFile), true);
 
     if (! (is_array($app['version']) && isset($app['version']['number']) && isset($app['version']['date']) && isset($app['version']['branch']))) {
         http_response_code(500);
-        infeap_render_init_message('Application files corrupted', 'The application files are corrupted. Concretely, the version.json file is missing the "number", "date" and/or "branch" key.');
+        infeav_render_init_message('Application files corrupted', 'The application files are corrupted. Concretely, the version.json file is missing the "number", "date" and/or "branch" key.');
     }
 
     if (! is_file($app['dir'] . '/public/.htaccess')) {
         if (is_writable($app['dir'] . '/public/') && is_readable($app['dir'] . '/public/.htaccess-default')) {
             if (copy($app['dir'] . '/public/.htaccess-default', $app['dir'] . '/public/.htaccess')) {
                 header('Refresh: 0');
-                infeap_render_init_message('Reload required', 'Please reload this page.');
+                infeav_render_init_message('Reload required', 'Please reload this page.');
             }
         }
 
         http_response_code(500);
-        infeap_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the public/.htaccess file is missing.');
+        infeav_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the public/.htaccess file is missing.');
     }
 
-    $app['context'] = getenv('INFEAP_CONTEXT');
+    $app['context'] = getenv('infeav_CONTEXT');
 
     if (! $app['context']) {
         $app['context'] = 'default';
@@ -110,14 +110,14 @@ return (function (): callable {
 
     if (! (is_file($appContextConfigFile) && is_readable($appContextConfigFile))) {
         http_response_code(500);
-        infeap_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" is missing or not readable.');
+        infeav_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" is missing or not readable.');
     }
 
     $appContextConfig = require $appContextConfigFile;
 
     if (! $appContextConfig) {
         http_response_code(500);
-        infeap_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" does not contain valid code.');
+        infeav_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" does not contain valid code.');
     }
 
     if (is_callable($appContextConfig)) {
@@ -126,7 +126,7 @@ return (function (): callable {
 
     if (! is_array($appContextConfig)) {
         http_response_code(500);
-        infeap_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" does not return an array.');
+        infeav_render_init_message('Application files required', 'The application files are not (yet) setup. Please read the installation documentation. Concretely, the context configuration file "config/context/' . $app['context'] . '.php" does not return an array.');
     }
 
     $cacheDir = $app['dir'] . '/var/cache';

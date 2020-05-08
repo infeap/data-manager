@@ -1,9 +1,9 @@
 {#
     This file is part of the
-    Infeap Data Manager (https://www.infeap.org/data-manager)
+    Infeav Data Manager (https://www.infeav.org/data-manager)
     open source project
 
-    @copyright   2018-2020 Tobias Krebs and the Infeap Team
+    @copyright   2018-2020 Tobias Krebs and the Infeav Team
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
 #}
 
@@ -11,12 +11,12 @@
 <html lang="{{ current_language() }}">
     <head>
         <meta charset="utf-8">
-        <meta name="application-name" content="Infeap {{ 'app.name'|trans }}">
+        <meta name="application-name" content="Infeav {{ 'app.name'|trans }}">
 
         {% if app.config.debug %}
-            <meta name="generator" content="Infeap {{ 'app.name'|trans }} {{ app.version.number }} ({{ app.version.branch }})">
+            <meta name="generator" content="Infeav {{ 'app.name'|trans }} {{ app.version.number }} ({{ app.version.branch }})">
         {% else %}
-            <meta name="generator" content="Infeap {{ 'app.name'|trans }}">
+            <meta name="generator" content="Infeav {{ 'app.name'|trans }}">
         {% endif %}
 
         <meta name="base-path" content="{{ app.base_path }}">
@@ -26,7 +26,7 @@
             <link rel="stylesheet" href="{{ compiled_css('foundation') }}">
         {% endif %}
 
-        <title>{% block title 'Infeap ' ~ 'app.name'|trans %}</title>
+        <title>{% block title 'Infeav ' ~ 'app.name'|trans %}</title>
     </head>
 
     <body class="{% block body_class '' %}">
