@@ -10,6 +10,7 @@
 
 namespace Infeap\Foundation\Handler\Api;
 
+use Infeap\Foundation\Config\AccessControl;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -18,8 +19,17 @@ use Psr\Http\Server\RequestHandlerInterface;
 class AuthHandler implements RequestHandlerInterface
 {
 
+    protected $accessControl;
+
+    public function __construct(AccessControl $accessControl)
+    {
+        $this->accessControl = $accessControl;
+    }
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        $user = $this->accessControl->findUserMatch($request);
+
         return new JsonResponse([]);
     }
 

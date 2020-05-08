@@ -8,18 +8,17 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeap\Foundation\Handler\Api;
+namespace Infeap\Foundation\Config;
 
-use Infeap\Foundation\Config\AccessControl;
 use Laminas\ServiceManager\ServiceManager;
 
-class AuthHandlerFactory
+class DataSourcesManagerFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new AuthHandler(
-            $serviceManager->get(AccessControl::class),
+        return new DataSourcesManager(
+            $serviceManager->get('app_config')['data_sources'] ?? [],
         );
     }
 
