@@ -7,19 +7,10 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-import Vue from 'vue'
-import Vuex from 'vuex'
-
-import modules from './store/modules'
+import dataSources from './modules/data-sources'
+import user from './modules/user'
 
 export default {
-    init() {
-        Vue.use(Vuex)
-
-        this.instance = new Vuex.Store({
-            modules,
-        })
-
-        return this.instance
-    },
+    dataSources,
+    user,
 }
