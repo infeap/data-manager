@@ -37,7 +37,7 @@ class BasicMessageMiddleware implements MiddlewareInterface
                 $this->template->render('page::basic-message', [
                     'message' => [
                         'heading' => $response->getHeading(),
-                        'descriptionLines' => $response->getDescriptionLines(),
+                        'description_lines' => $response->getDescriptionLines(),
                         'type' => $response->getType(),
                     ],
                 ]),
