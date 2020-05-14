@@ -13,10 +13,10 @@ namespace Infeav\Foundation\I18n;
 class LanguageService
 {
 
-    protected $supportedLanguages;
-    protected $fallbackLanguage;
+    protected array $supportedLanguages;
+    protected string $fallbackLanguage;
 
-    protected $currentLanguage;
+    protected ?string $currentLanguage = null;
 
     public function __construct(array $supportedLanguages, string $fallbackLanguage)
     {

@@ -18,8 +18,8 @@ use Laminas\I18n\Translator\Translator as TranslationEngine;
 class Translator
 {
 
-    protected $languageService;
-    protected $appConfig;
+    protected LanguageService $languageService;
+    protected array $appConfig;
 
     protected ?TranslationEngine $engine = null;
 

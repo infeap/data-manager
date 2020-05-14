@@ -23,7 +23,7 @@ class KeyedResponse extends Response
      * @param $options ['key']: string
      *                 ['details']: array
      *                 ['debug']: array   ['message']: string
-     *                                    ['exception']: \Throwable
+     *                                    ['error']: \Throwable
      *
      *                 ['status']: int
      *                 ['headers']: array

@@ -57,7 +57,7 @@ class AssetExtension extends AbstractExtension
     {
         $file = $this->getFilePath($context, $url);
 
-        if (is_file($file)) {
+        if (is_file($file) && is_readable($file)) {
             $anchorPos = strpos($url, '#');
 
             if ($anchorPos) {
