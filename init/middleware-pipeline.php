@@ -56,10 +56,8 @@ return function (array $app, array $routesConfig, Application $application): voi
             $target = $routeConfig['target'];
         }
 
-        if ($target) {
-            if (is_array($target)) {
-                $target = current($target);
-            }
+        if ($target && is_array($target)) {
+            $target = current($target);
         }
 
         if ($beforeMidleware || $afterMidleware) {

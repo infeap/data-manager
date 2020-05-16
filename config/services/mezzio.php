@@ -15,12 +15,8 @@ return [
     \Mezzio\Router\FastRouteRouter\ConfigProvider::class,
     \Mezzio\Twig\ConfigProvider::class,
 
-    'aliases' => [
-        'config' => 'app_config',
-    ],
-
     'services' => [
-        'app_config' => [
+        'config' => [
             'mezzio' => [
                 'error_handler' => [
                     'template_404' => 'page::error/404',

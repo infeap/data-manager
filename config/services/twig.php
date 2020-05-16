@@ -15,7 +15,7 @@ return function (array $app): array {
 
     return [
         'services' => [
-            'app_config' => [
+            'config' => [
                 'templates' => [
                     'extension' => 'twig',
                     'paths' => [

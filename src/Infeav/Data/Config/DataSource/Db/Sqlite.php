@@ -8,8 +8,13 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-return [
-    'factories' => [
-        \Infeav\Foundation\Handler\Api\TranslationsHandler::class => \Infeav\Foundation\Handler\Api\TranslationsHandlerFactory::class,
-    ],
-];
+namespace Infeav\Data\Config\DataSource\Db;
+
+use Infeav\Data\Config\DataSource;
+
+class Sqlite extends DataSource
+{
+
+
+
+}

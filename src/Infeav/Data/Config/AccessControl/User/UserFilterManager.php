@@ -8,8 +8,13 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-return [
-    'factories' => [
-        \Infeav\Foundation\Config\AccessControl::class => \Infeav\Foundation\Config\AccessControlFactory::class,
-    ],
-];
+namespace Infeav\Data\Config\AccessControl\User;
+
+use Laminas\ServiceManager\AbstractPluginManager;
+
+class UserFilterManager extends AbstractPluginManager
+{
+
+    protected $instanceOf = UserFilter::class;
+
+}

@@ -31,11 +31,13 @@ return function (array $app): void {
 
     ini_set('default_charset', 'UTF-8');
 
-    $phpConfig = $app['config']['php'] ?? false;
+    $phpConfig = $app['config']['php'] ?? null;
 
-    if ($phpConfig && is_array($phpConfig)) {
+    if (is_iterable($phpConfig)) {
         foreach ($phpConfig as $key => $value) {
-            ini_set($key, $value);
+            if (is_string($key) && is_scalar($value)) {
+                ini_set($key, $value);
+            }
         }
     }
 };

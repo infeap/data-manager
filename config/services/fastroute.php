@@ -15,7 +15,7 @@ return function (array $app): array {
 
     return [
         'services' => [
-            'app_config' => [
+            'config' => [
                 'router' => [
                     'fastroute' => [
                         'cache_enabled' => $app['checks']['cache_dir_is_writable'],

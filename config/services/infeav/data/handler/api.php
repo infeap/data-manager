@@ -10,6 +10,6 @@
 
 return [
     'factories' => [
-        \Infeav\Foundation\Handler\Api\TranslationsHandler::class => \Infeav\Foundation\Handler\Api\TranslationsHandlerFactory::class,
+        \Infeav\Data\Handler\Api\AuthHandler::class => \Infeav\Data\Handler\Api\AuthHandlerFactory::class,
     ],
 ];

@@ -8,18 +8,22 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Foundation\Handler\Api;
+namespace Infeav\Data\Config\AccessControl\User;
 
-use Infeav\Foundation\Config\AccessControl;
+use Infeav\Foundation\ServiceManager\PluginManager\TypesConfigTrait;
 use Laminas\ServiceManager\ServiceManager;
 
-class AuthHandlerFactory
+class UserDataStoreManagerFactory
 {
+    use TypesConfigTrait;
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new AuthHandler(
-            $serviceManager->get(AccessControl::class),
+        $serviceTypesConfig = $this->getServiceTypesConfig($serviceManager, UserDataStoreManager::class);
+
+        return new UserDataStoreManager(
+            $serviceManager,
+            $serviceTypesConfig,
         );
     }
 

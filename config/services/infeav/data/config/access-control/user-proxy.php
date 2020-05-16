@@ -10,6 +10,6 @@
 
 return [
     'factories' => [
-        \Infeav\Foundation\Config\DataSourcesManager::class => \Infeav\Foundation\Config\DataSourcesManagerFactory::class,
+        \Infeav\Data\Config\AccessControl\UserProxyManager::class => \Infeav\Data\Config\AccessControl\UserProxyManagerFactory::class,
     ],
 ];

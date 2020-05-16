@@ -15,9 +15,9 @@ use Laminas\ServiceManager\ServiceManager;
 trait TypesConfigTrait
 {
 
-    public function getTypesServiceConfig(ServiceManager $serviceManager, string $pluginManagerName): array
+    public function getServiceTypesConfig(ServiceManager $serviceManager, string $pluginManagerName): array
     {
-        $typesServiceConfig = [
+        $serviceTypesConfig = [
             'invokables' => [],
             'factories' => [],
         ];
@@ -36,13 +36,13 @@ trait TypesConfigTrait
 
         foreach ($typesConfig as $type => $typeServiceName) {
             if ($endsWith($typeServiceName, 'Factory')) {
-                $typesServiceConfig['factories'][] = $typeServiceName;
+                $serviceTypesConfig['factories'][] = $typeServiceName;
             } else {
-                $typesServiceConfig['invokables'][] = $typeServiceName;
+                $serviceTypesConfig['invokables'][] = $typeServiceName;
             }
         }
 
-        return $typesServiceConfig;
+        return $serviceTypesConfig;
     }
 
 }

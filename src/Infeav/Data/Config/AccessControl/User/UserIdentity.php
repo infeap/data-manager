@@ -8,11 +8,17 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Foundation\Config\AccessControl;
+namespace Infeav\Data\Config\AccessControl\User;
 
-class User
+abstract class UserIdentity
 {
 
+    abstract public function getKey(): string;
+    abstract public function getValue(): string;
 
+    public function __toString()
+    {
+        return $this->getValue();
+    }
 
 }
