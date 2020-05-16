@@ -62,7 +62,7 @@
 </IfModule>
 
 # Explain when rewrite engine is not available
-ErrorDocument 404 /index.php
+ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apache+setup+required' target='_blank'>Apache setup required</a>"
 
 # Configure PHP or serve as a template for recommended php.ini settings
 <IfModule mod_php7.c>
