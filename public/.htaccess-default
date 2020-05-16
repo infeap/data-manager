@@ -39,17 +39,17 @@
     # Enforce a HTTPS connection
     # RewriteCond %{HTTP_HOST} ^data\.infeav\.org$ [NC]
     # RewriteCond %{HTTPS} off
-    # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    # RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
 
     # Ignore index.html/.php once app files are setup
-    RewriteRule index\.html start.php [L]
-    RewriteRule index\.php start.php [L]
+    RewriteRule ^index\.html start.php [L]
+    RewriteRule ^index\.php start.php [L]
 
     # The following rule tells Apache that if the requested filename exists, simply serve it
     RewriteCond %{REQUEST_FILENAME} -s [OR]
     RewriteCond %{REQUEST_FILENAME} -l [OR]
     RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^.*$ - [NC,L]
+    RewriteRule .* - [NC,L]
 
     # The following rewrites all other queries to start.php.
     # The condition ensures that if you are using Apache aliases to do mass virtual hosting,
