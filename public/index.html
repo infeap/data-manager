@@ -5,9 +5,9 @@
 
     @copyright   2018-2020 Tobias Krebs and the Infeav Team
     @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
+-->
 
-
-
+<!--
     The official entry point to this application is start.php
 -->
 
