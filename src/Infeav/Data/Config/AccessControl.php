@@ -10,6 +10,7 @@
 
 namespace Infeav\Data\Config;
 
+use Infeav\Data\Config\AccessControl\Permission;
 use Infeav\Data\Config\AccessControl\PermissionsManager;
 use Infeav\Data\Config\AccessControl\RolesManager;
 use Infeav\Data\Config\AccessControl\User;
@@ -57,6 +58,24 @@ class AccessControl
         }
 
         return new User();
+    }
+
+    public function hasPermission(User $user, string $permissionType, string $dataSourceId): bool
+    {
+        $validUserRoleNames = array_intersect($user->getData()->getRoleNames(), $this->rolesManager->getRoleNames());
+
+        /** @var Permission $permission */
+        foreach ($this->permissionsManager->getPermissions() as $permission) {
+            if ($permission->getDataSource() === $dataSourceId) {
+                if ($permission->getType() === $permissionType) {
+                    if (in_array($permission->getRole(), $validUserRoleNames)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }

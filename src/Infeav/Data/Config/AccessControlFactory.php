@@ -20,7 +20,7 @@ class AccessControlFactory
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        $accessControlConfig = $serviceManager->get('app_config')['access_control'] ?? [];
+        $accessControlConfig = $serviceManager->get('app_config')['access_control'] ?? null;
 
         if (! is_array($accessControlConfig)) {
             $accessControlConfig = [];

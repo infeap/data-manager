@@ -16,6 +16,7 @@ return [
         'config' => [
             \Infeav\Data\Config\AccessControl\User\UserSessionManager::class => [
                 'types' => [
+                    'anonymous' => \Infeav\Data\Config\AccessControl\User\UserSession\AnonymousSession::class,
                     'plain_token' => \Infeav\Data\Config\AccessControl\User\UserSession\PlainTokenSession::class,
                 ],
             ],

@@ -13,6 +13,6 @@ namespace Infeav\Data\Config\AccessControl\User;
 abstract class UserDataStore
 {
 
-    abstract public function getData(UserIdentity $identity): ?UserData;
+    abstract public function getData(?string $key = null, ?string $value = null): ?UserData;
 
 }

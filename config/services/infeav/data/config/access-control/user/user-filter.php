@@ -16,8 +16,8 @@ return [
         'config' => [
             \Infeav\Data\Config\AccessControl\User\UserFilterManager::class => [
                 'types' => [
-                    // 'request_header' => '...',
-                    // 'ip_address' => '...',
+                    'ip_address' => \Infeav\Data\Config\AccessControl\User\UserFilter\IpAddressFilter::class,
+                    'request_header' => \Infeav\Data\Config\AccessControl\User\UserFilter\RequestHeaderFilter::class,
                 ],
             ],
         ],

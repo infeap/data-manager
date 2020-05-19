@@ -20,8 +20,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 class AuthHandler implements RequestHandlerInterface
 {
 
-    protected $accessControl;
-    protected $dataSourcesManager;
+    protected AccessControl $accessControl;
+    protected DataSourcesManager $dataSourcesManager;
 
     public function __construct(AccessControl $accessControl, DataSourcesManager $dataSourcesManager)
     {

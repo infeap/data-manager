@@ -18,7 +18,6 @@ return [
                 'types' => [
                     'multi_factor' => \Infeav\Data\Config\AccessControl\User\UserAuthentication\MultiFactorAuth::class,
                     'password' => \Infeav\Data\Config\AccessControl\User\UserAuthentication\PasswordAuth::class,
-                    'none' => \Infeav\Data\Config\AccessControl\User\UserAuthentication\NoneAuth::class,
                 ],
             ],
         ],

@@ -8,7 +8,35 @@
 -->
 
 <template>
-    <div class="text-center" style="margin: 6rem 0 4rem 0">
-        <inf-spinner />
+    <div>
+        <div v-if="loading"
+            class="text-center" style="margin: 6rem 0 4rem 0">
+
+            <inf-spinner />
+        </div>
     </div>
 </template>
+
+<script>
+    export default {
+        data() {
+            return {
+                loading: true,
+            }
+        },
+        methods: {
+            auth() {
+                this.infetch.get('/api/v1/auth').then((response) => {
+                    if (response.parsedBody) {
+
+                    } else {
+                        throw new Error('Unable to parse response body')
+                    }
+                })
+            },
+        },
+        mounted() {
+            this.auth()
+        },
+    }
+</script>

@@ -16,6 +16,7 @@ return [
         'config' => [
             \Infeav\Data\Config\AccessControl\User\UserIdentificationManager::class => [
                 'types' => [
+                    'anonymous' => \Infeav\Data\Config\AccessControl\User\UserIdentification\AnonymousIdentification::class,
                     'email_address' => \Infeav\Data\Config\AccessControl\User\UserIdentification\EmailAddressIdentification::class,
                 ],
             ],

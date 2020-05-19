@@ -19,13 +19,15 @@ class DataSourcesManager extends AbstractPluginManager
 
     protected $instanceOf = DataSource::class;
 
-    protected $dataSourcesConfig;
+    protected array $dataSourcesConfig;
+    protected AccessControl $accessControl;
 
     protected ?array $dataSources = null;
 
-    public function __construct(array $dataSourcesConfig, ServiceManager $serviceManager, array $serviceTypesConfig)
+    public function __construct(array $dataSourcesConfig, AccessControl $accessControl, ServiceManager $serviceManager, array $serviceTypesConfig)
     {
         $this->dataSourcesConfig = $dataSourcesConfig;
+        $this->accessControl = $accessControl;
 
         parent::__construct($serviceManager, $serviceTypesConfig);
     }
@@ -49,6 +51,9 @@ class DataSourcesManager extends AbstractPluginManager
                         /** @var DataSource $dataSource */
                         $dataSource = $this->build($type, $typeConfig);
 
+                        unset($dataSourceConfig['config']);
+                        $dataSource->setMeta($dataSourceConfig);
+
                         $this->dataSources[] = $dataSource;
                     }
                 }
@@ -60,7 +65,18 @@ class DataSourcesManager extends AbstractPluginManager
 
     public function getDataSourcesWithPermission(string $permissionType, User $user): DataSourceList
     {
-        return new DataSourceList();
+        $permittedDataSources = [];
+
+        /** @var DataSource $dataSource */
+        foreach ($this->getDataSources() as $dataSource) {
+            $dataSourceId = $dataSource->getId();
+
+            if ($this->accessControl->hasPermission($user, $permissionType, $dataSourceId)) {
+                $permittedDataSources[] = $dataSource;
+            }
+        }
+
+        return new DataSourceList($permittedDataSources);
     }
 
 }

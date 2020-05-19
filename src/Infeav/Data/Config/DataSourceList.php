@@ -13,9 +13,23 @@ namespace Infeav\Data\Config;
 class DataSourceList
 {
 
+    protected array $dataSources;
+
+    public function __construct(array $dataSources)
+    {
+        $this->dataSources = $dataSources;
+    }
+
     public function toResponseArray(): array
     {
-        return [];
+        $response = [];
+
+        /** @var DataSource $dataSource */
+        foreach ($this->dataSources as $dataSource) {
+            $response[] = $dataSource->toResponseArray();
+        }
+
+        return $response;
     }
 
 }

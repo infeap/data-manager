@@ -8,13 +8,9 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Data\Config\DataSource\Db;
+namespace Infeav\Data\Config\DataSource;
 
 use Infeav\Data\Config\DataSource;
 
-class Sqlite extends DataSource
-{
-
-
-
-}
+abstract class RemoteSource extends DataSource
+{ }

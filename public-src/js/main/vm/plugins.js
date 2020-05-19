@@ -7,10 +7,12 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+import http from './plugins/http'
 import i18n from './plugins/i18n'
 
 export default {
     init() {
+        http.init()
         i18n.init()
     },
 }

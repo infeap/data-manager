@@ -13,6 +13,35 @@ namespace Infeav\Data\Config\AccessControl;
 class RolesManager
 {
 
+    protected array $rolesConfig;
 
+    protected ?array $roles = null;
+
+    public function __construct(array $rolesConfig)
+    {
+        $this->rolesConfig = $rolesConfig;
+    }
+
+    public function getRoles(): array
+    {
+        if ($this->roles === null) {
+            $this->roles = [];
+
+            foreach ($this->rolesConfig as $roleConfig) {
+                if (is_array($roleConfig)) {
+                    if (Role::isValidConfig($roleConfig)) {
+                        $this->roles[] = new Role($roleConfig);
+                    }
+                }
+            }
+        }
+
+        return $this->roles;
+    }
+
+    public function getRoleNames(): array
+    {
+        return array_map(fn(Role $role) => $role->getName(), $this->getRoles());
+    }
 
 }

@@ -22,7 +22,7 @@ class EmailAddressIdentity extends UserIdentity
 
     public function getValue(): string
     {
-        return '';
+        return ''; // ToDo
     }
 
 }

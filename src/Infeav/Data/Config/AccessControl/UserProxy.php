@@ -11,7 +11,6 @@
 namespace Infeav\Data\Config\AccessControl;
 
 use Infeav\Data\Config\AccessControl\User\UserAuthentication;
-use Infeav\Data\Config\AccessControl\User\UserData;
 use Infeav\Data\Config\AccessControl\User\UserDataStore;
 use Infeav\Data\Config\AccessControl\User\UserFilter;
 use Infeav\Data\Config\AccessControl\User\UserIdentification;
@@ -22,16 +21,16 @@ class UserProxy
 {
 
     protected array $filters;
-    protected ?UserData $dataStore;
-    protected UserIdentification $identification;
-    protected UserAuthentication $authentication;
+    protected ?UserDataStore $dataStore;
+    protected ?UserIdentification $identification;
+    protected ?UserAuthentication $authentication;
     protected ?UserSession $session;
 
     public function __construct(
         array $filters,
         ?UserDataStore $dataStore,
-        UserIdentification $identification,
-        UserAuthentication $authentication,
+        ?UserIdentification $identification,
+        ?UserAuthentication $authentication,
         ?UserSession $session)
     {
         $this->filters = $filters;
@@ -50,15 +49,23 @@ class UserProxy
             }
         }
 
+        if (! $this->identification) {
+            return null;
+        }
+
         $identity = $this->identification->matchIdentity($request);
 
-        if (! $identity) {
+        if (! $identity || ! $this->dataStore) {
             return null;
         }
 
         $userData = $this->identification->getUserData($identity, $this->dataStore);
 
         if (! $userData) {
+            return null;
+        }
+
+        if (! $this->authentication) {
             return null;
         }
 
@@ -80,9 +87,17 @@ class UserProxy
             }
         }
 
-        $identity = $this->session->matchIdentity($this->identification, $request);
+        if (! $this->session || ! $this->identification) {
+            return null;
+        }
+
+        $identity = $this->session->matchIdentity($request, $this->identification);
 
         if (! $identity) {
+            return null;
+        }
+
+        if (! $this->identification) {
             return null;
         }
 
@@ -92,7 +107,11 @@ class UserProxy
             return null;
         }
 
-        return new User($identity, $userData, true);
+        if ($identity instanceof UserIdentification\AnonymousIdentity) {
+            return new User(null, $userData, false);
+        } else {
+            return new User($identity, $userData, true);
+        }
     }
 
 }

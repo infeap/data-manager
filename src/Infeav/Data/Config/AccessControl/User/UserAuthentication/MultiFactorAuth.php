@@ -19,7 +19,7 @@ class MultiFactorAuth extends UserAuthentication
 
     public function authenticate(UserIdentity $identity, ServerRequestInterface $request): bool
     {
-        return false;
+        return false; // ToDo
     }
 
 }

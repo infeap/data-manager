@@ -15,6 +15,6 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class UserSession
 {
 
-    abstract public function matchIdentity(UserIdentification $identification, ServerRequestInterface $request): ?UserIdentity;
+    abstract public function matchIdentity(ServerRequestInterface $request, UserIdentification $identification): ?UserIdentity;
 
 }

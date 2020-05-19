@@ -23,6 +23,7 @@ class DataSourcesManagerFactory
 
         return new DataSourcesManager(
             $serviceManager->get('app_config')['data_sources'] ?? [],
+            $serviceManager->get(AccessControl::class),
             $serviceManager,
             $serviceTypesConfig,
         );

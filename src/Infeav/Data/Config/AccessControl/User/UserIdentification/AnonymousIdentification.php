@@ -16,17 +16,17 @@ use Infeav\Data\Config\AccessControl\User\UserIdentification;
 use Infeav\Data\Config\AccessControl\User\UserIdentity;
 use Psr\Http\Message\ServerRequestInterface;
 
-class NoneIdentification extends UserIdentification
+class AnonymousIdentification extends UserIdentification
 {
 
     public function matchIdentity(ServerRequestInterface $request): ?UserIdentity
     {
-        return null;
+        return new AnonymousIdentity();
     }
 
     public function getUserData(UserIdentity $identity, UserDataStore $dataStore): ?UserData
     {
-        return null;
+        return $dataStore->getData();
     }
 
 }

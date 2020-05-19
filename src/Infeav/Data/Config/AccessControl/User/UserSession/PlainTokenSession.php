@@ -18,9 +18,9 @@ use Psr\Http\Message\ServerRequestInterface;
 class PlainTokenSession extends UserSession
 {
 
-    public function matchIdentity(UserIdentification $identification, ServerRequestInterface $request): ?UserIdentity
+    public function matchIdentity(ServerRequestInterface $request, UserIdentification $identification): ?UserIdentity
     {
-        return null;
+        return null; // ToDo
     }
 
 }

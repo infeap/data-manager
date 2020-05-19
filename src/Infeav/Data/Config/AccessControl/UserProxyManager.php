@@ -126,10 +126,6 @@ class UserProxyManager
                         }
                     }
 
-                    if (! $identification) {
-                        continue;
-                    }
-
                     /*
                      * Authentication
                      */
@@ -149,10 +145,6 @@ class UserProxyManager
                             /** @var UserAuthentication $authentication */
                             $authentication = $this->userAuthenticationManager->build($authenticationType, $authenticationTypeConfig);
                         }
-                    }
-
-                    if (! $authentication) {
-                        continue;
                     }
 
                     /*
@@ -177,7 +169,7 @@ class UserProxyManager
                     }
 
                     /*
-                     * Proxy
+                     * Finally, the Proxy
                      */
                     $userProxy = new UserProxy($filters, $dataStore, $identification, $authentication, $session);
 

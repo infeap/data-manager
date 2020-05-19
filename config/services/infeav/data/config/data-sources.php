@@ -16,29 +16,29 @@ return [
         'config' => [
             \Infeav\Data\Config\DataSourcesManager::class => [
                 'types' => [
-                    // 'db/ibm_db2' => '...',
-                    // 'db/maria' => '...',
-                    // 'db/mysql' => '...',
-                    // 'db/oci8' => '...',
-                    // 'db/pgsql' => '...',
-                    // 'db/sqlite' => '...',
-                    // 'db/sqlsrv' => '...',
+                    'db/ibm_db2' => \Infeav\Data\Config\DataSource\Db\IbmDb2Source::class,
+                    'db/maria' => \Infeav\Data\Config\DataSource\Db\MariaSource::class,
+                    'db/mysql' => \Infeav\Data\Config\DataSource\Db\MySqlSource::class,
+                    'db/oci8' => \Infeav\Data\Config\DataSource\Db\Oci8Source::class,
+                    'db/pgsql' => \Infeav\Data\Config\DataSource\Db\PgSqlSource::class,
+                    'db/sqlite' => \Infeav\Data\Config\DataSource\Db\SqliteSource::class,
+                    'db/sqlsrv' => \Infeav\Data\Config\DataSource\Db\SqlSrvSource::class,
 
-                    // 'fs/directory' => '...',
-                    // 'fs/file' => '...',
+                    'fs/directory' => \Infeav\Data\Config\DataSource\Fs\DirectorySource::class,
+                    'fs/file' => \Infeav\Data\Config\DataSource\Fs\FileSource::class,
 
-                    // 'ftp' => '...',
-                    // 'sftp' => '...',
+                    'remote/ftp' => \Infeav\Data\Config\DataSource\Remote\FtpSource::class,
+                    'remote/sftp' => \Infeav\Data\Config\DataSource\Remote\SftpSource::class,
 
-                    // 'http' => '...',
+                    'remote/http' => \Infeav\Data\Config\DataSource\Remote\HttpSource::class,
 
-                    // 'ldap' => '...',
+                    'remote/ldap' => \Infeav\Data\Config\DataSource\Remote\LdapSource::class,
 
-                    // 'mail' => '...',
+                    'remote/mail' => \Infeav\Data\Config\DataSource\Remote\MailSource::class,
 
-                    // 'webdav' => '...',
+                    'remote/webdav' => \Infeav\Data\Config\DataSource\Remote\WebDavSource::class,
 
-                    // 'reflection' => '...',
+                    'reflection' => \Infeav\Data\Config\DataSource\ReflectionSource::class,
                 ],
             ],
         ],

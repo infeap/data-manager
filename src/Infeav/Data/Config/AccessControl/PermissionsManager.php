@@ -13,6 +13,26 @@ namespace Infeav\Data\Config\AccessControl;
 class PermissionsManager
 {
 
+    protected array $permissionsConfig;
 
+    protected ?array $permissions = null;
+
+    public function __construct(array $permissionsConfig)
+    {
+        $this->permissionsConfig = $permissionsConfig;
+    }
+
+    public function getPermissions(): array
+    {
+        if ($this->permissions === null) {
+            $this->permissions = [];
+
+            foreach ($this->permissionsConfig as $permissionConfig) {
+                $this->permissions = [...$this->permissions, ...PermissionsFactory::createPermissions($permissionConfig)];
+            }
+        }
+
+        return $this->permissions;
+    }
 
 }

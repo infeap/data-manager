@@ -21,12 +21,12 @@ class EmailAddressIdentification extends UserIdentification
 
     public function matchIdentity(ServerRequestInterface $request): ?UserIdentity
     {
-        return null;
+        return null; // ToDo
     }
 
     public function getUserData(UserIdentity $identity, UserDataStore $dataStore): ?UserData
     {
-        return null;
+        return null; // ToDo
     }
 
 }

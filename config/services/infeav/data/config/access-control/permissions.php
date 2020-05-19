@@ -10,6 +10,6 @@
 
 return [
     'factories' => [
-
+        \Infeav\Data\Config\AccessControl\PermissionsManager::class => \Infeav\Data\Config\AccessControl\PermissionsManagerFactory::class,
     ],
 ];

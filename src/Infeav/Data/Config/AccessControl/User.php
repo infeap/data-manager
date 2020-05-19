@@ -24,12 +24,22 @@ class User
     {
         $this->identity = $identity;
         $this->data = $data;
-        $this->isAuthenticated = $isAuthenticated;
+        $this->isAuthenticated = $identity && $isAuthenticated;
     }
 
     public function isIdentified(): bool
     {
-        return $this->identity !== null;
+        return (bool) $this->identity;
+    }
+
+    public function getIdentity(): ?UserIdentity
+    {
+        return $this->identity;
+    }
+
+    public function getData(): ?UserData
+    {
+        return $this->data;
     }
 
     public function isAuthenticated(): bool
