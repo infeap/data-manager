@@ -22,8 +22,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 class TranslationsHandler implements RequestHandlerInterface
 {
 
-    protected $translator;
-    protected $languageService;
+    protected Translator $translator;
+    protected LanguageService $languageService;
 
     public function __construct(Translator $translator, LanguageService $languageService)
     {

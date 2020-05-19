@@ -20,8 +20,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ApiResponseMiddleware implements MiddlewareInterface
 {
 
-    protected $isDebugMode;
-    protected $appDir;
+    protected bool $isDebugMode;
+    protected string $appDir;
 
     public function __construct(bool $isDebugMode, string $appDir)
     {

@@ -17,8 +17,8 @@ use Psr\Http\Message\ServerRequestInterface;
 class Listener
 {
 
-    protected $logDir;
-    protected $appDir;
+    protected string $logDir;
+    protected string $appDir;
 
     public function __construct(string $logDir, string $appDir)
     {

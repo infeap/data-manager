@@ -36,9 +36,9 @@ trait TypesConfigTrait
 
         foreach ($typesConfig as $type => $typeServiceName) {
             if ($endsWith($typeServiceName, 'Factory')) {
-                $serviceTypesConfig['factories'][] = $typeServiceName;
+                $serviceTypesConfig['factories'][$type] = $typeServiceName;
             } else {
-                $serviceTypesConfig['invokables'][] = $typeServiceName;
+                $serviceTypesConfig['invokables'][$type] = $typeServiceName;
             }
         }
 

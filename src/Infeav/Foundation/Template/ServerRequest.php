@@ -15,7 +15,7 @@ use Infeav\Foundation\Http\Request\Helper\ServerRequestHelper;
 class ServerRequest
 {
 
-    protected $requestHelper;
+    protected ServerRequestHelper $requestHelper;
 
     public function __construct(ServerRequestHelper $requestHelper)
     {

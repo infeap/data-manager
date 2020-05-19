@@ -19,8 +19,8 @@ use Twig\TwigFunction;
 class TranslationExtension extends AbstractExtension
 {
 
-    protected $translator;
-    protected $languageService;
+    protected Translator $translator;
+    protected LanguageService $languageService;
 
     public function __construct(Translator $translator, LanguageService $languageService)
     {

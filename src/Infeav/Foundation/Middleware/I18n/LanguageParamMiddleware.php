@@ -22,8 +22,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 class LanguageParamMiddleware implements MiddlewareInterface
 {
 
-    protected $languageService;
-    protected $translator;
+    protected LanguageService $languageService;
+    protected Translator $translator;
 
     public function __construct(LanguageService $languageService, Translator $translator)
     {

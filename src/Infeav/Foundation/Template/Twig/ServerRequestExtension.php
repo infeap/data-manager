@@ -18,7 +18,7 @@ use Twig\TwigFunction;
 class ServerRequestExtension extends AbstractExtension
 {
 
-    protected $templateServerRequest;
+    protected ServerRequestHelper $templateServerRequest;
 
     public function __construct(ServerRequestHelper $requestHelper)
     {

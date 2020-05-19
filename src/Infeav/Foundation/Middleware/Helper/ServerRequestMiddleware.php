@@ -19,7 +19,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ServerRequestMiddleware implements MiddlewareInterface
 {
 
-    protected $requestHelper;
+    protected ServerRequestHelper $requestHelper;
 
     public function __construct(ServerRequestHelper $requestHelper)
     {

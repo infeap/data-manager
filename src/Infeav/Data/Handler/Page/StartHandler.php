@@ -19,7 +19,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 class StartHandler implements RequestHandlerInterface
 {
 
-    protected $template;
+    protected TemplateRendererInterface $template;
 
     public function __construct(TemplateRendererInterface $templateRenderer)
     {

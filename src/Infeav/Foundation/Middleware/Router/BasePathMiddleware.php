@@ -18,8 +18,8 @@ use Psr\Http\Server\RequestHandlerInterface;
 class BasePathMiddleware implements MiddlewareInterface
 {
 
-    protected $basePath;
-    protected $requestPath;
+    protected string $basePath;
+    protected string $requestPath;
 
     public function __construct(string $basePath, string $requestPath)
     {
