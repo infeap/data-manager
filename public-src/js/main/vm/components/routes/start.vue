@@ -18,6 +18,8 @@
 </template>
 
 <script>
+    import get from 'lodash/get'
+
     export default {
         data() {
             return {
@@ -28,10 +30,32 @@
             auth() {
                 this.infetch.get('/api/v1/auth').then((response) => {
                     if (response.parsedBody) {
-
+                        if (get(response.parsedBody, 'user.isAuthenticated')) {
+                            if (response.parsedBody.dataSources) {
+                                // ToDo: Show list
+                            } else {
+                                // ToDo: Show minimal user data + logout
+                            }
+                        } else {
+                            if (response.parsedBody.dataSources) {
+                                if (get(response.parsedBody, 'user.offerLogin')) {
+                                    // ToDo: Show list + login fore "more" (with lock icon)
+                                } else {
+                                    // ToDo: Show list
+                                }
+                            } else {
+                                if (get(response.parsedBody, 'user.offerLogin')) {
+                                    // ToDo: Show login
+                                } else {
+                                    // ToDo: Show setup wizard
+                                }
+                            }
+                        }
                     } else {
                         throw new Error('Unable to parse response body')
                     }
+                }).catch(() => {
+                    // ToDo: Differentiate between recoverable and unrecoverable errors and show respective basic message template
                 })
             },
         },

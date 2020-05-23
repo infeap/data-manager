@@ -76,7 +76,8 @@ class DataSourcesManager extends AbstractPluginManager
             }
         }
 
-        return new DataSourceList($permittedDataSources);
+        return new DataSourceList($permittedDataSources,
+            count($permittedDataSources) == count($this->getDataSources()));
     }
 
 }

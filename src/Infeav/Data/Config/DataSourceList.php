@@ -14,10 +14,17 @@ class DataSourceList
 {
 
     protected array $dataSources;
+    protected ?bool $isComplete;
 
-    public function __construct(array $dataSources)
+    public function __construct(array $dataSources, ?bool $isComplete = null)
     {
         $this->dataSources = $dataSources;
+        $this->isComplete = $isComplete;
+    }
+
+    public function isComplete(): ?bool
+    {
+        return $this->isComplete;
     }
 
     public function toResponseArray(): array

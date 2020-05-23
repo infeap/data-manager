@@ -37,6 +37,7 @@ class AuthHandler implements RequestHandlerInterface
         return new JsonResponse([
             'user' => [
                 'isAuthenticated' => $sessionUser->isAuthenticated(),
+                'offerLogin' => ! $sessionUser->isAuthenticated() && ! $dataSources->isComplete(),
             ],
             'dataSources' => $dataSources->toResponseArray(),
         ]);
