@@ -7,6 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+import isEmpty from 'lodash/isEmpty'
+
 import infetch from '../http/request/infetch'
 import language from './language'
 
@@ -27,7 +29,11 @@ export default {
 
                     loadedTranslations[languageTag][textDomain] = response.parsedBody
                 } else {
-                    throw new Error('Unable to parse response body')
+                    if (isEmpty(loadedTranslations)) {
+                        throw new Error('Unable to parse response body')
+                    } else {
+                        console.warn('[Infeav Data Manager] Unable to parse response body of translations for ' + languageTag + '/' + textDomain)
+                    }
                 }
             })
     },
@@ -41,6 +47,22 @@ export default {
                 if (loadedTranslations[languageTag][textDomain][key]) {
                     return loadedTranslations[languageTag][textDomain][key]
                 }
+            }
+        }
+
+        console.warn('[Infeav Data Manager] Missing translation "' + key + '" in ' + languageTag + '/' + textDomain)
+
+        if (language.fallbackLanguage) {
+            if (loadedTranslations[language.fallbackLanguage]) {
+                if (loadedTranslations[language.fallbackLanguage][textDomain]) {
+                    if (loadedTranslations[language.fallbackLanguage][textDomain][key]) {
+                        return loadedTranslations[language.fallbackLanguage][textDomain][key]
+                    }
+                }
+            } else {
+                loadedTranslations[language.fallbackLanguage] = {}
+
+                this.loadTranslations(textDomain, language.fallbackLanguage)
             }
         }
 

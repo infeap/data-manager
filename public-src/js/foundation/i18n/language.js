@@ -10,6 +10,7 @@
 import $ from 'jquery-slim'
 
 let documentLanguage
+let fallbackLanguage
 
 export default {
     get documentLanguage() {
@@ -18,5 +19,12 @@ export default {
         }
 
         return documentLanguage
+    },
+    get fallbackLanguage() {
+        if (! fallbackLanguage) {
+            fallbackLanguage = $('html').data('fallback-lang')
+        }
+
+        return fallbackLanguage
     },
 }
