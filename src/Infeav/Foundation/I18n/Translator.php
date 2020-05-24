@@ -11,8 +11,10 @@
 namespace Infeav\Foundation\I18n;
 
 use Infeav\Foundation\I18n\Translator\IniLoader;
+use Infeav\Foundation\Log\LogManager;
 use Laminas\Cache\Storage\Adapter\Filesystem;
 use Laminas\Cache\StorageFactory;
+use Laminas\EventManager\EventInterface;
 use Laminas\I18n\Translator\Translator as TranslationEngine;
 
 class Translator
@@ -20,15 +22,17 @@ class Translator
 
     protected LanguageService $languageService;
     protected array $appConfig;
+    protected ?LogManager $logManager;
 
     protected ?TranslationEngine $engine = null;
 
     protected ?array $textDomains = null;
 
-    public function __construct(LanguageService $languageService, array $appConfig)
+    public function __construct(LanguageService $languageService, array $appConfig, ?LogManager $logManager = null)
     {
         $this->languageService = $languageService;
         $this->appConfig = $appConfig;
+        $this->logManager = $logManager;
     }
 
     public function getEngine(): TranslationEngine
@@ -51,6 +55,9 @@ class Translator
 
             $this->engine->setFallbackLocale($this->languageService->getFallbackLanguage());
 
+            /*
+             * Setup caching
+             */
             $l10n_cache_dir = $this->appConfig['cache_dir'] . '/resources/l10n/';
 
             if (! is_dir($l10n_cache_dir)) {
@@ -79,6 +86,15 @@ class Translator
                 foreach ($this->textDomains as $textDomain) {
                     $this->engine->clearCache($textDomain, $this->languageService->getFallbackLanguage());
                 }
+            }
+
+            /*
+             * Setup missing translations logging (if not in debug mode)
+             */
+            if ($this->logManager) {
+                $this->engine->enableEventManager()->getEventManager()->attach('missingTranslation', function (EventInterface $event) {
+                    $this->logManager->logMissingTranslation($event->getParam('message'), $event->getParam('text_domain'), $event->getParam('locale'));
+                });
             }
         }
 

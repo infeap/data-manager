@@ -8,19 +8,19 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Foundation\Middleware\Error\Logging;
+namespace Infeav\Foundation\Log;
 
-use Infeav\Foundation\Log\LogManager;
+use Infeav\Foundation\I18n\LanguageService;
 use Laminas\ServiceManager\ServiceManager;
 
-class ListenerFactory
+class LogManagerFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new Listener(
-            $serviceManager->get(LogManager::class),
-            $serviceManager->get('app_dir'),
+        return new LogManager(
+            $serviceManager->get('app_config')['log_dir'],
+            $serviceManager->get(LanguageService::class),
         );
     }
 

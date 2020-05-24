@@ -10,35 +10,26 @@
 
 namespace Infeav\Foundation\Middleware\Error\Logging;
 
-use Laminas\Json\Json;
+use Infeav\Foundation\Log\LogManager;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class Listener
 {
 
-    protected string $logDir;
+    protected LogManager $logManager;
     protected string $appDir;
 
-    public function __construct(string $logDir, string $appDir)
+    public function __construct(LogManager $logManager, string $appDir)
     {
-        $this->logDir = $logDir;
+        $this->logManager = $logManager;
         $this->appDir = $appDir;
     }
 
     public function __invoke(\Throwable $error, ServerRequestInterface $request, ResponseInterface $response)
     {
-        $logFile = sprintf('%s/errors.json',
-            $this->logDir);
-
-        $log = [];
-
-        if (is_file($logFile) && is_readable($logFile)) {
-            $log = Json::decode(file_get_contents($logFile), Json::TYPE_ARRAY);
-        }
-
-        $createLogEntry = function (\Throwable $error) use (&$createLogEntry, $request, $response): array {
-            $logEntry = [
+        $createLogDetails = function (\Throwable $error) use (&$createLogDetails, $request, $response): array {
+            $logDetails = [
                 'id' => $response->getHeaderLine('Inf-Error-ID'),
                 'time' => date('Y-m-d H:i:s T'),
                 'request' => [
@@ -55,22 +46,15 @@ class Listener
             $previousError = $error->getPrevious();
 
             if ($previousError) {
-                $logEntry['previous'] = $createLogEntry($previousError);
+                $logDetails['previous'] = $createLogDetails($previousError);
             }
 
-            return $logEntry;
+            return $logDetails;
         };
 
-        $log[] = $createLogEntry($error);
+        $logDetails = $createLogDetails($error);
 
-        if ((is_file($logFile) && is_writable($logFile)) ||
-            (! is_file($logFile) && is_writable(dirname($logFile)))) {
-
-            $logJson = Json::prettyPrint(Json::encode($log));
-            $logJson = str_replace('\/', '/', $logJson);
-
-            file_put_contents($logFile, $logJson);
-        }
+        $this->logManager->logError($logDetails);
     }
 
 }

@@ -10,6 +10,7 @@
 
 namespace Infeav\Foundation\I18n;
 
+use Infeav\Foundation\Log\LogManager;
 use Laminas\ServiceManager\ServiceManager;
 
 class TranslatorFactory
@@ -17,9 +18,16 @@ class TranslatorFactory
 
     public function __invoke(ServiceManager $serviceManager)
     {
+        if (! $serviceManager->get('app_config')['debug']) {
+            $logManager = $serviceManager->get(LogManager::class);
+        } else {
+            $logManager = null;
+        }
+
         return new Translator(
             $serviceManager->get(LanguageService::class),
             $serviceManager->get('app_config'),
+            $logManager,
         );
     }
 
