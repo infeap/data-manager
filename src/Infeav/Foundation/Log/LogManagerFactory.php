@@ -20,6 +20,7 @@ class LogManagerFactory
     {
         return new LogManager(
             $serviceManager->get('app_config')['log_dir'],
+            $serviceManager->get('app_dir'),
             $serviceManager->get(LanguageService::class),
         );
     }

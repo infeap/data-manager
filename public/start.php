@@ -32,6 +32,9 @@ $initApp(function ($appBaseConfig) {
     $initRoutes = require '../init/routes.php';
     $initRoutes($appBaseConfig, $routesConfig, $app);
 
+    $initQuickClasses = require '../init/quick-classes.php';
+    $initQuickClasses($serviceManager);
+
     $app->run();
 
 });
