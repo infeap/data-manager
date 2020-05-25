@@ -25,7 +25,6 @@
 
 <script>
     import $ from 'jquery-slim'
-    import get from 'lodash/get'
 
     import dataSourcesComponent from './structure/data-sources.vue'
 
@@ -58,37 +57,33 @@
                 }
             },
             auth() {
-                this.infetch.get('/api/v1/auth').then((response) => {
-                    if (response.parsedBody) {
-                        if (get(response.parsedBody, 'user.isAuthenticated')) {
-                            if (response.parsedBody.dataSources) {
-                                // ToDo: Show list
-                                this.switchBodyLayout('main')
-                            } else {
-                                // ToDo: Show minimal user data + logout
-                            }
+                this.$store.dispatch('auth').then(() => {
+                    if (this.$store.state.user.isAuthenticated) {
+                        if (this.$store.state.dataSources.list.length) {
+                            // ToDo: Show list
+                            this.switchBodyLayout('main')
                         } else {
-                            if (response.parsedBody.dataSources) {
-                                if (get(response.parsedBody, 'user.offerLogin')) {
-                                    // ToDo: Show list + login fore "more" (with lock icon)
-                                } else {
-                                    // ToDo: Show list
-                                }
-
-                                this.switchBodyLayout('main')
+                            // ToDo: Show minimal user data + logout
+                        }
+                    } else {
+                        if (this.$store.state.dataSources.list.length) {
+                            if (this.$store.state.user.offerLogin) {
+                                // ToDo: Show list + login fore "more" (with lock icon)
                             } else {
-                                if (get(response.parsedBody, 'user.offerLogin')) {
-                                    // ToDo: Show login
-                                } else {
-                                    // ToDo: Show setup wizard
-                                }
+                                // ToDo: Show list
+                            }
+
+                            this.switchBodyLayout('main')
+                        } else {
+                            if (this.$store.state.user.offerLogin) {
+                                // ToDo: Show login
+                            } else {
+                                // ToDo: Show setup wizard
                             }
                         }
-
-                        this.loading = false
-                    } else {
-                        throw new Error('Unable to parse response body')
                     }
+
+                    this.loading = false
                 }).catch(() => {
                     // ToDo: Differentiate between recoverable and unrecoverable errors and show respective basic message template
                 })

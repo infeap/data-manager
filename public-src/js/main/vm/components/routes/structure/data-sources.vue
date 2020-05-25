@@ -9,6 +9,22 @@
 
 <template>
     <div class="-component" data-name="structure/data-sources">
-
+        <nav>
+            <ul>
+                <li v-for="dataSource in dataSources" :key="dataSource.id">{{ dataSource.id }}</li>
+            </ul>
+        </nav>
     </div>
 </template>
+
+<script>
+    export default {
+        computed: {
+            dataSources: {
+                get() {
+                    return this.$store.state.dataSources.list
+                },
+            },
+        },
+    }
+</script>

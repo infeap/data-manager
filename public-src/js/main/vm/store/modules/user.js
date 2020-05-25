@@ -9,4 +9,16 @@
 
 export default {
     namespaced: true,
+    state: {
+        isAuthenticated: null,
+        offerLogin: null,
+    },
+    mutations: {
+        setIsAuthenticated(state, isAuthenticated) {
+            state.isAuthenticated = isAuthenticated
+        },
+        setOfferLogin(state, offerLogin) {
+            state.offerLogin = offerLogin
+        },
+    },
 }

@@ -7,14 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+import auth from './actions/auth'
+
 export default {
-    namespaced: true,
-    state: {
-        list: [],
-    },
-    mutations: {
-        setList(state, list) {
-            state.list = list
-        },
-    },
+    auth,
 }
