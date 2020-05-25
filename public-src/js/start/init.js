@@ -13,9 +13,9 @@ import translator from '../foundation/i18n/translator'
 
 $(document).ready(() => {
 
-    let $start = $('#inf-start')
+    let $startElement = $('#inf-start')
 
-    if ($start.length) {
+    if ($startElement.length) {
 
         translator.loadTranslations().then(() => {
 
@@ -28,10 +28,10 @@ $(document).ready(() => {
 
                     let $mainVmElement = $('<div id="inf-main-vm"></div>')
 
-                    $start.before($mainVmElement)
+                    $startElement.before($mainVmElement)
 
-                    mainVm.init({ element: $mainVmElement[0] }).then(() => {
-                        $start.remove()
+                    mainVm.init({ rootElement: $mainVmElement[0] }).then(() => {
+                        $startElement.remove()
                     })
                 }
             )

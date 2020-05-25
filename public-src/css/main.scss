@@ -1,4 +1,4 @@
-/**
+/*!
  * This file is part of the
  * Infeav Data Manager (https://www.infeav.org/data-manager)
  * open source project
@@ -7,12 +7,10 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-$gray-500: darken(#adb5bd, 5%);
+@import 'foundation/variables';
 
-$body-bg: #f8f9fa; // = $gray-100
-$body-color: #343a40; // == $gray-800
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
 
-$border-radius-sm: 4px;
-$border-radius: 6px;
-
-$spacer: 2rem;
+@import 'main/layout';

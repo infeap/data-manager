@@ -7,10 +7,10 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-import component from '../components/routes/start.vue'
+import component from '../components/routes/structure.vue'
 
 export default {
-    name: 'start',
+    name: 'structure',
     path: '/',
     component,
 }

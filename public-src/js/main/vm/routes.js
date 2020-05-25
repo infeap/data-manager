@@ -8,9 +8,9 @@
  */
 
 import notFound from './routes/not-found'
-import start from './routes/start'
+import structure from './routes/structure'
 
 export default [
-    start,
+    structure,
     notFound,
 ]

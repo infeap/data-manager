@@ -8,7 +8,7 @@
 -->
 
 <template>
-    <div class="-component" data-name="routes/not-found">
+    <div class="-component" data-name="layout/user-panel">
 
     </div>
 </template>
