@@ -69,7 +69,13 @@ abstract class DataSource
     public function getSlug(): string
     {
         if ($this->slug === null) {
-            $this->slug = (new AsciiSlugger())->slug($this->id);
+            $slug = $this->getMetaValue('slug');
+
+            if ($slug) {
+                $this->slug = $slug;
+            } else {
+                $this->slug = (new AsciiSlugger())->slug($this->getId());
+            }
         }
 
         return $this->slug;
