@@ -11,6 +11,6 @@ import component from '../components/routes/structure.vue'
 
 export default {
     name: 'structure',
-    path: '/',
+    path: '/:path*',
     component,
 }

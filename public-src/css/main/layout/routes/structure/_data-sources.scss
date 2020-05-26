@@ -15,5 +15,9 @@
         color: white;
         border-radius: $border-radius;
         background: $gray-700;
+
+        a {
+            color: inherit;
+        }
     }
 }

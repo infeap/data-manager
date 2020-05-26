@@ -10,10 +10,15 @@
 
 namespace Infeav\Data\Config;
 
+use Symfony\Component\String\Slugger\AsciiSlugger;
+
 abstract class DataSource
 {
 
     protected ?array $meta = null;
+
+    protected ?string $id = null;
+    protected ?string $slug = null;
 
     public function setMeta(array $meta): void
     {
@@ -40,25 +45,54 @@ abstract class DataSource
 
     public function getId(): string
     {
-        $name = $this->getMetaValue('name');
+        if ($this->id === null) {
+            $name = $this->getMetaValue('name');
 
-        if ($name) {
-            return $name;
+            if ($name) {
+                $this->id = $name;
+            } else {
+                $type = $this->getMetaValue('type');
+
+                if ($type) {
+                    $this->id = $type;
+                }
+            }
+
+            if (! $this->id) {
+                throw new \BadMethodCallException('Data Source meta data contains no identification key');
+            }
         }
 
-        $type = $this->getMetaValue('type');
+        return $this->id;
+    }
 
-        if ($type) {
-            return $type;
+    public function getSlug(): string
+    {
+        if ($this->slug === null) {
+            $this->slug = (new AsciiSlugger())->slug($this->id);
         }
 
-        throw new \BadMethodCallException('Data Source meta data contains no identification key');
+        return $this->slug;
+    }
+
+    public function getLabel(): string
+    {
+        $label = $this->getMetaValue('label');
+
+        if ($label) {
+            return $label;
+        }
+
+        return $this->getId();
     }
 
     public function toResponseArray(): array
     {
         return [
             'id' => $this->getId(),
+            'slug' => $this->getSlug(),
+            'type' => $this->getMetaValue('type'),
+            'label' => $this->getLabel(),
         ];
     }
 

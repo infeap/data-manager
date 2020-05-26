@@ -7,10 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-import notFound from './routes/not-found'
 import structure from './routes/structure'
 
 export default [
     structure,
-    notFound,
 ]
