@@ -9,6 +9,7 @@
 
 a, button, .btn {
     display: inline-block;
+    vertical-align: top;
 
     &:focus {
         outline: dotted 1px currentColor;
