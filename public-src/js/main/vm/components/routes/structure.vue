@@ -18,6 +18,7 @@
         </template><template v-else>
 
             <inf-data-sources />
+            <inf-data-views />
 
         </template>
     </div>
@@ -26,7 +27,8 @@
 <script>
     import $ from 'jquery-slim'
 
-    import dataSourcesComponent from './structure/data-sources.vue'
+    import dataSourcesComponent from '../data/data-sources.vue'
+    import dataViewsComponent from '../data/data-views.vue'
 
     export default {
         data() {
@@ -36,6 +38,7 @@
         },
         components: {
             'inf-data-sources': dataSourcesComponent,
+            'inf-data-views': dataViewsComponent,
         },
         methods: {
             switchBodyLayout(name) {

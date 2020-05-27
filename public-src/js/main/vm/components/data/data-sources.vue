@@ -8,11 +8,11 @@
 -->
 
 <template>
-    <div class="-component" data-name="structure/data-sources">
+    <div class="-component" data-name="data-sources">
         <nav>
             <ul>
                 <li v-for="dataSource in dataSources" :key="dataSource.id">
-                    <router-link :to="{ name: 'structure', params: { path: dataSource.slug } }">
+                    <router-link :to="{ name: 'structure', params: { dataPath: dataSource.slug } }">
                         {{ dataSource.label }}
                     </router-link>
                 </li>

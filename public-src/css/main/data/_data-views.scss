@@ -8,16 +8,8 @@
  */
 
 #inf-main-vm .-component {
-    &[data-name="structure/data-sources"] {
-        flex: 0 1 13rem;
-        height: 100%;
-        padding: 1.5rem;
-        color: white;
-        border-radius: $border-radius;
-        background: $gray-700;
-
-        a {
-            color: inherit;
-        }
+    &[data-name="data-views"] {
+        display: flex;
+        align-items: stretch;
     }
 }

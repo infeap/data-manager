@@ -7,14 +7,12 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-@import 'structure/data-sources';
-
 #inf-main-vm .-component {
     &[data-name="routes/structure"] {
         height: 100%;
 
         display: flex;
-        align-items: center;
+        align-items: stretch;
 
         .-loading {
             margin: 0 !important;
