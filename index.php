@@ -63,8 +63,15 @@
                         $heading);
 
                     if (isset($text)) {
-                        printf('<p>%s</p>',
-                            $text);
+                        if (is_string($text)) {
+                            printf('<p>%s</p>',
+                                $text);
+                        } else if (is_array($text)) {
+                            foreach ($text as $line) {
+                                printf('<p>%s</p>',
+                                    $line);
+                            }
+                        }
                     } else {
                         echo '<p>The Apache HTTP Server module <b>mod_rewrite</b> must be installed and enabled to be used in <b>.htaccess</b> files – but seems not to.</p>';
                         echo '<p>Please ask your server\'s administrator to enable it.</p>';

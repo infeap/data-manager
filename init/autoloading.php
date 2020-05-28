@@ -19,7 +19,8 @@ return $initAppArray(function (array $app): callable {
 
     if (! (is_file($autoloadFile) && is_readable($autoloadFile))) {
         http_response_code(500);
-        infeav_render_init_message('Dependencies required', 'The application dependencies are not (yet) installed. Please read the installation documentation or use Composer to install.');
+        infeav_render_init_message('Dependencies required',
+            'The application dependencies are not (yet) installed. Please read the installation documentation and use Composer to install.');
     }
 
     require_once $autoloadFile;
