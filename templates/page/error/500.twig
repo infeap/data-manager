@@ -49,7 +49,11 @@
                 <dt>{{ 'error.500.debug.trace'|trans }}:</dt>
                 <dd class="inf-error-trace">
                     {% for trace_element in error.trace %}
-                        <div>{{ trace_element.file|replace({(app.dir) ~ '/': ''}) }}<code>:{{ trace_element.line }}</code></div>
+                        {% set trace_element_file_normalized = trace_element.file|replace({(app.dir) ~ '/': ''}) %}
+
+                        <div class="{% if trace_element_file_normalized starts with 'vendor/' %}text-muted{% endif %}">
+                            {{ trace_element_file_normalized }}<code>:{{ trace_element.line }}</code>
+                        </div>
                     {% endfor %}
                 </dd>
             </dl>
