@@ -9,6 +9,8 @@
 
 {% extends "@page/layout/basic-message.twig" %}
 
+{% block body_class parent() ~ ' -has-max-width' %}
+
 {% block message_symbol %}
     {% if message.type %}
         <figure class="-type-symbol text-{{ message.type }}" aria-hidden="true">

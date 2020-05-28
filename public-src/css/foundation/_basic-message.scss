@@ -14,6 +14,12 @@ body {
         align-items: center;
 
         min-height: 100vh;
+
+        &.-has-max-width {
+            .inf-basic-message {
+                max-width: 54rem;
+            }
+        }
     }
 }
 
