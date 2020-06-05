@@ -159,6 +159,8 @@ return (function (): callable {
 
     if ($app['config']['develop'] && ! isset($app['config']['dev_server_url'])) {
         $app['config']['dev_server_url'] = 'https://localhost:8080/';
+    } else {
+        $app['config']['dev_server_url'] = null;
     }
 
     $initPhp($app);

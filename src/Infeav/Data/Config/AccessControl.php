@@ -66,9 +66,9 @@ class AccessControl
 
         /** @var Permission $permission */
         foreach ($this->permissionsManager->getPermissions() as $permission) {
-            if ($permission->getDataSource() === $dataSourceId) {
+            if ($permission->getDataSourceId() === $dataSourceId) {
                 if ($permission->getType() === $permissionType) {
-                    if (in_array($permission->getRole(), $validUserRoleNames)) {
+                    if (in_array($permission->getRoleName(), $validUserRoleNames)) {
                         return true;
                     }
                 }

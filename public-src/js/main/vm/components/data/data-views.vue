@@ -15,6 +15,8 @@
 </template>
 
 <script>
+    import isString from 'lodash/isString'
+
     import dataView from './data-view.vue'
 
     export default {
@@ -23,7 +25,11 @@
                 let dataPaths = []
 
                 if (this.$route.params.dataPath) {
-                    let dataPathSegments = this.$route.params.dataPath.split('/')
+                    let dataPathSegments = this.$route.params.dataPath
+
+                    if (isString(dataPathSegments)) {
+                        dataPathSegments = this.$route.params.dataPath.split('/')
+                    }
 
                     for (let i = 1; i <= dataPathSegments.length; i++) {
                         dataPaths.push(dataPathSegments.slice(0, i).join('/'))

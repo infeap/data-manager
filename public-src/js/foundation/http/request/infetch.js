@@ -13,7 +13,12 @@ import app from '../../../init/app-array'
 
 export default {
     get(resource, options = {}) {
-        return fetch(this.prependBasePath(resource), {
+        if (isString(resource) && options.query) {
+            resource += '?' + new URLSearchParams(options.query).toString()
+            delete options.query
+        }
+
+        return fetch(resource, {
             ...options,
             method: 'GET',
         }).then(this.checkResponseStatus.bind(this))

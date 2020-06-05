@@ -68,6 +68,7 @@ class LogManager
             'textDomain' => $textDomain,
             'languageTag' => $languageTag,
         ], function (array $log) use ($key): bool {
+
             return ! array_filter($log, function ($logEntry) use ($key) {
                 if (is_array($logEntry)) {
                     $logEntryKey = $logEntry['key'] ?? null;

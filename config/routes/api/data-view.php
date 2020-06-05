@@ -8,16 +8,11 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Data\Config\DataSource;
-
-use Infeav\Data\Config\DataSource;
-
-class ReflectionSource extends DataSource
-{
-
-    public function getId(): ?string
-    {
-        return 'reflection';
-    }
-
-}
+return [
+    'api/v1/data-view' => [
+        'path' => '/api/v1/data-view',
+        'get' => [
+            \Infeav\Data\Handler\Api\DataViewHandler::class,
+        ],
+    ],
+];

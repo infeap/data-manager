@@ -16,13 +16,13 @@ return [
         'config' => [
             \Infeav\Data\Config\DataSourcesManager::class => [
                 'types' => [
-                    'db/ibm_db2' => \Infeav\Data\Config\DataSource\Db\IbmDb2Source::class,
-                    'db/maria' => \Infeav\Data\Config\DataSource\Db\MariaSource::class,
-                    'db/mysql' => \Infeav\Data\Config\DataSource\Db\MySqlSource::class,
-                    'db/oci8' => \Infeav\Data\Config\DataSource\Db\Oci8Source::class,
-                    'db/pgsql' => \Infeav\Data\Config\DataSource\Db\PgSqlSource::class,
-                    'db/sqlite' => \Infeav\Data\Config\DataSource\Db\SqliteSource::class,
-                    'db/sqlsrv' => \Infeav\Data\Config\DataSource\Db\SqlSrvSource::class,
+                    'db/ibm_db2' => \Infeav\Data\Config\DataSource\Db\IbmDb2SourceFactory::class,
+                    'db/maria' => \Infeav\Data\Config\DataSource\Db\MariaSourceFactory::class,
+                    'db/mysql' => \Infeav\Data\Config\DataSource\Db\MySqlSourceFactory::class,
+                    'db/oci8' => \Infeav\Data\Config\DataSource\Db\Oci8SourceFactory::class,
+                    'db/pgsql' => \Infeav\Data\Config\DataSource\Db\PgSqlSourceFactory::class,
+                    'db/sqlite' => \Infeav\Data\Config\DataSource\Db\SqliteSourceFactory::class,
+                    'db/sqlsrv' => \Infeav\Data\Config\DataSource\Db\SqlSrvSourceFactory::class,
 
                     'fs/directory' => \Infeav\Data\Config\DataSource\Fs\DirectorySource::class,
                     'fs/file' => \Infeav\Data\Config\DataSource\Fs\FileSource::class,

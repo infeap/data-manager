@@ -21,16 +21,53 @@
             list-style: none;
         }
 
+        li {
+            + li {
+                margin-top: 0.5rem;
+            }
+
+            position: relative;
+
+            .-icon {
+                position: absolute;
+                left: -2.05rem; top: 0.25rem;
+                width: 2rem; height: 2rem;
+                border-radius: 2rem;
+                background: $gray-700;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
         a {
             color: inherit;
             display: block;
+            margin-right: 1.5rem;
             padding: 0.5rem;
-            border-top-left-radius: $border-radius-sm;
-            border-bottom-left-radius: $border-radius-sm;
+            border-radius: $border-radius-sm;
 
             &.router-link-active {
-                margin-right: -1.5rem;
+                margin-right: -1.75rem;
+                padding-right: 3rem;
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
                 background: $gray-600;
+
+                &:hover {
+                    background: $gray-600;
+                }
+            }
+
+            small {
+                display: block;
+                opacity: 0.5;
+            }
+
+            &:hover {
+                text-decoration: none;
+                background: mix($gray-600, $gray-700, 50%);
             }
         }
     }

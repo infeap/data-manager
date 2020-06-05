@@ -10,33 +10,5 @@
 
 namespace Infeav\Data\Config;
 
-class DataSourceList
-{
-
-    protected array $dataSources;
-    protected ?bool $isComplete;
-
-    public function __construct(array $dataSources, ?bool $isComplete = null)
-    {
-        $this->dataSources = $dataSources;
-        $this->isComplete = $isComplete;
-    }
-
-    public function isComplete(): ?bool
-    {
-        return $this->isComplete;
-    }
-
-    public function toResponseArray(): array
-    {
-        $response = [];
-
-        /** @var DataSource $dataSource */
-        foreach ($this->dataSources as $dataSource) {
-            $response[] = $dataSource->toResponseArray();
-        }
-
-        return $response;
-    }
-
-}
+class DataSourceList extends DataViewList
+{ }

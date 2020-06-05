@@ -45,7 +45,7 @@ class Permission
         return true;
     }
 
-    public function getDataSource(): string
+    public function getDataSourceId(): string
     {
         return $this->config['data_source'];
     }
@@ -55,7 +55,7 @@ class Permission
         return $this->config['type'];
     }
 
-    public function getRole(): string
+    public function getRoleName(): string
     {
         return $this->config['role'];
     }

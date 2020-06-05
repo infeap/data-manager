@@ -10,7 +10,7 @@
 #inf-main-vm .-component {
     &[data-name="data-view"] {
         margin-left: 1.5rem;
-        padding: 2rem;
+        padding: 1.5rem;
         border-radius: $border-radius;
         border: solid 2px $gray-400;
 
@@ -18,29 +18,124 @@
             color: $body-bg;
             border: none;
             background: $gray-600;
+
+            nav a {
+                &.router-link-active {
+                    background: $gray-500;
+                }
+
+                &:hover {
+                    background: mix($gray-600, $gray-500, 50%);
+                }
+            }
         }
 
         &:nth-child(2) {
             color: $body-bg;
             border: none;
             background: $gray-500;
+
+            nav a {
+                &.router-link-active {
+                    background: $gray-400;
+                }
+
+                &:hover {
+                    background: mix($gray-500, $gray-400, 50%);
+                }
+            }
         }
 
         &:nth-child(3) {
             border: none;
             background: $gray-400;
+
+            nav a {
+                &.router-link-active {
+                    background: $gray-300;
+                }
+
+                &:hover {
+                    background: mix($gray-400, $gray-300, 50%);
+                }
+            }
         }
 
         &:nth-child(4) {
             background: $gray-300;
+
+            nav a {
+                &.router-link-active {
+                    background: $gray-200;
+                }
+
+                &:hover {
+                    background: mix($gray-300, $gray-200, 50%);
+                }
+            }
         }
 
         &:nth-child(5) {
             background: $gray-200;
+
+            nav a {
+                &.router-link-active {
+                    background: $gray-100;
+                }
+
+                &:hover {
+                    background: mix($gray-200, $gray-100, 50%);
+                }
+            }
         }
 
         &:nth-child(6) {
             background: $gray-100;
+
+            nav a.router-link-active {
+                background: white;
+            }
+        }
+
+        .-loading {
+            transform: translateY(4px);
+        }
+
+        nav {
+            ul {
+                margin: 0; padding: 0;
+                list-style: none;
+            }
+
+            li {
+                + li {
+                    margin-top: 0.25rem;
+                }
+            }
+
+            a {
+                color: inherit;
+                display: block;
+                padding: 0.25rem 0.5rem;
+                border-radius: $border-radius-sm;
+
+                &.router-link-active {
+                    margin-right: -3rem;
+                    padding-right: 3rem;
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    background: $gray-600;
+                }
+
+                small {
+                    display: block;
+                    opacity: 0.5;
+                }
+
+                &:hover {
+                    text-decoration: none;
+                }
+            }
         }
     }
 }

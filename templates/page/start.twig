@@ -38,8 +38,8 @@
 {% block foot %}
     {% if app.config.develop %}
         <script src="{{ compiled_js('vendors~error~start') }}"></script>
-        <script src="{{ compiled_js('vendors~start') }}"></script>
     {% endif %}
 
+    <script src="{{ compiled_js('vendors~start') }}"></script>
     <script src="{{ compiled_js('start') }}"></script>
 {% endblock %}

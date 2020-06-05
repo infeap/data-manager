@@ -11,8 +11,4 @@
 namespace Infeav\Data\Config\DataSource\Db;
 
 class Oci8Source extends LaminasDbSource
-{
-
-
-
-}
+{ }

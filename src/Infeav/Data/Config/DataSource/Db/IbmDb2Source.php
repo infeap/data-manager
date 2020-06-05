@@ -11,8 +11,4 @@
 namespace Infeav\Data\Config\DataSource\Db;
 
 class IbmDb2Source extends LaminasDbSource
-{
-
-
-
-}
+{ }

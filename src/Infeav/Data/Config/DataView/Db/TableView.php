@@ -8,34 +8,32 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Data\Config\DataSource\Db;
+namespace Infeav\Data\Config\DataView\Db;
 
-use Infeav\Data\Config\DataSource\DbSource;
-use Infeav\Data\Config\DataView\Db\TableView;
+use Infeav\Data\Config\DataView;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Metadata\MetadataInterface;
 
-class LaminasDbSource extends DbSource
+class TableView extends DataView
 {
 
     protected DbAdapter $dbAdapter;
     protected MetadataInterface $dbMeta;
 
-    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta)
+    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta, string $tableName)
     {
         $this->dbAdapter = $dbAdapter;
         $this->dbMeta = $dbMeta;
+
+        $this->setMeta([
+            'name' => $tableName,
+        ]);
     }
 
-    public function assembleChildDataViews(): array
+    public function toOverviewArray(): array
     {
-        $childDataViews = [];
-
-        foreach ($this->dbMeta->getTableNames() as $tableName) {
-            $childDataViews[] = new TableView($this->dbAdapter, $this->dbMeta, $tableName);
-        }
-
-        return $childDataViews;
+        // ToDo: Add extra data like size
+        return parent::toOverviewArray();
     }
 
 }

@@ -71,8 +71,10 @@ class DataSourcesManager extends AbstractPluginManager
         foreach ($this->getDataSources() as $dataSource) {
             $dataSourceId = $dataSource->getId();
 
-            if ($this->accessControl->hasPermission($user, $permissionType, $dataSourceId)) {
-                $permittedDataSources[] = $dataSource;
+            if ($dataSourceId) {
+                if ($this->accessControl->hasPermission($user, $permissionType, $dataSourceId)) {
+                    $permittedDataSources[] = $dataSource;
+                }
             }
         }
 
