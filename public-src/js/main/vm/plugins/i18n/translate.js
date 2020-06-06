@@ -14,6 +14,7 @@ export default {
         Vue.mixin({
             methods: {
                 translate: translator.translate,
+                translateOnDemand: translator.translateOnDemand,
                 translateList: translator.translateList,
                 translatePlural: translator.translatePlural,
                 translatePluralList: translator.translatePluralList,

@@ -68,6 +68,13 @@ export default {
 
         return '[' + key + ']'
     },
+    translateOnDemand(key, textDomain = 'js-main-vm', languageTag = null) {
+        if (key.startsWith('trans:')) {
+            return this.translate(key.replace(/^trans:/, ''), textDomain, languageTag)
+        } else {
+            return key
+        }
+    },
     translateList(key, textDomain = 'js-main-vm', languageTag = null) {
         let translationList = []
 

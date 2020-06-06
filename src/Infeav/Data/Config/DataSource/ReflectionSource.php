@@ -20,4 +20,9 @@ class ReflectionSource extends DataSource
         return 'reflection';
     }
 
+    public function getLabel(): ?string
+    {
+        return 'trans:data_views.reflection.label';
+    }
+
 }

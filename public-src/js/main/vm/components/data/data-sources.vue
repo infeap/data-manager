@@ -17,10 +17,10 @@
                     </div>
 
                     <router-link :to="{ name: 'structure', params: { dataPath: dataSource.id } }">
-                        {{ dataSource.label }}
+                        {{ dataSource.label | transOnDemand }}
 
                         <small v-if="dataSource.description">
-                            {{ dataSource.description }}
+                            {{ dataSource.description | transOnDemand }}
                         </small>
                     </router-link>
                 </li>

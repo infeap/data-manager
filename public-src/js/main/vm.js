@@ -12,6 +12,7 @@ import '../../css/main.scss'
 import Vue from 'vue'
 
 import components from './vm/components'
+import filters from './vm/filters'
 import plugins from './vm/plugins'
 import router from './vm/router'
 import store from './vm/store'
@@ -23,6 +24,7 @@ export default {
         return new Promise((resolve, reject) => {
 
             components.init()
+            filters.init()
             plugins.init()
 
             this.instance = new Vue({

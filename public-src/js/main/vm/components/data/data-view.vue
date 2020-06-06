@@ -21,10 +21,10 @@
                 <ul>
                     <li v-for="childDataView in childDataViews" :key="childDataView.id">
                         <router-link :to="{ name: 'structure', params: { dataPath: [dataPath, childDataView.id] } }">
-                            {{ childDataView.label }}
+                            {{ childDataView.label | transOnDemand }}
 
                             <small v-if="childDataView.description">
-                                {{ childDataView.description }}
+                                {{ childDataView.description | transOnDemand }}
                             </small>
                         </router-link>
                     </li>

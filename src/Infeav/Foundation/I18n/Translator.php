@@ -133,6 +133,15 @@ class Translator
         return $translation;
     }
 
+    public function translateOnDemand(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
+    {
+        if (strpos($key, 'trans:') === 0) {
+            return $this->translate(preg_replace('~^trans:~', '', $key), $textDomain, $languageTag);
+        } else {
+            return $key;
+        }
+    }
+
     public function translateList(string $key, string $textDomain = 'foundation', ?string $languageTag = null): array
     {
         $translationList = [];

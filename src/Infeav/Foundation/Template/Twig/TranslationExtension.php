@@ -32,6 +32,7 @@ class TranslationExtension extends AbstractExtension
     {
         return [
             new TwigFilter('trans', [$this, 'translate']),
+            new TwigFilter('trans_on_demand', [$this, 'translateOnDemand']),
             new TwigFilter('trans_list', [$this, 'translateList']),
             new TwigFilter('trans_plural', [$this, 'translatePlural']),
             new TwigFilter('trans_plural_list', [$this, 'translatePluralList']),
@@ -41,6 +42,11 @@ class TranslationExtension extends AbstractExtension
     public function translate(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
         return $this->translator->translate($key, $textDomain, $languageTag);
+    }
+
+    public function translateOnDemand(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
+    {
+        return $this->translator->translateOnDemand($key, $textDomain, $languageTag);
     }
 
     public function translateList(string $key, string $textDomain = 'foundation', ?string $languageTag = null): array
