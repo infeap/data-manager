@@ -15,7 +15,7 @@ use Infeav\Data\Config\DataView\Db\TableView;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Metadata\MetadataInterface;
 
-class LaminasDbSource extends DbSource
+abstract class LaminasDbSource extends DbSource
 {
 
     protected DbAdapter $dbAdapter;

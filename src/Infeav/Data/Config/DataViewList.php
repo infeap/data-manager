@@ -34,14 +34,14 @@ class DataViewList implements \IteratorAggregate
 
     public function toOverviewArray(): array
     {
-        $response = [];
+        $result = [];
 
         /** @var DataView $dataView */
         foreach ($this->dataViews as $dataView) {
-            $response[] = $dataView->toOverviewArray();
+            $result[] = $dataView->toOverviewArray();
         }
 
-        return $response;
+        return $result;
     }
 
 }

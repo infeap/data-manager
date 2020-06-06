@@ -15,7 +15,7 @@ use Infeav\Data\Config\DataSource;
 class ReflectionSource extends DataSource
 {
 
-    public function getId(): ?string
+    public function getId(): string
     {
         return 'reflection';
     }

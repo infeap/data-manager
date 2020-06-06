@@ -63,7 +63,7 @@ abstract class DataView
         ];
     }
 
-    public function assembleChildDataViews(): array
+    protected function assembleChildDataViews(): array
     {
         return [];
     }

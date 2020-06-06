@@ -36,4 +36,10 @@ class TableView extends DataView
         return parent::toOverviewArray();
     }
 
+    public function toDetailsArray(): array
+    {
+        // ToDo: Load table records
+        return [];
+    }
+
 }
