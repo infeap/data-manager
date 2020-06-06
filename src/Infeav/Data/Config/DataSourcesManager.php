@@ -63,6 +63,18 @@ class DataSourcesManager extends AbstractPluginManager
         return $this->dataSources;
     }
 
+    public function getDataSource(string $id): ?DataSource
+    {
+        /** @var DataSource $dataSource */
+        foreach ($this->getDataSources() as $dataSource) {
+            if ($dataSource->getId() === $id) {
+                return $dataSource;
+            }
+        }
+
+        return null;
+    }
+
     public function getDataSourcesWithPermission(string $permissionType, User $user): DataSourceList
     {
         $permittedDataSources = [];

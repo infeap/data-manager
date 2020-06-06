@@ -8,14 +8,13 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Data\Config\DataSource\Db;
+namespace Infeav\Data\Config\DataView\Infeav;
 
-use Infeav\Data\Config\DataSource\DbSource;
-use Infeav\Data\Config\DataView\Db\TablesView;
+use Infeav\Data\Config\DataView;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Metadata\MetadataInterface;
 
-abstract class LaminasDbSource extends DbSource
+abstract class BookingView extends DataView
 {
 
     protected DbAdapter $dbAdapter;
@@ -25,23 +24,10 @@ abstract class LaminasDbSource extends DbSource
     {
         $this->dbAdapter = $dbAdapter;
         $this->dbMeta = $dbMeta;
+
+        $this->initMeta();
     }
 
-    public function getDbAdapter(): DbAdapter
-    {
-        return $this->dbAdapter;
-    }
-
-    public function getDbMeta(): MetadataInterface
-    {
-        return $this->dbMeta;
-    }
-
-    public function assembleChildDataViews(): array
-    {
-        return [
-            new TablesView($this->dbAdapter, $this->dbMeta),
-        ];
-    }
+    abstract public function initMeta(): void;
 
 }

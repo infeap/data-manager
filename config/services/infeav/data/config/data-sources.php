@@ -16,6 +16,9 @@ return [
         'config' => [
             \Infeav\Data\Config\DataSourcesManager::class => [
                 'types' => [
+                    'infeav/data' => \Infeav\Data\Config\DataSource\Infeav\DataSystemFactory::class,
+                    'infeav/booking' => \Infeav\Data\Config\DataSource\Infeav\BookingSystemFactory::class,
+
                     'db/ibm_db2' => \Infeav\Data\Config\DataSource\Db\IbmDb2SourceFactory::class,
                     'db/maria' => \Infeav\Data\Config\DataSource\Db\MariaSourceFactory::class,
                     'db/mysql' => \Infeav\Data\Config\DataSource\Db\MySqlSourceFactory::class,

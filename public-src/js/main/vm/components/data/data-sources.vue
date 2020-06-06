@@ -32,6 +32,8 @@
 <script>
     import {
         BIcon,
+        BIconCollection,
+        BIconCalendar,
         BIconServer,
         BIconFolder,
         BIconFileEarmark,
@@ -52,6 +54,8 @@
         },
         components: {
             BIcon,
+            BIconCollection,
+            BIconCalendar,
             BIconServer,
             BIconFolder,
             BIconFileEarmark,
@@ -64,6 +68,12 @@
         methods: {
             getDataSourceIcon(dataSource) {
                 switch (dataSource.type) {
+                    case 'infeav/data':
+                        return 'collection'
+
+                    case 'infeav/booking':
+                        return 'calendar'
+
                     case 'db/ibm_db2':
                     case 'db/maria':
                     case 'db/mysql':

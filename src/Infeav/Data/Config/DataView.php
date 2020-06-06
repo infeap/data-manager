@@ -10,6 +10,8 @@
 
 namespace Infeav\Data\Config;
 
+use Infeav\Foundation\String\UnicodeString;
+
 abstract class DataView
 {
 
@@ -56,7 +58,14 @@ abstract class DataView
 
     public function toOverviewArray(): array
     {
+        $className = get_class($this);
+        $className = str_replace('Infeav\\Data\\Config\\DataView\\', '', $className);
+
+        $type = new UnicodeString($className);
+        $type = $type->snake();
+
         return [
+            'type' => $type,
             'id' => $this->getId(),
             'label' => $this->getLabel(),
             'description' => $this->getDescription(),

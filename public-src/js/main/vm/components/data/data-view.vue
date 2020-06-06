@@ -20,13 +20,7 @@
             <nav>
                 <ul>
                     <li v-for="childDataView in childDataViews" :key="childDataView.id">
-                        <router-link :to="{ name: 'structure', params: { dataPath: [...dataPathSegments, childDataView.id] } }">
-                            {{ childDataView.label | transOnDemand }}
-
-                            <small v-if="childDataView.description">
-                                {{ childDataView.description | transOnDemand }}
-                            </small>
-                        </router-link>
+                        <inf-child-data-view :data-path="dataPath" :child-data-view="childDataView" />
                     </li>
                 </ul>
             </nav>
@@ -36,6 +30,8 @@
 </template>
 
 <script>
+    import childDataViewComponent from './data-view/child-data-view.vue'
+
     export default {
         data() {
             return {
@@ -49,10 +45,8 @@
                 required: true,
             },
         },
-        computed: {
-            dataPathSegments() {
-                return this.dataPath.split('/')
-            },
+        components: {
+            'inf-child-data-view': childDataViewComponent,
         },
         watch: {
             $route(toRoute) {

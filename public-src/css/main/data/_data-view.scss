@@ -7,6 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+@import 'data-view/child-data-view';
+
 #inf-main-vm .-component {
     &[data-name="data-view"] {
         margin-left: 1.5rem;
