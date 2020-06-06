@@ -14,32 +14,32 @@ use Infeav\Data\Config\DataView;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Metadata\MetadataInterface;
 
-class TableView extends DataView
+class TablesView extends DataView
 {
 
     protected DbAdapter $dbAdapter;
     protected MetadataInterface $dbMeta;
 
-    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta, string $tableName)
+    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta)
     {
         $this->dbAdapter = $dbAdapter;
         $this->dbMeta = $dbMeta;
 
         $this->setMeta([
-            'name' => $tableName,
+            'name' => 'tables',
+            'label' => 'trans:data_views.db.tables.label',
         ]);
     }
 
-    public function toOverviewArray(): array
+    public function assembleChildDataViews(): array
     {
-        // ToDo: Add extra data like size
-        return parent::toOverviewArray();
-    }
+        $childDataViews = [];
 
-    public function toDetailsArray(): array
-    {
-        // ToDo: Load table records
-        return parent::toDetailsArray();
+        foreach ($this->dbMeta->getTableNames() as $tableName) {
+            $childDataViews[] = new TableView($this->dbAdapter, $this->dbMeta, $tableName);
+        }
+
+        return $childDataViews;
     }
 
 }

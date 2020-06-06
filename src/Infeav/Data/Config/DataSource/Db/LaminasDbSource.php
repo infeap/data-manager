@@ -11,7 +11,7 @@
 namespace Infeav\Data\Config\DataSource\Db;
 
 use Infeav\Data\Config\DataSource\DbSource;
-use Infeav\Data\Config\DataView\Db\TableView;
+use Infeav\Data\Config\DataView\Db\TablesView;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Metadata\MetadataInterface;
 
@@ -29,13 +29,9 @@ abstract class LaminasDbSource extends DbSource
 
     public function assembleChildDataViews(): array
     {
-        $childDataViews = [];
-
-        foreach ($this->dbMeta->getTableNames() as $tableName) {
-            $childDataViews[] = new TableView($this->dbAdapter, $this->dbMeta, $tableName);
-        }
-
-        return $childDataViews;
+        return [
+            new TablesView($this->dbAdapter, $this->dbMeta),
+        ];
     }
 
 }
