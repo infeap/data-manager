@@ -20,7 +20,7 @@
             <nav>
                 <ul>
                     <li v-for="childDataView in childDataViews" :key="childDataView.id">
-                        <router-link :to="{ name: 'structure', params: { dataPath: [dataPath, childDataView.id] } }">
+                        <router-link :to="{ name: 'structure', params: { dataPath: [...dataPathSegments, childDataView.id] } }">
                             {{ childDataView.label | transOnDemand }}
 
                             <small v-if="childDataView.description">
@@ -47,6 +47,11 @@
             dataPath: {
                 type: String,
                 required: true,
+            },
+        },
+        computed: {
+            dataPathSegments() {
+                return this.dataPath.split('/')
             },
         },
         watch: {
