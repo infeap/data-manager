@@ -9,14 +9,7 @@
 
 <template>
     <div class="-component" data-name="data-view">
-        <template v-if="loading">
-
-            <div class="-loading">
-                <inf-spinner />
-            </div>
-
-        </template><template v-else>
-
+        <inf-load :flag="loading">
             <nav>
                 <ul>
                     <li v-for="childDataView in childDataViews" :key="childDataView.id">
@@ -24,8 +17,7 @@
                     </li>
                 </ul>
             </nav>
-
-        </template>
+        </inf-load>
     </div>
 </template>
 
