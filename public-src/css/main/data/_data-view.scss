@@ -22,14 +22,14 @@
             background: $gray-600;
 
             nav a {
+                text-shadow: 0 1px 2px rgba(black, 0.5);
+
                 &.router-link-active {
-                    text-shadow: 0 1px 2px rgba(black, 0.5);
                     border-color: transparent;
                     background: $gray-500;
                 }
 
                 &:hover {
-                    text-shadow: 0 1px 2px rgba(black, 0.5);
                     border-color: transparent;
                     background: $gray-500;
                 }
@@ -42,16 +42,15 @@
             background: $gray-500;
 
             nav a {
+                text-shadow: 0 1px 2px rgba(black, 0.5);
                 border-color: transparent;
 
                 &.router-link-active {
-                    text-shadow: 0 1px 2px rgba(black, 0.5);
                     border-color: transparent;
                     background: $gray-400;
                 }
 
                 &:hover {
-                    text-shadow: 0 1px 2px rgba(black, 0.5);
                     border-color: transparent;
                     background: $gray-400;
                 }
