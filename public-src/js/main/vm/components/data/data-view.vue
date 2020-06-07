@@ -10,13 +10,17 @@
 <template>
     <div class="-component" data-name="data-view">
         <inf-load :flag="loading">
-            <nav>
-                <ul>
-                    <li v-for="childDataView in childDataViews" :key="childDataView.id">
-                        <inf-child-data-view :data-path="dataPath" :child-data-view="childDataView" />
-                    </li>
-                </ul>
-            </nav>
+            <template v-if="childDataViews.length">
+                <nav>
+                    <ul>
+                        <li v-for="childDataView in childDataViews" :key="childDataView.id">
+                            <inf-child-data-view :data-path="dataPath" :child-data-view="childDataView" />
+                        </li>
+                    </ul>
+                </nav>
+            </template><template v-else>
+                <div class="-no-data">{{ 'data_views.no_data.label' | trans }}</div>
+            </template>
         </inf-load>
     </div>
 </template>
