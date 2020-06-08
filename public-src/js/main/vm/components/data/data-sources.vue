@@ -12,8 +12,8 @@
         <nav>
             <ul>
                 <li v-for="dataSource in dataSources" :key="dataSource.id">
-                    <div class="-icon">
-                        <b-icon :icon="getDataSourceIcon(dataSource)" />
+                    <div v-if="dataSource.icon" class="-icon">
+                        <b-icon :icon="dataSource.icon" />
                     </div>
 
                     <router-link :to="{ name: 'structure', params: { dataPath: dataSource.id } }">
@@ -30,87 +30,12 @@
 </template>
 
 <script>
-    import {
-        BIcon,
-        BIconCollection,
-        BIconCalendar,
-        BIconServer,
-        BIconFolder,
-        BIconFileEarmark,
-        BIconFolderSymlink,
-        BIconFileEarmarkArrowDown,
-        BIconInboxFill,
-        BIconTools,
-        BIconFile,
-    } from 'bootstrap-vue'
-
     export default {
         computed: {
             dataSources: {
                 get() {
                     return this.$store.state.dataSources.list
                 },
-            },
-        },
-        components: {
-            BIcon,
-            BIconCollection,
-            BIconCalendar,
-            BIconServer,
-            BIconFolder,
-            BIconFileEarmark,
-            BIconFolderSymlink,
-            BIconFileEarmarkArrowDown,
-            BIconInboxFill,
-            BIconTools,
-            BIconFile,
-        },
-        methods: {
-            getDataSourceIcon(dataSource) {
-                switch (dataSource.type) {
-                    case 'infeav/data':
-                        return 'collection'
-
-                    case 'infeav/booking':
-                        return 'calendar'
-
-                    case 'db/ibm_db2':
-                    case 'db/maria':
-                    case 'db/mysql':
-                    case 'db/oci8':
-                    case 'db/pgsql':
-                    case 'db/sqlite':
-                    case 'db/sqlsrv':
-                        return 'server'
-
-                    case 'fs/directory':
-                        return 'folder'
-
-                    case 'fs/file':
-                        return 'file-earmark'
-
-                    case 'remote/ftp':
-                    case 'remote/sftp':
-                        return 'folder-symlink'
-
-                    case 'remote/http':
-                        return 'file-earmark-arrow-down'
-
-                    case 'remote/ldap':
-                        return 'folder-symlink'
-
-                    case 'remote/mail':
-                        return 'inbox-fill'
-
-                    case 'remote/webdav':
-                        return 'folder-symlink'
-
-                    case 'reflection':
-                        return 'tools'
-
-                    default:
-                        return 'file'
-                }
             },
         },
     }

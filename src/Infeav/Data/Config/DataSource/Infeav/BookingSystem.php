@@ -10,7 +10,7 @@
 
 namespace Infeav\Data\Config\DataSource\Infeav;
 
-use Infeav\Data\Config\DataSource\DependentSource;
+use Infeav\Data\Config\DataSource\InfeavSource;
 use Infeav\Data\Config\DataView\Infeav\Booking\AnalysisView;
 use Infeav\Data\Config\DataView\Infeav\Booking\AssetsView;
 use Infeav\Data\Config\DataView\Infeav\Booking\BookingsView;
@@ -22,8 +22,13 @@ use Infeav\Data\Config\DataView\Infeav\Booking\ProcessView;
 use Infeav\Data\Config\DataView\Infeav\Booking\SettingsView;
 use Infeav\Data\Config\DataView\SeparatorView;
 
-class BookingSystem extends DependentSource
+class BookingSystem extends InfeavSource
 {
+
+    public function getIcon(): string
+    {
+        return $this->getMetaValue('icon', 'calendar');
+    }
 
     public function assembleChildDataViews(): array
     {

@@ -10,11 +10,14 @@
 
 namespace Infeav\Data\Config\DataSource\Infeav;
 
-use Infeav\Data\Config\DataSource\DependentSource;
+use Infeav\Data\Config\DataSource\InfeavSource;
 
-class DataSystem extends DependentSource
+class DataSystem extends InfeavSource
 {
 
-
+    public function getIcon(): string
+    {
+        return $this->getMetaValue('icon', 'collection-fill');
+    }
 
 }

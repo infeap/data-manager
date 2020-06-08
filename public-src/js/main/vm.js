@@ -10,6 +10,7 @@
 import '../../css/main.scss'
 
 import Vue from 'vue'
+import { BootstrapVueIcons } from 'bootstrap-vue'
 
 import components from './vm/components'
 import filters from './vm/filters'
@@ -18,6 +19,8 @@ import router from './vm/router'
 import store from './vm/store'
 
 import userPanelComponent from './vm/components/layout/user-panel.vue'
+
+Vue.use(BootstrapVueIcons)
 
 export default {
     init({ rootElement }) {

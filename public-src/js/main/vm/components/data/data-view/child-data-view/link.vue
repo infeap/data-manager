@@ -9,6 +9,8 @@
 
 <template>
     <router-link class="-link" :to="{ name: 'structure', params: { dataPath: [...dataPathSegments, childDataView.id] } }">
+        <b-icon v-if="childDataView.icon" :icon="childDataView.icon" class="mr-1" />
+
         {{ childDataView.label | transOnDemand }}
 
         <small v-if="childDataView.description">

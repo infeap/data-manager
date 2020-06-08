@@ -15,6 +15,9 @@ use Infeav\Data\Config\DataSource;
 class FileSource extends DataSource
 {
 
-
+    public function getIcon(): string
+    {
+        return $this->getMetaValue('icon', 'file-earmark');
+    }
 
 }

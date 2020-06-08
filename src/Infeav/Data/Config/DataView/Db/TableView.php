@@ -10,20 +10,23 @@
 
 namespace Infeav\Data\Config\DataView\Db;
 
-use Infeav\Data\Config\DataView;
+use Infeav\Data\Config\DataView\Db\Table\RowsView;
+use Infeav\Data\Config\DataView\Db\Table\StructureView;
+use Infeav\Data\Config\DataView\DbBasedView;
 use Laminas\Db\Adapter\Adapter as DbAdapter;
 use Laminas\Db\Metadata\MetadataInterface;
+use Laminas\Db\TableGateway\TableGateway;
 
-class TableView extends DataView
+class TableView extends DbBasedView
 {
 
-    protected DbAdapter $dbAdapter;
-    protected MetadataInterface $dbMeta;
+    protected string $tableName;
 
     public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta, string $tableName)
     {
-        $this->dbAdapter = $dbAdapter;
-        $this->dbMeta = $dbMeta;
+        parent::__construct($dbAdapter, $dbMeta);
+
+        $this->tableName = $tableName;
 
         $this->setMeta([
             'name' => $tableName,
@@ -32,14 +35,18 @@ class TableView extends DataView
 
     public function toOverviewArray(): array
     {
-        // ToDo: Add extra data like size
+        // ToDo: Add extra data like size (or via details view?)
         return parent::toOverviewArray();
     }
 
-    public function toDetailsArray(): array
+    public function assembleChildDataViews(): array
     {
-        // ToDo: Load table records
-        return parent::toDetailsArray();
+        $table = new TableGateway($this->tableName, $this->dbAdapter);
+
+        return [
+            new StructureView($this->dbAdapter, $this->dbMeta, $table),
+            new RowsView($this->dbAdapter, $this->dbMeta, $table),
+        ];
     }
 
 }

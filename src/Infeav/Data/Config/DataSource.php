@@ -13,14 +13,9 @@ namespace Infeav\Data\Config;
 abstract class DataSource extends DataView
 {
 
-    public function getType(): ?string
+    public function getIcon(): string
     {
-        return $this->getMetaValue('type');
-    }
-
-    public function toOverviewArray(): array
-    {
-        return ['type' => $this->getType()] + parent::toOverviewArray();
+        return $this->getMetaValue('icon', 'file');
     }
 
 }

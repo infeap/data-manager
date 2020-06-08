@@ -10,8 +10,6 @@
 
 namespace Infeav\Data\Config;
 
-use Infeav\Foundation\String\UnicodeString;
-
 abstract class DataView
 {
 
@@ -21,7 +19,7 @@ abstract class DataView
     public function setMeta(array $meta): void
     {
         if ($this->meta !== null) {
-            throw new \BadMethodCallException('Data View meta data can only be set once during initialization');
+            throw new \BadMethodCallException('DataView meta can only be set once during initialization');
         }
 
         $this->meta = $meta;
@@ -46,6 +44,11 @@ abstract class DataView
         return $this->getMetaValue('id') ?: $this->getMetaValue('name');
     }
 
+    public function getIcon(): ?string
+    {
+        return $this->getMetaValue('icon');
+    }
+
     public function getLabel(): ?string
     {
         return $this->getMetaValue('label') ?: $this->getId();
@@ -58,15 +61,9 @@ abstract class DataView
 
     public function toOverviewArray(): array
     {
-        $className = get_class($this);
-        $className = str_replace('Infeav\\Data\\Config\\DataView\\', '', $className);
-
-        $type = new UnicodeString($className);
-        $type = $type->snake();
-
         return [
-            'type' => $type,
             'id' => $this->getId(),
+            'icon' => $this->getIcon(),
             'label' => $this->getLabel(),
             'description' => $this->getDescription(),
         ];

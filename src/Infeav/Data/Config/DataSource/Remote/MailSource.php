@@ -15,6 +15,9 @@ use Infeav\Data\Config\DataSource\RemoteSource;
 class MailSource extends RemoteSource
 {
 
-
+    public function getIcon(): string
+    {
+        return $this->getMetaValue('icon', 'inbox-fill');
+    }
 
 }

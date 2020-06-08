@@ -13,4 +13,11 @@ namespace Infeav\Data\Config\DataSource;
 use Infeav\Data\Config\DataSource;
 
 abstract class DbSource extends DataSource
-{ }
+{
+
+    public function getIcon(): string
+    {
+        return $this->getMetaValue('icon', 'server');
+    }
+
+}

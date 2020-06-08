@@ -10,23 +10,16 @@
 
 namespace Infeav\Data\Config\DataView\Db;
 
-use Infeav\Data\Config\DataView;
-use Laminas\Db\Adapter\Adapter as DbAdapter;
-use Laminas\Db\Metadata\MetadataInterface;
+use Infeav\Data\Config\DataView\DbBasedView;
 
-class TablesView extends DataView
+class TablesView extends DbBasedView
 {
 
-    protected DbAdapter $dbAdapter;
-    protected MetadataInterface $dbMeta;
-
-    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta)
+    public function initMeta(): void
     {
-        $this->dbAdapter = $dbAdapter;
-        $this->dbMeta = $dbMeta;
-
         $this->setMeta([
             'name' => 'tables',
+            'icon' => 'files',
             'label' => 'trans:data_views.db.tables.label',
         ]);
     }

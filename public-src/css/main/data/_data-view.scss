@@ -24,6 +24,10 @@
             nav a {
                 text-shadow: 0 1px 2px rgba(black, 0.5);
 
+                .bi {
+                    filter: drop-shadow(0 1px 2px rgba(black, 0.5));
+                }
+
                 &.router-link-active {
                     border-color: transparent;
                     background: $gray-500;
@@ -44,6 +48,10 @@
             nav a {
                 text-shadow: 0 1px 2px rgba(black, 0.5);
                 border-color: transparent;
+
+                .bi {
+                    filter: drop-shadow(0 1px 2px rgba(black, 0.5));
+                }
 
                 &.router-link-active {
                     border-color: transparent;

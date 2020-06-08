@@ -8,9 +8,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Data\Config\DataView\Infeav;
+namespace Infeav\Data\Config\DataSource;
 
-use Infeav\Data\Config\DataView\DbBasedView;
-
-abstract class BookingView extends DbBasedView
+abstract class InfeavSource extends DependentSource
 { }
