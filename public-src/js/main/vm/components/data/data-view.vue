@@ -62,6 +62,10 @@
                 }).then((response) => {
                     if (response.parsedBody) {
                         this.childDataViews = response.parsedBody.childDataViews
+
+                        if (this.childDataViews.length === 1) {
+                            this.$router.replace({ name: 'structure', params: { dataPath: [...this.dataPath.split('/'), this.childDataViews[0].id] } })
+                        }
                     } else {
                         throw new Error('Unable to parse response body')
                     }
