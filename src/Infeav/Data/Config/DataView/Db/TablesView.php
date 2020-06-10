@@ -10,7 +10,9 @@
 
 namespace Infeav\Data\Config\DataView\Db;
 
+use Infeav\Data\Config\DataView\Db\Tables\CreateView;
 use Infeav\Data\Config\DataView\DbBasedView;
+use Infeav\Data\Config\DataView\SeparatorView;
 
 class TablesView extends DbBasedView
 {
@@ -26,7 +28,10 @@ class TablesView extends DbBasedView
 
     public function assembleChildDataViews(): array
     {
-        $childDataViews = [];
+        $childDataViews = [
+            new CreateView($this->dbAdapter, $this->dbMeta),
+            new SeparatorView(),
+        ];
 
         foreach ($this->dbMeta->getTableNames() as $tableName) {
             $childDataViews[] = new TableView($this->dbAdapter, $this->dbMeta, $tableName);
