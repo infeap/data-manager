@@ -10,7 +10,7 @@
 <template>
     <div class="-component" data-name="data-views">
         <inf-data-view v-for="(dataPath, i) in dataPaths" :key="i"
-            :data-path="dataPath" />
+            :data-path="dataPath" :is-active-view="i + 1 === dataPaths.length" />
     </div>
 </template>
 

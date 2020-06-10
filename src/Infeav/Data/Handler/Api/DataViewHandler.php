@@ -116,7 +116,9 @@ class DataViewHandler implements RequestHandlerInterface
         }
 
         return new JsonResponse(
-            $requestedDataView->toDetailsArray(),
+            $requestedDataView->toDetailsArray() + [
+                'hasAnnotationsSupport' => $requestedDataSource->hasAnnotationsSupport(),
+            ],
         );
     }
 

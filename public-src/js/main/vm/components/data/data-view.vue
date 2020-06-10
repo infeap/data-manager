@@ -9,19 +9,25 @@
 
 <template>
     <div class="-component" data-name="data-view">
-        <inf-load :flag="loading">
-            <template v-if="childDataViews.length">
-                <nav>
-                    <ul>
-                        <li v-for="childDataView in childDataViews" :key="childDataView.id">
-                            <inf-child-data-view :data-path="dataPath" :child-data-view="childDataView" />
-                        </li>
-                    </ul>
-                </nav>
-            </template><template v-else>
-                <div class="-no-data">{{ 'data_views.no_data.label' | trans }}</div>
-            </template>
-        </inf-load>
+        <div class="-data -card">
+            <inf-load :flag="loading">
+                <template v-if="childDataViews.length">
+                    <nav>
+                        <ul>
+                            <li v-for="childDataView in childDataViews" :key="childDataView.id">
+                                <inf-child-data-view :data-path="dataPath" :child-data-view="childDataView" />
+                            </li>
+                        </ul>
+                    </nav>
+                </template><template v-else>
+                    <div class="-no-data">{{ 'data_views.no_data.label' | trans }}</div>
+                </template>
+            </inf-load>
+        </div>
+
+        <div class="-annotations -card" v-if="hasAnnotationsSupport && isActiveView">
+            Comments and History
+        </div>
     </div>
 </template>
 
@@ -33,12 +39,17 @@
             return {
                 loading: true,
                 childDataViews: [],
+                hasAnnotationsSupport: false,
             }
         },
         props: {
             dataPath: {
                 type: String,
                 required: true,
+            },
+            isActiveView: {
+                type: Boolean,
+                default: false,
             },
         },
         components: {
@@ -62,6 +73,7 @@
                 }).then((response) => {
                     if (response.parsedBody) {
                         this.childDataViews = response.parsedBody.childDataViews
+                        this.hasAnnotationsSupport = response.parsedBody.hasAnnotationsSupport
 
                         if (this.childDataViews.length === 1) {
                             this.$router.replace({ name: 'structure', params: { dataPath: [...this.dataPath.split('/'), this.childDataViews[0].id] } })

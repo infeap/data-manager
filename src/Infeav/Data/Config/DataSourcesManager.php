@@ -54,6 +54,21 @@ class DataSourcesManager extends AbstractPluginManager
                         unset($dataSourceConfig['config']);
                         $dataSource->setMeta($dataSourceConfig);
 
+                        $annotationsConfig = $dataSourceConfig['annotations'] ?? null;
+
+                        if (is_array($annotationsConfig)) {
+                            $annotationsDataSourceId = $annotationsConfig['data_source'] ?? null;
+
+                            if (is_string($annotationsDataSourceId)) {
+                                $annotationsDataSource = array_filter($this->dataSources,
+                                    fn (DataSource $dataSource) => $dataSource->getId() === $annotationsDataSourceId);
+
+                                if (count($annotationsDataSource) === 1) {
+                                    $dataSource->setAnnotationsDataSource($annotationsDataSource[0]);
+                                }
+                            }
+                        }
+
                         $this->dataSources[] = $dataSource;
                     }
                 }
