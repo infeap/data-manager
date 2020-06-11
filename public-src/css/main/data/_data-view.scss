@@ -7,8 +7,6 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-@import 'data-view/child-data-view';
-
 #inf-main-vm .-component {
     &[data-name="data-view"] {
         display: flex;
@@ -22,7 +20,7 @@
         }
 
         &:nth-child(1) {
-            .-data.-card {
+            .-partials.-card {
                 color: $body-bg;
                 border: none;
                 background: $gray-600;
@@ -48,7 +46,7 @@
         }
 
         &:nth-child(2) {
-            .-data.-card {
+            .-partials.-card {
                 color: white;
                 border: none;
                 background: $gray-500;
@@ -75,7 +73,7 @@
         }
 
         &:nth-child(3) {
-            .-data.-card {
+            .-partials.-card {
                 border: none;
                 background: $gray-400;
 
@@ -94,7 +92,7 @@
         }
 
         &:nth-child(4) {
-            .-data.-card {
+            .-partials.-card {
                 background: $gray-300;
 
                 nav a {
@@ -112,7 +110,7 @@
         }
 
         &:nth-child(5) {
-            .-data.-card {
+            .-partials.-card {
                 background: $gray-200;
 
                 nav a {

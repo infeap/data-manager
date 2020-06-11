@@ -39,7 +39,7 @@ class AuthHandler implements RequestHandlerInterface
                 'isAuthenticated' => $sessionUser->isAuthenticated(),
                 'offerLogin' => ! $sessionUser->isAuthenticated() && ! $dataSources->isComplete(),
             ],
-            'dataSources' => $dataSources->toOverviewArray(),
+            'dataSources' => $dataSources->toOverview(),
         ]);
     }
 

@@ -33,13 +33,13 @@ class TableView extends DbBasedView
         ]);
     }
 
-    public function toOverviewArray(): array
+    public function toOverview(): array
     {
         // ToDo: Add extra data like size (or via details view?)
-        return parent::toOverviewArray();
+        return parent::toOverview();
     }
 
-    public function assembleChildDataViews(): array
+    public function assembleSubViews(): array
     {
         $table = new TableGateway($this->tableName, $this->dbAdapter);
 

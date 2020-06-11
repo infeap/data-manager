@@ -10,6 +10,7 @@
 
 namespace Infeav\Data\Config\DataSource\Infeav;
 
+use Infeav\Data\Config\DataPartial\SubViewsPartial;
 use Infeav\Data\Config\DataSource\InfeavSource;
 use Infeav\Data\Config\DataView\Infeav\Booking\AnalysisView;
 use Infeav\Data\Config\DataView\Infeav\Booking\AssetsView;
@@ -20,17 +21,18 @@ use Infeav\Data\Config\DataView\Infeav\Booking\LayoutsView;
 use Infeav\Data\Config\DataView\Infeav\Booking\PagesView;
 use Infeav\Data\Config\DataView\Infeav\Booking\ProcessView;
 use Infeav\Data\Config\DataView\Infeav\Booking\SettingsView;
-use Infeav\Data\Config\DataView\SeparatorView;
+use Infeav\Data\Config\DataPartial\SeparatorPartial;
+use Infeav\Data\Config\DataViewList;
 
 class BookingSystem extends InfeavSource
 {
 
     public function getIcon(): string
     {
-        return $this->getMetaValue('icon', 'calendar');
+        return $this->getMetaValue('icon', 'calendar3-fill');
     }
 
-    public function assembleChildDataViews(): array
+    protected function assemblePartials(): array
     {
         $dependentDataSource = $this->getDependentDataSource();
 
@@ -38,24 +40,26 @@ class BookingSystem extends InfeavSource
         $dbMeta = $dependentDataSource->getDbMeta();
 
         return [
-            new DashboardView($dbAdapter, $dbMeta),
-            new AnalysisView($dbAdapter, $dbMeta),
-
-            new SeparatorView(),
-
-            new BookingsView($dbAdapter, $dbMeta),
-            new CustomersView($dbAdapter, $dbMeta),
-
-            new SeparatorView(),
-
-            new ProcessView($dbAdapter, $dbMeta),
-            new AssetsView($dbAdapter, $dbMeta),
-
-            new SeparatorView(),
-
-            new PagesView($dbAdapter, $dbMeta),
-            new LayoutsView($dbAdapter, $dbMeta),
-            new SettingsView($dbAdapter, $dbMeta),
+            new SubViewsPartial([
+                new DashboardView($dbAdapter, $dbMeta),
+                new AnalysisView($dbAdapter, $dbMeta),
+            ]),
+            new SeparatorPartial(),
+            new SubViewsPartial([
+                new BookingsView($dbAdapter, $dbMeta),
+                new CustomersView($dbAdapter, $dbMeta),
+            ]),
+            new SeparatorPartial(),
+            new SubViewsPartial([
+                new ProcessView($dbAdapter, $dbMeta),
+                new AssetsView($dbAdapter, $dbMeta),
+            ]),
+            new SeparatorPartial(),
+            new SubViewsPartial([
+                new PagesView($dbAdapter, $dbMeta),
+                new LayoutsView($dbAdapter, $dbMeta),
+                new SettingsView($dbAdapter, $dbMeta),
+            ]),
         ];
     }
 

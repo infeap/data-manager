@@ -10,28 +10,26 @@
 
 namespace Infeav\Data\Config;
 
+use Infeav\Data\Config\DataPartial\SubViewsPartial;
+
 abstract class DataView
 {
 
     protected ?array $meta = null;
-    protected ?DataViewList $childDataViews = null;
+    protected ?DataPartialList $partials = null;
 
     public function setMeta(array $meta): void
     {
-        if ($this->meta !== null) {
-            throw new \BadMethodCallException('DataView meta can only be set once during initialization');
-        }
-
         $this->meta = $meta;
     }
 
     public function getMeta(): array
     {
-        if ($this->meta !== null) {
-            return $this->meta;
-        } else {
+        if ($this->meta === null) {
             return [];
         }
+
+        return $this->meta;
     }
 
     public function getMetaValue(string $key, $defaultValue = null)
@@ -59,7 +57,7 @@ abstract class DataView
         return $this->getMetaValue('description');
     }
 
-    public function toOverviewArray(): array
+    public function toOverview(): array
     {
         return [
             'id' => $this->getId(),
@@ -69,25 +67,36 @@ abstract class DataView
         ];
     }
 
-    protected function assembleChildDataViews(): array
+    protected function assembleSubViews(): ?array
     {
-        return [];
+        return null;
     }
 
-    public function getChildDataViews(): DataViewList
+    protected function assemblePartials(): array
     {
-        if ($this->childDataViews === null) {
-            $this->childDataViews = new DataViewList($this->assembleChildDataViews());
+        $partials = [];
+
+        $subViews = $this->assembleSubViews();
+
+        if (is_array($subViews)) {
+            $partials[] = new SubViewsPartial(new DataViewList($subViews));
         }
 
-        return $this->childDataViews;
+        return $partials;
     }
 
-    public function toDetailsArray(): array
+    public function getPartials(): DataPartialList
     {
-        return [
-            'childDataViews' => $this->getChildDataViews()->toOverviewArray(),
-        ];
+        if ($this->partials === null) {
+            $this->partials = new DataPartialList($this->assemblePartials());
+        }
+
+        return $this->partials;
+    }
+
+    public function findSubView(string $id): ?DataView
+    {
+        return $this->getPartials()->findSubView($id);
     }
 
 }

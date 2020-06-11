@@ -13,7 +13,6 @@ namespace Infeav\Data\Handler\Api;
 use Infeav\Data\Config\AccessControl;
 use Infeav\Data\Config\DataSource;
 use Infeav\Data\Config\DataSourcesManager;
-use Infeav\Data\Config\DataView;
 use Infeav\Foundation\Http\Message\Response\StatusCode;
 use Infeav\Foundation\Http\Response\ApiResponse;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -88,38 +87,32 @@ class DataViewHandler implements RequestHandlerInterface
         if (count($dataPathSegments) == 1) {
             $requestedDataView = $requestedDataSource;
         } else {
-            $childDataViews = $requestedDataSource->getChildDataViews();
-            $requestedDataView = null;
+            $requestedDataView = $requestedDataSource;
 
             for ($i = 1; $i < count($dataPathSegments); $i++) {
 
-                /** @var DataView $childDataView */
-                foreach ($childDataViews as $childDataView) {
+                // ToDo: Check permissions, if data paths are used for access control
+                $subView = $requestedDataView->findSubView($dataPathSegments[$i]);
 
-                    // ToDo: Check permissions, if data paths are used for access control
-                    if ($childDataView->getId() === $dataPathSegments[$i]) {
-                        $childDataViews = $childDataView->getChildDataViews();
-                        $requestedDataView = $childDataView;
-                        continue 2;
-                    }
+                if ($subView) {
+                    $requestedDataView = $subView;
+                } else {
+                    return new ApiResponse([
+                        'status' => StatusCode::NOT_FOUND,
+                        'key' => 'error.data_view.not_found',
+                        'details' => [
+                            'message' => 'The requested data view has not been found',
+                            'dataView' => $dataPathSegments[$i],
+                        ],
+                    ]);
                 }
-
-                return new ApiResponse([
-                    'status' => StatusCode::NOT_FOUND,
-                    'key' => 'error.data_view.not_found',
-                    'details' => [
-                        'message' => 'The requested data view has not been found',
-                        'dataView' => $dataPathSegments[$i],
-                    ],
-                ]);
             }
         }
 
-        return new JsonResponse(
-            $requestedDataView->toDetailsArray() + [
-                'hasAnnotationsSupport' => $requestedDataSource->hasAnnotationsSupport(),
-            ],
-        );
+        return new JsonResponse([
+            'partials' => $requestedDataView->getPartials()->toResponse(),
+            'hasAnnotationsSupport' => $requestedDataSource->hasAnnotationsSupport(),
+        ]);
     }
 
 }

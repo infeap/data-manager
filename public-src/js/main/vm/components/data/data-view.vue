@@ -9,36 +9,31 @@
 
 <template>
     <div class="-component" data-name="data-view">
-        <div class="-data -card">
+        <div class="-partials -card">
             <inf-load :flag="loading">
-                <template v-if="childDataViews.length">
-                    <nav>
-                        <ul>
-                            <li v-for="childDataView in childDataViews" :key="childDataView.id">
-                                <inf-child-data-view :data-path="dataPath" :child-data-view="childDataView" />
-                            </li>
-                        </ul>
-                    </nav>
+                <template v-if="partials.length">
+                    <inf-data-partial v-for="(partial, i) in partials" :key="i"
+                        :data-path="dataPath" :partial="partial" />
                 </template><template v-else>
-                    <div class="-no-data">{{ 'data_views.no_data.label' | trans }}</div>
+                    <div class="-no-data">{{ 'data_views.no_tools.label' | trans }}</div>
                 </template>
             </inf-load>
         </div>
 
-        <div class="-annotations -card" v-if="hasAnnotationsSupport && isActiveView">
+        <div class="-annotations -card" v-if="! loading && hasAnnotationsSupport && isActiveView">
             Comments and History
         </div>
     </div>
 </template>
 
 <script>
-    import childDataViewComponent from './data-view/child-data-view.vue'
+    import partialComponent from './data-partial.vue'
 
     export default {
         data() {
             return {
                 loading: true,
-                childDataViews: [],
+                partials: [],
                 hasAnnotationsSupport: false,
             }
         },
@@ -53,7 +48,7 @@
             },
         },
         components: {
-            'inf-child-data-view': childDataViewComponent,
+            'inf-data-partial': partialComponent,
         },
         watch: {
             $route(toRoute) {
@@ -72,11 +67,11 @@
                     },
                 }).then((response) => {
                     if (response.parsedBody) {
-                        this.childDataViews = response.parsedBody.childDataViews
+                        this.partials = response.parsedBody.partials
                         this.hasAnnotationsSupport = response.parsedBody.hasAnnotationsSupport
 
-                        if (this.childDataViews.length === 1) {
-                            this.$router.replace({ name: 'structure', params: { dataPath: [...this.dataPath.split('/'), this.childDataViews[0].id] } })
+                        if (this.partials.length === 1 && this.partials[0].type == 'sub_views' && this.partials[0].subViews.length === 1) {
+                            this.$router.replace({ name: 'structure', params: { dataPath: [...this.dataPath.split('/'), this.partials[0].subViews[0].id] } })
                         }
                     } else {
                         throw new Error('Unable to parse response body')

@@ -12,6 +12,7 @@ namespace Infeav\Data\Config\DataSource\Infeav;
 
 use Infeav\Data\Config\DataSource;
 use Infeav\Data\Config\DataSource\InfeavSource;
+use Infeav\Data\Config\DataView\Infeav\Data\CreateView;
 
 class DataSystem extends InfeavSource
 {
@@ -29,6 +30,18 @@ class DataSystem extends InfeavSource
     public function getAnnotationsDataSource(): DataSource
     {
         return $this;
+    }
+
+    public function assembleSubViews(): array
+    {
+        $dependentDataSource = $this->getDependentDataSource();
+
+        $dbAdapter = $dependentDataSource->getDbAdapter();
+        $dbMeta = $dependentDataSource->getDbMeta();
+
+        return [
+            new CreateView($dbAdapter, $dbMeta),
+        ];
     }
 
 }

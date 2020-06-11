@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of the
  * Infeav Data Manager (https://www.infeav.org/data-manager)
@@ -7,7 +8,16 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-@import 'data/data-partials';
-@import 'data/data-sources';
-@import 'data/data-view';
-@import 'data/data-views';
+namespace Infeav\Data\Config\DataPartial\Infeav\Data;
+
+use Infeav\Data\Config\DataPartial;
+
+class HeaderPartial extends DataPartial
+{
+
+    public function getType(): string
+    {
+        return 'infeav/data/header';
+    }
+
+}

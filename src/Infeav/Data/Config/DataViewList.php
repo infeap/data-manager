@@ -13,18 +13,18 @@ namespace Infeav\Data\Config;
 class DataViewList implements \IteratorAggregate
 {
 
-    protected array $dataViews;
+    protected array $views;
     protected ?bool $isComplete;
 
-    public function __construct(array $dataViews, ?bool $isComplete = null)
+    public function __construct(array $views = [], ?bool $isComplete = null)
     {
-        $this->dataViews = $dataViews;
+        $this->views = $views;
         $this->isComplete = $isComplete;
     }
 
     public function getIterator(): \Traversable
     {
-        return new \ArrayIterator($this->dataViews);
+        return new \ArrayIterator($this->views);
     }
 
     public function isComplete(): ?bool
@@ -32,16 +32,16 @@ class DataViewList implements \IteratorAggregate
         return $this->isComplete;
     }
 
-    public function toOverviewArray(): array
+    public function toOverview(): array
     {
-        $result = [];
+        $overview = [];
 
         /** @var DataView $dataView */
-        foreach ($this->dataViews as $dataView) {
-            $result[] = $dataView->toOverviewArray();
+        foreach ($this->views as $dataView) {
+            $overview[] = $dataView->toOverview();
         }
 
-        return $result;
+        return $overview;
     }
 
 }

@@ -8,10 +8,11 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Data\Config\DataView\Db\Tables;
+namespace Infeav\Data\Config\DataView\Infeav\Data;
 
-use Infeav\Data\Config\DataView\Db\Tables\Create\TableView;
 use Infeav\Data\Config\DataView\DbBasedView;
+use Infeav\Data\Config\DataView\Infeav\Data\Create\RecordView;
+use Infeav\Data\Config\DataView\Infeav\Data\Create\SchemaView;
 
 class CreateView extends DbBasedView
 {
@@ -28,7 +29,8 @@ class CreateView extends DbBasedView
     public function assembleSubViews(): array
     {
         return [
-            new TableView($this->dbAdapter, $this->dbMeta),
+            new RecordView($this->dbAdapter, $this->dbMeta),
+            new SchemaView($this->dbAdapter, $this->dbMeta),
         ];
     }
 

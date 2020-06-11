@@ -8,18 +8,13 @@
 -->
 
 <template>
-    <div class="-child-data-view">
-        <template v-if="childDataView.type == 'separator'">
-            <inf-separator />
-        </template><template v-else>
-            <inf-link :data-path="dataPath" :child-data-view="childDataView" />
-        </template>
-    </div>
+    <component :is="'inf-' + normalizedPartialType"
+        :data-path="dataPath" :partial="partial" />
 </template>
 
 <script>
-    import linkComponent from './child-data-view/link.vue'
-    import separatorComponent from './child-data-view/separator.vue'
+    import separator from './data-partials/separator.vue'
+    import subViews from './data-partials/sub-views.vue'
 
     export default {
         props: {
@@ -27,14 +22,19 @@
                 type: String,
                 required: true,
             },
-            childDataView: {
+            partial: {
                 type: Object,
                 required: true,
             },
         },
-        components: {
-            'inf-link': linkComponent,
-            'inf-separator': separatorComponent,
+        computed: {
+            normalizedPartialType() {
+                return this.partial.type.replace('/', '-').replace('_', '-')
+            },
         },
+        components: {
+            'inf-separator': separator,
+            'inf-sub-views': subViews,
+        }
     }
 </script>

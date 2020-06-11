@@ -10,9 +10,11 @@
 
 namespace Infeav\Data\Config\DataView\Db;
 
+use Infeav\Data\Config\DataPartial\SubViewsPartial;
 use Infeav\Data\Config\DataView\Db\Tables\CreateView;
 use Infeav\Data\Config\DataView\DbBasedView;
-use Infeav\Data\Config\DataView\SeparatorView;
+use Infeav\Data\Config\DataPartial\SeparatorPartial;
+use Infeav\Data\Config\DataViewList;
 
 class TablesView extends DbBasedView
 {
@@ -26,18 +28,17 @@ class TablesView extends DbBasedView
         ]);
     }
 
-    public function assembleChildDataViews(): array
+    protected function assemblePartials(): array
     {
-        $childDataViews = [
-            new CreateView($this->dbAdapter, $this->dbMeta),
-            new SeparatorView(),
+        return [
+            new SubViewsPartial([
+                new CreateView($this->dbAdapter, $this->dbMeta),
+            ]),
+            new SeparatorPartial(),
+            new SubViewsPartial(
+                array_map(fn ($tableName) => new TableView($this->dbAdapter, $this->dbMeta, $tableName), $this->dbMeta->getTableNames()),
+            ),
         ];
-
-        foreach ($this->dbMeta->getTableNames() as $tableName) {
-            $childDataViews[] = new TableView($this->dbAdapter, $this->dbMeta, $tableName);
-        }
-
-        return $childDataViews;
     }
 
 }

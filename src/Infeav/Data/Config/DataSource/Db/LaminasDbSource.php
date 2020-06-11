@@ -37,7 +37,7 @@ abstract class LaminasDbSource extends DbSource
         return $this->dbMeta;
     }
 
-    public function assembleChildDataViews(): array
+    public function assembleSubViews(): array
     {
         return [
             new TablesView($this->dbAdapter, $this->dbMeta),

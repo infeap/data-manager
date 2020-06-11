@@ -1,3 +1,4 @@
+<?php
 /**
  * This file is part of the
  * Infeav Data Manager (https://www.infeav.org/data-manager)
@@ -7,15 +8,16 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-#inf-main-vm .-component {
-    &[data-name="data-view"] {
-        nav {
-            .-separator {
-                margin: 1rem 0;
-                height: 2px;
-                opacity: 0.25;
-                background: currentColor;
-            }
-        }
+namespace Infeav\Data\Config\DataPartial;
+
+use Infeav\Data\Config\DataPartial;
+
+class SeparatorPartial extends DataPartial
+{
+
+    public function getType(): string
+    {
+        return 'separator';
     }
+
 }
