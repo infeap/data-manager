@@ -11,10 +11,9 @@
 namespace Infeav\Data\Handler\Api;
 
 use Infeav\Data\Config\AccessControl;
-use Infeav\Data\Config\DataSource;
 use Infeav\Data\Config\DataSourcesManager;
-use Infeav\Foundation\Http\Message\Response\StatusCode;
 use Infeav\Foundation\Http\Response\ApiResponse;
+use Infeav\Foundation\Http\Response\ApiResponseException;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -22,6 +21,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class DataViewHandler implements RequestHandlerInterface
 {
+    use DataPathTrait;
 
     protected AccessControl $accessControl;
     protected DataSourcesManager $dataSourcesManager;
@@ -37,76 +37,12 @@ class DataViewHandler implements RequestHandlerInterface
         $sessionUser = $this->accessControl->getSessionUser($request);
         $dataSources = $this->dataSourcesManager->getDataSourcesWithPermission('read', $sessionUser);
 
-        $dataPath = $request->getQueryParams()['path'] ?? null;
-
-        if ($dataPath === null) {
-            return new ApiResponse([
-                'status' => StatusCode::BAD_REQUEST,
-                'key' => 'error.data_view.data_path.missing',
-                'details' => [
-                    'message' => 'The "path" query param is required but missing',
-                ],
-            ]);
-        }
-
-        $dataPath = trim($dataPath, ' /');
-
-        if (! $dataPath) {
-            return new ApiResponse([
-                'status' => StatusCode::BAD_REQUEST,
-                'key' => 'error.data_view.data_path.empty',
-                'details' => [
-                    'message' => 'The "path" query param is empty, but must contain at least one segment',
-                ],
-            ]);
-        }
-
-        $dataPathSegments = explode('/', $dataPath);
-
-        $requestedDataSource = null;
-
-        /** @var DataSource $dataSource */
-        foreach ($dataSources as $dataSource) {
-            if ($dataSource->getId() === $dataPathSegments[0]) {
-                $requestedDataSource = $dataSource;
-                break;
-            }
-        }
-
-        if (! $requestedDataSource) {
-            return new ApiResponse([
-                'status' => StatusCode::NOT_FOUND,
-                'key' => 'error.data_view.not_found',
-                'details' => [
-                    'message' => 'The requested data source has not been found',
-                    'dataSource' => $dataPathSegments[0],
-                ],
-            ]);
-        }
-
-        if (count($dataPathSegments) == 1) {
-            $requestedDataView = $requestedDataSource;
-        } else {
-            $requestedDataView = $requestedDataSource;
-
-            for ($i = 1; $i < count($dataPathSegments); $i++) {
-
-                // ToDo: Check permissions, if data paths are used for access control
-                $subView = $requestedDataView->findSubView($dataPathSegments[$i]);
-
-                if ($subView) {
-                    $requestedDataView = $subView;
-                } else {
-                    return new ApiResponse([
-                        'status' => StatusCode::NOT_FOUND,
-                        'key' => 'error.data_view.not_found',
-                        'details' => [
-                            'message' => 'The requested data view has not been found',
-                            'dataView' => $dataPathSegments[$i],
-                        ],
-                    ]);
-                }
-            }
+        try {
+            $dataPathSegments = $this->getDataPathSegments($request);
+            $requestedDataSource = $this->getRequestedDataSource($dataPathSegments, $dataSources);
+            $requestedDataView = $this->getRequestedDataView($dataPathSegments, $requestedDataSource);
+        } catch (ApiResponseException $exception) {
+            return new ApiResponse($exception->getApiResponseOptions());
         }
 
         return new JsonResponse([
