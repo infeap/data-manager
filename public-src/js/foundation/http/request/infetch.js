@@ -12,56 +12,67 @@ import isString from 'lodash/isString'
 import app from '../../../init/app-array'
 
 export default {
-    get(resource, options = {}) {
+
+    /*
+     * Core
+     */
+    fetch(method, resource, options = {}) {
         if (isString(resource) && options.query) {
             resource += '?' + new URLSearchParams(options.query).toString()
             delete options.query
         }
 
-        return fetch(resource, {
-            ...options,
-            method: 'GET',
-        }).then(this.checkResponseStatus.bind(this))
-            .then(this.parseResponseBody.bind(this))
-    },
-    head(resource, options = {}) {
         return fetch(this.prependBasePath(resource), {
             ...options,
-            method: 'HEAD',
-        }).then(this.checkResponseStatus.bind(this))
-            .then(this.parseResponseBody.bind(this))
-    },
-    post(resource, options = {}) {
-        return fetch(this.prependBasePath(resource), {
-            ...options,
-            method: 'POST',
-        }).then(this.checkResponseStatus.bind(this))
-            .then(this.parseResponseBody.bind(this))
-    },
-    put(resource, options = {}) {
-        return fetch(this.prependBasePath(resource), {
-            ...options,
-            method: 'PUT',
-        }).then(this.checkResponseStatus.bind(this))
-            .then(this.parseResponseBody.bind(this))
-    },
-    patch(resource, options = {}) {
-        return fetch(this.prependBasePath(resource), {
-            ...options,
-            method: 'PATCH',
-        }).then(this.checkResponseStatus.bind(this))
-            .then(this.parseResponseBody.bind(this))
-    },
-    delete(resource, options = {}) {
-        return fetch(this.prependBasePath(resource), {
-            ...options,
-            method: 'DELETE',
+            method: method.toUpperCase(),
         }).then(this.checkResponseStatus.bind(this))
             .then(this.parseResponseBody.bind(this))
     },
 
     /*
-     * Helpers
+     * Request method shortcuts
+     */
+    get(resource, options = {}) {
+        return this.fetch('get', resource, options)
+    },
+    head(resource, options = {}) {
+        return this.fetch('head', resource, options)
+    },
+    post(resource, options = {}) {
+        return this.fetch('post', resource, options)
+    },
+    put(resource, options = {}) {
+        return this.fetch('put', resource, options)
+    },
+    patch(resource, options = {}) {
+        return this.fetch('patch', resource, options)
+    },
+    delete(resource, options = {}) {
+        return this.fetch('delete', resource, options)
+    },
+
+    /*
+     * JSON shortcuts
+     */
+    postJSON(resource, options = {}) {
+        return this.post(resource,
+            this.prepareOptionsForJSON(options))
+    },
+    putJSON(resource, options = {}) {
+        return this.put(resource,
+            this.prepareOptionsForJSON(options))
+    },
+    patchJSON(resource, options = {}) {
+        return this.patch(resource,
+            this.prepareOptionsForJSON(options))
+    },
+    deleteJSON(resource, options = {}) {
+        return this.delete(resource,
+            this.prepareOptionsForJSON(options))
+    },
+
+    /*
+     * Internal helpers
      */
     prependBasePath(resource) {
         if (isString(resource) && resource.startsWith('/')) {
@@ -100,5 +111,15 @@ export default {
             default:
                 return response
         }
+    },
+    prepareOptionsForJSON(options = {}) {
+        options.headers ??= {}
+        options.headers['Content-Type'] = 'application/json'
+
+        if (options.body) {
+            options.body = JSON.stringify(options.body)
+        }
+
+        return options
     },
 }
