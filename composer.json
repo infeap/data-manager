@@ -3,6 +3,7 @@
     "type": "project",
     "homepage": "https://www.infeav.org/data-manager",
     "license": "GPL-3.0-only",
+    "readme": "docs/readme.md",
     "require": {
         "php": "^7.4",
         "ext-json": "*",
