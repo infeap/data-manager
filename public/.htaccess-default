@@ -7,12 +7,12 @@
 
     # Example for live (or production) environment
     <If "%{HTTP_HOST} == 'data.infeav.org'">
-        SetEnv infeav_CONTEXT live
+        SetEnv INFEAV_CONTEXT live
     </If>
 
     # Example for staging environment
     <If "%{HTTP_HOST} == 'staging.data.infeav.org'">
-        SetEnv infeav_CONTEXT staging
+        SetEnv INFEAV_CONTEXT staging
 
         AuthType Basic
         AuthName "Infeav Data Manager Staging Environment"
@@ -22,7 +22,7 @@
 
     # Example for local machine development (or testing)
     <If "%{HTTP_HOST} == 'data.infeav.localhost'">
-        SetEnv infeav_CONTEXT development
+        SetEnv INFEAV_CONTEXT development
         # Can also be further branched by developer names as "development/t.krebs"
     </If>
 

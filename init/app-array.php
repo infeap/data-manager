@@ -101,7 +101,7 @@ return (function (): callable {
         ]);
     }
 
-    $app['context'] = getenv('infeav_CONTEXT');
+    $app['context'] = getenv('INFEAV_CONTEXT');
 
     if (! $app['context']) {
         $app['context'] = 'default';
