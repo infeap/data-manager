@@ -1,5 +1,7 @@
 {
     "name": "@infeav/data-manager",
+    "homepage": "https://www.infeav.org/data-manager",
+    "license": "GPL-3.0-only",
     "devDependencies": {
         "git-branch": "^2.0.1",
         "glob": "^7.1.6",
