@@ -42,23 +42,15 @@ export default {
             languageTag = language.documentLanguage
         }
 
-        if (loadedTranslations[languageTag]) {
-            if (loadedTranslations[languageTag][textDomain]) {
-                if (loadedTranslations[languageTag][textDomain][key]) {
-                    return loadedTranslations[languageTag][textDomain][key]
-                }
-            }
+        if (loadedTranslations?.[languageTag]?.[textDomain]?.[key]) {
+            return loadedTranslations[languageTag][textDomain][key]
         }
 
         console.warn('[Infeav Data Manager] Missing translation "' + key + '" in ' + languageTag + '/' + textDomain)
 
         if (language.fallbackLanguage) {
-            if (loadedTranslations[language.fallbackLanguage]) {
-                if (loadedTranslations[language.fallbackLanguage][textDomain]) {
-                    if (loadedTranslations[language.fallbackLanguage][textDomain][key]) {
-                        return loadedTranslations[language.fallbackLanguage][textDomain][key]
-                    }
-                }
+            if (loadedTranslations?.[language.fallbackLanguage]?.[textDomain]?.[key]) {
+                return loadedTranslations[language.fallbackLanguage][textDomain][key]
             } else {
                 loadedTranslations[language.fallbackLanguage] = {}
 

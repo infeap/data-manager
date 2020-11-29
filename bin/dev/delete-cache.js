@@ -19,7 +19,7 @@ let appPackageFile = path.join(appDir, 'package.json')
 
 try {
     fs.accessSync(appPackageFile, fs.R_OK)
-} catch (error) {
+} catch {
     console.error(appPackageFile + ' does not exist or is not readable')
     process.exit(1)
 }
