@@ -11,7 +11,7 @@
 return [
     'api/v1/auth' => [
         'path' => '/api/v1/auth',
-        'get' => [
+        'GET' => [
             \Infeav\Data\Handler\Api\AuthHandler::class,
         ],
     ],

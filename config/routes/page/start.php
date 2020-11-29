@@ -11,7 +11,7 @@
 return [
     'page/start' => [
         'path' => '/',
-        'get' => [
+        'GET' => [
             \Infeav\Data\Handler\Page\StartHandler::class,
         ],
     ],

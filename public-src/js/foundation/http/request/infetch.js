@@ -24,7 +24,7 @@ export default {
 
         return fetch(this.prependBasePath(resource), {
             ...options,
-            method: method.toUpperCase(),
+            method,
         }).then(this.checkResponseStatus.bind(this))
             .then(this.parseResponseBody.bind(this))
     },
@@ -33,42 +33,42 @@ export default {
      * Request method shortcuts
      */
     get(resource, options = {}) {
-        return this.fetch('get', resource, options)
+        return this.fetch('GET', resource, options)
     },
     head(resource, options = {}) {
-        return this.fetch('head', resource, options)
+        return this.fetch('HEAD', resource, options)
     },
     post(resource, options = {}) {
-        return this.fetch('post', resource, options)
+        return this.fetch('POST', resource, options)
     },
     put(resource, options = {}) {
-        return this.fetch('put', resource, options)
+        return this.fetch('PUT', resource, options)
     },
     patch(resource, options = {}) {
-        return this.fetch('patch', resource, options)
+        return this.fetch('PATCH', resource, options)
     },
     delete(resource, options = {}) {
-        return this.fetch('delete', resource, options)
+        return this.fetch('DELETE', resource, options)
     },
 
     /*
      * JSON shortcuts
      */
-    postJSON(resource, options = {}) {
+    postJson(resource, options = {}) {
         return this.post(resource,
-            this.prepareOptionsForJSON(options))
+            this.prepareOptionsForJson(options))
     },
-    putJSON(resource, options = {}) {
+    putJson(resource, options = {}) {
         return this.put(resource,
-            this.prepareOptionsForJSON(options))
+            this.prepareOptionsForJson(options))
     },
-    patchJSON(resource, options = {}) {
+    patchJson(resource, options = {}) {
         return this.patch(resource,
-            this.prepareOptionsForJSON(options))
+            this.prepareOptionsForJson(options))
     },
-    deleteJSON(resource, options = {}) {
+    deleteJson(resource, options = {}) {
         return this.delete(resource,
-            this.prepareOptionsForJSON(options))
+            this.prepareOptionsForJson(options))
     },
 
     /*
@@ -112,7 +112,7 @@ export default {
                 return response
         }
     },
-    prepareOptionsForJSON(options = {}) {
+    prepareOptionsForJson(options = {}) {
         options.headers ??= {}
         options.headers['Content-Type'] = 'application/json'
 

@@ -11,7 +11,7 @@
 return [
     'api/v1/data-view' => [
         'path' => '/api/v1/data-view',
-        'get' => [
+        'GET' => [
             \Infeav\Data\Handler\Api\DataViewHandler::class,
         ],
     ],

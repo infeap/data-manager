@@ -11,7 +11,7 @@
 return [
     'api/v1/translations' => [
         'path' => '/api/v1/translations/{language-tag}/{text-domain}',
-        'get' => [
+        'GET' => [
             \Infeav\Foundation\Handler\Api\TranslationsHandler::class,
         ],
     ],

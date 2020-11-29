@@ -18,7 +18,7 @@ return function (array $app, array $routesConfig, Application $application): voi
     $basePath = $app['base_path'];
     $basePath = rtrim($basePath, '/');
 
-    $routeMethods = ['get', 'head', 'post', 'put', 'patch', 'delete'];
+    $routeMethods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
     foreach ($routesConfig as $routeName => $routeConfig) {
         if (! (is_string($routeName) && is_array($routeConfig))) {
