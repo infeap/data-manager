@@ -11,10 +11,10 @@
 /*
  * $app keys:
  *
- * $app['dir'] = Application directory (not public/)
+ * $app['dir'] = Application root directory path (not public/) without trailing slash
  *
- * $app['base_path']
- * $app['request_path']
+ * $app['base_path'] = '' (empty) or with leading and without trailing slash (like '/public')
+ * $app['request_path'] = '/' or with leading (and request dependent trailing) slash; without query params
  *
  * $app['version'] = Version data from version.json file
  * $app['version']['number']
@@ -27,10 +27,10 @@
  * $app['config']['debug']
  * $app['config']['develop']
  *
- * $app['config']['dev_server_url'] = For Webpack DevServer
+ * $app['config']['dev_server_url'] = For Webpack DevServer; always with trailing slash
  *
- * $app['config']['cache_dir']
- * $app['config']['log_dir']
+ * $app['config']['cache_dir'] = Without trailing slash
+ * $app['config']['log_dir'] = Without trailing slash
  *
  * $app['config']['hash']
  *
@@ -44,9 +44,9 @@ return (function (): callable {
         DIRECTORY_SEPARATOR => '/',
     ]);
 
-    $app['base_path'] = dirname($_SERVER['PHP_SELF']);
+    $app['base_path'] = rtrim(dirname($_SERVER['PHP_SELF']), '/');
 
-    if (strlen($app['base_path']) > 1) {
+    if ($app['base_path']) {
         $app['request_path'] = substr($_SERVER['REQUEST_URI'], strlen($app['base_path']));
     } else {
         $app['request_path'] = $_SERVER['REQUEST_URI'];
@@ -147,17 +147,21 @@ return (function (): callable {
         ]);
     }
 
-    $cacheDir = $app['dir'] . '/var/cache';
+    $app['config']['cache_dir'] = $app['dir'] . '/var/cache';
+
+    $app['config'] = array_merge($app['config'], $appContextConfig);
 
     $app['config']['cache_dir'] = sprintf('%s/version-%s-%s/%s',
-        $cacheDir,
+        rtrim($app['config']['cache_dir'], '/'),
         str_replace('/', '-', $app['version']['number']),
         str_replace('/', '-', $app['version']['branch']),
         str_replace('/', '-', $app['context']));
 
-    $app['config'] = array_merge($app['config'], $appContextConfig);
+    $app['config']['log_dir'] = rtrim($app['config']['log_dir'], '/');
 
-    if ($app['config']['develop'] && ! isset($app['config']['dev_server_url'])) {
+    if (isset($app['config']['dev_server_url'])) {
+        $app['config']['dev_server_url'] = rtrim($app['config']['dev_server_url'], '/') . '/';
+    } else if ($app['config']['develop']) {
         $app['config']['dev_server_url'] = 'https://localhost:8080/';
     } else {
         $app['config']['dev_server_url'] = null;
@@ -165,9 +169,7 @@ return (function (): callable {
 
     $initPhp($app);
 
-    $app['checks']['cache_dir_is_writable'] = is_writable($cacheDir);
-
-    if (! is_dir($app['config']['cache_dir']) && $app['checks']['cache_dir_is_writable']) {
+    if (! is_dir($app['config']['cache_dir']) && is_writable(dirname(dirname($app['config']['cache_dir'])))) {
         mkdir($app['config']['cache_dir'], 0775, true);
     }
 

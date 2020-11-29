@@ -88,8 +88,7 @@ class AssetExtension extends AbstractExtension
 
     protected function getFilePath(array $context, string $url): string
     {
-        $basePath = $context['app']['base_path'];
-        $publicPath = substr($url, strpos($url, $basePath) + strlen($basePath));
+        $publicPath = substr($url, strlen($context['app']['base_path']));
 
         if (strpos($publicPath, '?')) {
             $publicPath = substr($publicPath, 0, strpos($publicPath, '?'));
@@ -97,9 +96,7 @@ class AssetExtension extends AbstractExtension
             $publicPath = substr($publicPath, 0, strpos($publicPath, '#'));
         }
 
-        $file = $context['app']['dir'] . '/public/' . $publicPath;
-
-        return $file;
+        return $context['app']['dir'] . '/public' . $publicPath;
     }
 
     public function getFunctions(): array

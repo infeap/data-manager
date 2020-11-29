@@ -19,7 +19,7 @@ return function (array $app): array {
         ],
         'services' => [
             'app_config' => [
-                'l10n_dir' => $app['dir'] . '/resources/l10n/',
+                'l10n_dir' => $app['dir'] . '/resources/l10n',
                 'l10n_files' => [],
             ],
         ],
@@ -35,15 +35,19 @@ return function (array $app): array {
         $l10nDir = $config['services']['app_config']['l10n_dir'];
         $fallbackLanguage = $languagesConfig['services']['app_config']['fallback_language'];
 
-        $languageDir = $l10nDir . $fallbackLanguage . DIRECTORY_SEPARATOR;
+        $languageDir = $l10nDir . '/' . $fallbackLanguage;
 
         if (is_dir($languageDir)) {
             foreach (new RecursiveIteratorIterator(
                 new RecursiveDirectoryIterator($languageDir,
                 FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
 
-                if (preg_match('~\.ini$~', $iteratedFile)) {
-                    $relativeIteratedFile = str_replace($languageDir, '', $iteratedFile);
+                if (str_ends_with($iteratedFile, '.ini')) {
+                    $normalizedIteratedFile = strtr($iteratedFile, [
+                        DIRECTORY_SEPARATOR => '/',
+                    ]);
+
+                    $relativeIteratedFile = substr($normalizedIteratedFile, strlen($languageDir) + 1);
 
                     $config['services']['app_config']['l10n_files'][] = $relativeIteratedFile;
                 }

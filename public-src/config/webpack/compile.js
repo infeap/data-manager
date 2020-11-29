@@ -52,7 +52,7 @@ module.exports = function (env) {
         output: {
             filename: 'js/compiled/[name]' + env.vars.fileExtensionPrefix + '.js',
             chunkFilename: 'js/compiled/[name]' + env.vars.fileExtensionPrefix + '.js?v=[hash]',
-            path: path.resolve('public'),
+            path: path.resolve('public/'),
         },
         module: {
             rules: [

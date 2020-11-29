@@ -76,7 +76,7 @@ export default {
      */
     prependBasePath(resource) {
         if (isString(resource) && resource.startsWith('/')) {
-            resource = app.basePath + resource.substr(1)
+            resource = app.basePath + resource
         }
 
         return resource

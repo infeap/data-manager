@@ -22,7 +22,7 @@ const app = {
 }
 
 if (! __develop__) {
-    __webpack_public_path__ = app.basePath
+    __webpack_public_path__ = app.basePath + '/'
 }
 
 export default app

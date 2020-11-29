@@ -15,9 +15,6 @@ use Mezzio\Application;
  */
 return function (array $app, array $routesConfig, Application $application): void {
 
-    $basePath = $app['base_path'];
-    $basePath = rtrim($basePath, '/');
-
     $routeMethods = ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
     foreach ($routesConfig as $routeName => $routeConfig) {
@@ -45,7 +42,7 @@ return function (array $app, array $routesConfig, Application $application): voi
                     $routeMethodOptions = $routeOptions;
                 }
 
-                $route = $application->route($basePath . $routePath, $routeMethodMiddleware, [$routeMethod], $routeName);
+                $route = $application->route($app['base_path'] . $routePath, $routeMethodMiddleware, [$routeMethod], $routeName);
 
                 if ($routeMethodOptions) {
                     $route->setOptions($routeMethodOptions);

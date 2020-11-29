@@ -39,7 +39,7 @@ module.exports = function (env) {
         output: {
             filename: 'js/compiled/[name].js',
             chunkFilename: 'js/compiled/[name].js?v=[hash]',
-            path: path.resolve('public'),
+            path: path.resolve('public/'),
             publicPath: 'https://localhost:8080/',
         },
         module: {

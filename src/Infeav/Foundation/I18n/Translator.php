@@ -43,7 +43,7 @@ class Translator
             $this->textDomains = [];
 
             foreach ($this->appConfig['l10n_files'] as $l10nFile) {
-                $textDomain = explode(DIRECTORY_SEPARATOR, $l10nFile, 2)[0];
+                $textDomain = explode('/', $l10nFile, 2)[0];
                 $this->textDomains[] = $textDomain;
 
                 $this->engine->addTranslationFilePattern(IniLoader::class, $this->appConfig['l10n_dir'], '%s/' . $l10nFile, $textDomain);
@@ -58,17 +58,17 @@ class Translator
             /*
              * Setup caching
              */
-            $l10n_cache_dir = $this->appConfig['cache_dir'] . '/resources/l10n/';
+            $l10nCacheDir = $this->appConfig['cache_dir'] . '/resources/l10n/';
 
-            if (! is_dir($l10n_cache_dir)) {
-                mkdir($l10n_cache_dir, 0775, true);
+            if (! is_dir($l10nCacheDir)) {
+                mkdir($l10nCacheDir, 0775, true);
             }
 
             $this->engine->setCache(StorageFactory::factory([
                 'adapter' => [
                     'name' => Filesystem::class,
                     'options' => [
-                        'cache_dir' => $l10n_cache_dir,
+                        'cache_dir' => $l10nCacheDir,
                         'dir_level' => 0,
                         'namespace' => '',
                     ],
