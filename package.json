@@ -18,8 +18,6 @@
         "jquery": "^3.5.1",
         "lodash": "^4.17.20",
         "mini-css-extract-plugin": "^0.9.0",
-        "moment": "^2.27.0",
-        "moment-locales-webpack-plugin": "^1.2.0",
         "node-sass": "^4.14.1",
         "popper.js": "^1.16.1",
         "portal-vue": "^2.1.7",
