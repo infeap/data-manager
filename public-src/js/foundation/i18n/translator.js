@@ -72,7 +72,7 @@ export default {
 
         let i = 1
 
-        while (i < 1000) {
+        while (i < 1024) {
             let translationKey = key + '.' + i
             let translation = this.translate(translationKey, textDomain, languageTag)
 
@@ -100,7 +100,7 @@ export default {
 
         let i = 1
 
-        while (i < 1000) {
+        while (i < 1024) {
             if (number == 1) {
                 var translationKey = key + '.singular.' + i
             } else {

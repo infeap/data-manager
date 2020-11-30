@@ -11,5 +11,5 @@
 
 import '../css/foundation.scss'
 
-import './init/app-array'
-import './init/hmr'
+import './foundation/init/app-array'
+import './foundation/init/hmr'

@@ -9,7 +9,7 @@
 
 import isString from 'lodash/isString'
 
-import app from '../../../init/app-array'
+import app from '../../init/app-array'
 
 export default {
 
@@ -30,7 +30,7 @@ export default {
     },
 
     /*
-     * Request method shortcuts
+     * Method shortcuts
      */
     get(resource, options = {}) {
         return this.fetch('GET', resource, options)

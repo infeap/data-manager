@@ -19,12 +19,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 class StartHandler implements RequestHandlerInterface
 {
 
-    protected TemplateRendererInterface $template;
-
-    public function __construct(TemplateRendererInterface $templateRenderer)
-    {
-        $this->template = $templateRenderer;
-    }
+    public function __construct(
+        protected TemplateRendererInterface $template,
+    ) { }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
