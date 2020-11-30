@@ -8,6 +8,9 @@
     # Example for live (or production) environment
     <If "%{HTTP_HOST} == 'data.infeav.org'">
         SetEnv INFEAV_CONTEXT live
+
+        ServerSignature off
+        # ServerTokens Minor # This cannot be set in .htaccess, but remains here as a recommendation
     </If>
 
     # Example for staging environment
@@ -18,12 +21,18 @@
         AuthName "Infeav Data Manager Staging Environment"
         AuthUserFile /var/www/vhosts/infeav.org/httpdocs/data/staging/public/.htpasswd
         Require valid-user
+
+        ServerSignature on
+        # ServerTokens Full # This cannot be set in .htaccess, but remains here as a recommendation
     </If>
 
     # Example for local machine development (or testing)
     <If "%{HTTP_HOST} == 'data.infeav.localhost'">
         SetEnv INFEAV_CONTEXT development
         # Can also be further branched by developer names as "development/t.krebs"
+
+        ServerSignature on
+        # ServerTokens Full # This cannot be set in .htaccess, but remains here as a recommendation
     </If>
 
 </IfVersion>
@@ -70,11 +79,13 @@ ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apac
     php_value max_execution_time 120
     php_value max_input_time 120
 
+    php_value max_file_uploads 64
     php_value post_max_size 64M
     php_value upload_max_filesize 64M
 
+    php_value memory_limit 256M
+
     php_value max_input_vars 4096
-    php_value suhosin.get.max_vars 4096
     php_value suhosin.post.max_vars 4096
     php_value suhosin.request.max_vars 4096
 
