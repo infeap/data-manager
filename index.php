@@ -21,6 +21,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" href="favicon.ico">
         <link rel="stylesheet" href="<?php if (! isset($fromPublic)) { echo 'public/'; } ?>css/compiled/foundation.min.css">
+        <link rel="help" href="https://www.infeav.org/data-manager/help?search=<?php echo urlencode($heading); ?>">
         <title>Infeav Data Manager / Setup</title>
     </head>
 
