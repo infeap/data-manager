@@ -10,6 +10,7 @@
 
 return [
     'factories' => [
-        \Infeav\Foundation\Middleware\Router\BasePathMiddleware::class => \Infeav\Foundation\Middleware\Router\BasePathMiddlewareFactory::class,
+        \Infeav\Foundation\Middleware\Router\IndexFilesMiddleware::class => \Infeav\Foundation\Middleware\Router\IndexFilesMiddlewareFactory::class,
+        \Infeav\Foundation\Middleware\Router\TrailingSlashMiddleware::class => \Infeav\Foundation\Middleware\Router\TrailingSlashMiddlewareFactory::class,
     ],
 ];

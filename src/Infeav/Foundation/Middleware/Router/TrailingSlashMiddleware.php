@@ -19,12 +19,14 @@ use Psr\Http\Server\RequestHandlerInterface;
 class TrailingSlashMiddleware implements MiddlewareInterface
 {
 
+    public function __construct(
+        protected string $requestPath,
+    ) { }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $requestPath = $request->getAttribute('app_request_path');
-
-        if (strlen($requestPath) > 1) {
-            if (str_ends_with($requestPath, '/')) {
+        if (strlen($this->requestPath) > 1) {
+            if (str_ends_with($this->requestPath, '/')) {
                 $requestPathFinal = rtrim($request->getUri()->getPath(), '/');
                 $requestQuery = $request->getUri()->getQuery();
 

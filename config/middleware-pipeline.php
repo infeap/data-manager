@@ -9,7 +9,6 @@
  */
 
 return [
-    \Infeav\Foundation\Middleware\Router\BasePathMiddleware::class,
     \Infeav\Foundation\Middleware\Helper\ServerRequestMiddleware::class,
     \Mezzio\Helper\ServerUrlMiddleware::class,
 

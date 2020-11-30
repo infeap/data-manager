@@ -20,17 +20,18 @@ use Psr\Http\Server\RequestHandlerInterface;
 class IndexFilesMiddleware implements MiddlewareInterface
 {
 
+    public function __construct(
+        protected string $basePath,
+        protected string $requestPath,
+    ) { }
+
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $requestPath = $request->getAttribute('app_request_path');
-
-        switch ($requestPath) {
+        switch ($this->requestPath) {
             case '/index.html':
             case '/index.php':
             case '/start.php':
-                $basePath = $request->getAttribute('app_base_path');
-
-                return new RedirectResponse($basePath . '/', StatusCode::MOVED_PERMANENTLY);
+                return new RedirectResponse($this->basePath . '/', StatusCode::MOVED_PERMANENTLY);
         }
 
         return $handler->handle($request);
