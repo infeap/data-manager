@@ -109,7 +109,7 @@
             {% endif %}
 
             <div>
-                <a href="{{ 'app.website.url'|trans }}" target="_blank" rel="external noreferrer noopener">Infeav {{ 'app.website.label'|trans }}</a>
+                <a href="{{ 'app.website.url'|trans }}" target="_blank" rel="external noreferrer">{{ 'operator.name'|trans }} {{ 'app.website.label'|trans }}</a>
 
                 {% if block('help_search_term') is defined %}
                     <a href="{{ 'app.help.url'|trans }}?search={{ block('help_search_term')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>

@@ -11,12 +11,12 @@
 <html lang="{{ current_language() }}" data-fallback-lang="{{ fallback_language() }}">
     <head>
         <meta charset="utf-8">
-        <meta name="application-name" content="Infeav {{ 'app.name'|trans }}">
+        <meta name="application-name" content="{{ 'operator.name'|trans }} {{ 'app.name'|trans }}">
 
         {% if app.config.debug %}
-            <meta name="generator" content="Infeav {{ 'app.name'|trans }} {{ app.version.number }} ({{ app.version.branch }})">
+            <meta name="generator" content="{{ 'operator.name'|trans }} {{ 'app.name'|trans }} {{ app.version.number }} ({{ app.version.branch }})">
         {% else %}
-            <meta name="generator" content="Infeav {{ 'app.name'|trans }}">
+            <meta name="generator" content="{{ 'operator.name'|trans }} {{ 'app.name'|trans }}">
         {% endif %}
 
         <meta name="base-path" content="{{ app.base_path }}">
@@ -26,7 +26,7 @@
             <link rel="stylesheet" href="{{ compiled_css('foundation') }}">
         {% endif %}
 
-        <title>{% block title 'Infeav ' ~ 'app.name'|trans %}</title>
+        <title>{% block title 'operator.name'|trans ~ ' ' ~ 'app.name'|trans %}</title>
     </head>
 
     <body class="{% block body_class '' %}">
