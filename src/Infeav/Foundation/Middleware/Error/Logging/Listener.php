@@ -17,14 +17,10 @@ use Psr\Http\Message\ServerRequestInterface;
 class Listener
 {
 
-    protected LogManager $logManager;
-    protected string $appDir;
-
-    public function __construct(LogManager $logManager, string $appDir)
-    {
-        $this->logManager = $logManager;
-        $this->appDir = $appDir;
-    }
+    public function __construct(
+        protected LogManager $logManager,
+        protected string $appDir,
+    ) { }
 
     public function __invoke(\Throwable $error, ServerRequestInterface $request, ResponseInterface $response)
     {
@@ -37,7 +33,7 @@ class Listener
                     'uri' => (string) $request->getUri(),
                 ],
                 'message' => $error->getMessage(),
-                'type' => get_class($error),
+                'type' => $error::class,
                 'code' => $error->getCode(),
                 'file' => str_replace($this->appDir . '/', '', $error->getFile()),
                 'line' => $error->getLine(),

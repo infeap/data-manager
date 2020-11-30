@@ -24,10 +24,15 @@ class TrailingSlashMiddleware implements MiddlewareInterface
         $requestPath = $request->getAttribute('app_request_path');
 
         if (strlen($requestPath) > 1) {
-            if (substr($requestPath, -1, 1) == '/') {
-                $fullPath = $request->getUri()->getPath();
+            if (str_ends_with($requestPath, '/')) {
+                $requestPathFinal = rtrim($request->getUri()->getPath(), '/');
+                $requestQuery = $request->getUri()->getQuery();
 
-                return new RedirectResponse(rtrim($fullPath, '/'));
+                if ($requestQuery) {
+                    $requestPathFinal .= '?' . $requestQuery;
+                }
+
+                return new RedirectResponse($requestPathFinal);
             }
         }
 

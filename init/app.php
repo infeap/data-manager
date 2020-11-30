@@ -10,13 +10,13 @@
 
 require 'message.php';
 
-if (! defined('PHP_VERSION_ID') || PHP_VERSION_ID < 70400) {
+if (! defined('PHP_VERSION_ID') || PHP_VERSION_ID < 80000) {
     if (function_exists('http_response_code')) {
         http_response_code(500);
     }
 
     infeav_render_init_message('PHP setup required',
-        'PHP 7.4+ is required for this application to work (currently running PHP ' . PHP_VERSION . ').');
+        'PHP 8.0+ is required for this application to work (currently running PHP ' . PHP_VERSION . ').');
 }
 
 return require 'autoloading.php';

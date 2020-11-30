@@ -5,7 +5,7 @@
     "license": "GPL-3.0-only",
     "readme": "docs/readme.md",
     "require": {
-        "php": "^7.4",
+        "php": "^8.0",
         "ext-json": "*",
 
         "laminas/laminas-cache": "^2.9.0",

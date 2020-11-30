@@ -21,12 +21,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 class BasicMessageMiddleware implements MiddlewareInterface
 {
 
-    protected TemplateRendererInterface $template;
-
-    public function __construct(TemplateRendererInterface $templateRenderer)
-    {
-        $this->template = $templateRenderer;
-    }
+    public function __construct(
+        protected TemplateRendererInterface $template,
+    ) { }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

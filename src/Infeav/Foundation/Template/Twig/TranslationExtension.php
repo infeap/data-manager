@@ -19,14 +19,10 @@ use Twig\TwigFunction;
 class TranslationExtension extends AbstractExtension
 {
 
-    protected Translator $translator;
-    protected LanguageService $languageService;
-
-    public function __construct(Translator $translator, LanguageService $languageService)
-    {
-        $this->translator = $translator;
-        $this->languageService = $languageService;
-    }
+    public function __construct(
+        protected Translator $translator,
+        protected LanguageService $languageService,
+    ) { }
 
     public function getFilters(): array
     {

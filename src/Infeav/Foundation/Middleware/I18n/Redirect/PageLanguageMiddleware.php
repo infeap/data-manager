@@ -20,12 +20,9 @@ class PageLanguageMiddleware implements MiddlewareInterface
 {
     use RedirectToLanguageTrait;
 
-    protected LanguageService $languageService;
-
-    public function __construct(LanguageService $languageService)
-    {
-        $this->languageService = $languageService;
-    }
+    public function __construct(
+        protected LanguageService $languageService,
+    ) { }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

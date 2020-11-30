@@ -33,9 +33,9 @@ class AssetExtension extends AbstractExtension
         if ($context['app']['config']['debug'] && is_file($file)) {
             return $url;
         } else {
-            if (strpos($url, '?')) {
+            if (str_contains($url, '?')) {
                 $regexLimiter = '?)';
-            } else if (strpos($url, '#')) {
+            } else if (str_contains($url, '#')) {
                 $regexLimiter = '#)';
             } else {
                 $regexLimiter = ')$';
@@ -70,7 +70,7 @@ class AssetExtension extends AbstractExtension
 
             $fileVersion = filemtime($file);
 
-            if (strpos($versionedUrl, '?')) {
+            if (str_contains($versionedUrl, '?')) {
                 $versionedUrl .= '&v=' . $fileVersion;
             } else {
                 $versionedUrl .= '?v=' . $fileVersion;
@@ -90,9 +90,9 @@ class AssetExtension extends AbstractExtension
     {
         $publicPath = substr($url, strlen($context['app']['base_path']));
 
-        if (strpos($publicPath, '?')) {
+        if (str_contains($publicPath, '?')) {
             $publicPath = substr($publicPath, 0, strpos($publicPath, '?'));
-        } else if (strpos($publicPath, '#')) {
+        } else if (str_contains($publicPath, '#')) {
             $publicPath = substr($publicPath, 0, strpos($publicPath, '#'));
         }
 
@@ -115,18 +115,18 @@ class AssetExtension extends AbstractExtension
 
     public function getCompiledCssUrl(Environment $env, array $context, string $path): string
     {
-        return $this->getCompiledUrl($env, $context, 'css', $path);
+        return $this->getCompiledUrl($env, $context, $path, fileType: 'css');
     }
 
     public function getCompiledJsUrl(Environment $env, array $context, string $path): string
     {
-        return $this->getCompiledUrl($env, $context, 'js', $path);
+        return $this->getCompiledUrl($env, $context, $path, fileType: 'js');
     }
 
-    protected function getCompiledUrl(Environment $env, array $context, string $filenameExtension, string $path): string
+    protected function getCompiledUrl(Environment $env, array $context, string $path, string $fileType): string
     {
         $compiledPath = sprintf('%1$s/compiled/%2$s.%1$s',
-            $filenameExtension, $path);
+            $fileType, $path);
 
         if ($context['app']['config']['develop']) {
             $compiledUrl = $context['app']['config']['dev_server_url'] . $compiledPath;

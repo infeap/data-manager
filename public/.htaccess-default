@@ -65,7 +65,7 @@
 ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apache+setup+required' target='_blank'>Apache setup required</a>"
 
 # Configure PHP or serve as a template for recommended php.ini settings
-<IfModule mod_php7.c>
+<IfModule php_module>
 
     php_value max_execution_time 120
     php_value max_input_time 120

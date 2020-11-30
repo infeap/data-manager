@@ -22,14 +22,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 class TranslationsHandler implements RequestHandlerInterface
 {
 
-    protected Translator $translator;
-    protected LanguageService $languageService;
-
-    public function __construct(Translator $translator, LanguageService $languageService)
-    {
-        $this->translator = $translator;
-        $this->languageService = $languageService;
-    }
+    public function __construct(
+        protected Translator $translator,
+        protected LanguageService $languageService,
+    ) { }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
@@ -47,7 +43,7 @@ class TranslationsHandler implements RequestHandlerInterface
 
         $languageTag = $request->getAttribute('language-tag');
 
-        if (strpos($textDomain, 'js-') !== 0) {
+        if (! str_starts_with($textDomain, 'js-')) {
             return new ApiResponse([
                 'status' => StatusCode::FORBIDDEN,
                 'key' => 'error.translations.text_domain.forbidden',

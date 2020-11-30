@@ -23,7 +23,7 @@ class TypeExtension extends AbstractExtension
         ];
     }
 
-    public function getType($var): string
+    public function getType(mixed $var): string
     {
         $type = gettype($var);
 

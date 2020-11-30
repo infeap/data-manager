@@ -18,14 +18,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 class BasePathMiddleware implements MiddlewareInterface
 {
 
-    protected string $basePath;
-    protected string $requestPath;
-
-    public function __construct(string $basePath, string $requestPath)
-    {
-        $this->basePath = $basePath;
-        $this->requestPath = $requestPath;
-    }
+    public function __construct(
+        protected string $basePath,
+        protected string $requestPath,
+    ) { }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

@@ -15,12 +15,9 @@ use Infeav\Foundation\Http\Request\Helper\ServerRequestHelper;
 class ServerRequest
 {
 
-    protected ServerRequestHelper $requestHelper;
-
-    public function __construct(ServerRequestHelper $requestHelper)
-    {
-        $this->requestHelper = $requestHelper;
-    }
+    public function __construct(
+        protected ServerRequestHelper $requestHelper,
+    ) { }
 
     public function getQueryParams(): array
     {

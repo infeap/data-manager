@@ -43,7 +43,7 @@ return function (array $app): array {
              new RecursiveDirectoryIterator($app['dir'] . '/config/routes/',
                  FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
 
-            if (preg_match('~\.php$~', $iteratedFile)) {
+            if (str_ends_with($iteratedFile, '.php')) {
                 $flattenedIteratedFiles[] = $iteratedFile;
             }
         }

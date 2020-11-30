@@ -20,20 +20,14 @@ use Laminas\I18n\Translator\Translator as TranslationEngine;
 class Translator
 {
 
-    protected LanguageService $languageService;
-    protected array $appConfig;
-    protected ?LogManager $logManager;
-
     protected ?TranslationEngine $engine = null;
-
     protected ?array $textDomains = null;
 
-    public function __construct(LanguageService $languageService, array $appConfig, ?LogManager $logManager = null)
-    {
-        $this->languageService = $languageService;
-        $this->appConfig = $appConfig;
-        $this->logManager = $logManager;
-    }
+    public function __construct(
+        protected LanguageService $languageService,
+        protected array $appConfig,
+        protected ?LogManager $logManager = null,
+    ) { }
 
     public function getEngine(): TranslationEngine
     {
@@ -46,7 +40,12 @@ class Translator
                 $textDomain = explode('/', $l10nFile, 2)[0];
                 $this->textDomains[] = $textDomain;
 
-                $this->engine->addTranslationFilePattern(IniLoader::class, $this->appConfig['l10n_dir'], '%s/' . $l10nFile, $textDomain);
+                $this->engine->addTranslationFilePattern(
+                    type: IniLoader::class,
+                    baseDir: $this->appConfig['l10n_dir'],
+                    pattern: '%s/' . $l10nFile,
+                    textDomain: $textDomain,
+                );
             }
 
             if ($this->languageService->getCurrentLanguage()) {
@@ -93,7 +92,11 @@ class Translator
              */
             if ($this->logManager) {
                 $this->engine->enableEventManager()->getEventManager()->attach('missingTranslation', function (EventInterface $event) {
-                    $this->logManager->logMissingTranslation($event->getParam('message'), $event->getParam('text_domain'), $event->getParam('locale'));
+                    $this->logManager->logMissingTranslation(
+                        key: $event->getParam('message'),
+                        textDomain: $event->getParam('text_domain'),
+                        languageTag: $event->getParam('locale'),
+                    );
                 });
             }
         }
@@ -135,8 +138,8 @@ class Translator
 
     public function translateOnDemand(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
-        if (strpos($key, 'trans:') === 0) {
-            return $this->translate(preg_replace('~^trans:~', '', $key), $textDomain, $languageTag);
+        if (str_starts_with($key, 'trans:')) {
+            return $this->translate(substr($key, strlen('trans:')), $textDomain, $languageTag);
         } else {
             return $key;
         }

@@ -20,14 +20,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ApiResponseMiddleware implements MiddlewareInterface
 {
 
-    protected bool $isDebugMode;
-    protected string $appDir;
-
-    public function __construct(bool $isDebugMode, string $appDir)
-    {
-        $this->isDebugMode = $isDebugMode;
-        $this->appDir = $appDir;
-    }
+    public function __construct(
+        protected bool $isDebugMode,
+        protected string $appDir,
+    ) { }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
@@ -53,7 +49,7 @@ class ApiResponseMiddleware implements MiddlewareInterface
                     $parseError = function (\Throwable $error) use (&$parseError): array {
                         $errorData = [
                             'message' => $error->getMessage(),
-                            'type' => get_class($error),
+                            'type' => $error::class,
                             'code' => $error->getCode(),
                             'file' => str_replace($this->appDir . '/', '', $error->getFile()),
                             'line' => $error->getLine(),
@@ -66,8 +62,8 @@ class ApiResponseMiddleware implements MiddlewareInterface
 
                             foreach ($trace as $traceElement) {
                                 $errorData['trace'][] = [
-                                    'file' => str_replace($this->appDir . '/', '', $traceElement['file']),
-                                    'line' => $traceElement['line'],
+                                    'file' => str_replace($this->appDir . '/', '', $traceElement['file'] ?? null),
+                                    'line' => $traceElement['line'] ?? null,
                                 ];
                             }
                         }

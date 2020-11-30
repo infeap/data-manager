@@ -20,31 +20,40 @@ class InfeavQuickLog
         static::$logManager = $logManager;
     }
 
-    public static function logDebug($details, string $subName = 'general'): bool
+    public static function logDebug(mixed $details, string $fileName = 'general'): bool
     {
         if (! static::$logManager) {
             return false;
         }
 
-        return static::$logManager->logDebug($details, $subName);
+        return static::$logManager->logDebug($details, $fileName);
     }
 
-    public static function logError($details): bool
+    public static function logInfo(mixed $details): bool
     {
         if (! static::$logManager) {
             return false;
         }
 
-        return static::$logManager->logError($details);
+        return static::$logManager->logInfo($details);
     }
 
-    public static function logWarning($details): bool
+    public static function logWarning(mixed $details): bool
     {
         if (! static::$logManager) {
             return false;
         }
 
         return static::$logManager->logWarning($details);
+    }
+
+    public static function logError(mixed $details): bool
+    {
+        if (! static::$logManager) {
+            return false;
+        }
+
+        return static::$logManager->logError($details);
     }
 
 }

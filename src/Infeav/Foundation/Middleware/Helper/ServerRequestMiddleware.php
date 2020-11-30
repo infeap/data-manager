@@ -19,12 +19,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 class ServerRequestMiddleware implements MiddlewareInterface
 {
 
-    protected ServerRequestHelper $requestHelper;
-
-    public function __construct(ServerRequestHelper $requestHelper)
-    {
-        $this->requestHelper = $requestHelper;
-    }
+    public function __construct(
+        protected ServerRequestHelper $requestHelper,
+    ) { }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

@@ -32,7 +32,7 @@ return function (array $app): array {
             new RecursiveDirectoryIterator($app['dir'] . '/config/services/',
                 FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
 
-            if (preg_match('~\.php$~', $iteratedFile)) {
+            if (str_ends_with($iteratedFile, '.php')) {
                 $config = include $iteratedFile;
 
                 if (is_callable($config)) {

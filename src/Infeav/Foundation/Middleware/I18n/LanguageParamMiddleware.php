@@ -22,14 +22,10 @@ use Psr\Http\Server\RequestHandlerInterface;
 class LanguageParamMiddleware implements MiddlewareInterface
 {
 
-    protected LanguageService $languageService;
-    protected Translator $translator;
-
-    public function __construct(LanguageService $languageService, Translator $translator)
-    {
-        $this->languageService = $languageService;
-        $this->translator = $translator;
-    }
+    public function __construct(
+        protected LanguageService $languageService,
+        protected Translator $translator,
+    ) { }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {

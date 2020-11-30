@@ -22,20 +22,10 @@ trait TypesConfigTrait
             'factories' => [],
         ];
 
-        $typesConfig = $serviceManager->get('config')[$pluginManagerName]['types'] ?? null;
-
-        $endsWith = function (string $haystack, string $needle): bool {
-            $length = strlen($needle);
-
-            if ($length == 0) {
-                return true;
-            }
-
-            return (substr($haystack, -$length) === $needle);
-        };
+        $typesConfig = $serviceManager->get('config')[$pluginManagerName]['types'] ?? [];
 
         foreach ($typesConfig as $type => $typeServiceName) {
-            if ($endsWith($typeServiceName, 'Factory')) {
+            if (str_ends_with($typeServiceName, 'Factory')) {
                 $serviceTypesConfig['factories'][$type] = $typeServiceName;
             } else {
                 $serviceTypesConfig['invokables'][$type] = $typeServiceName;

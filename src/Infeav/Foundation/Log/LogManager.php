@@ -17,18 +17,13 @@ use Laminas\Json\Json;
 class LogManager
 {
 
-    protected string $logDir;
-    protected string $appDir;
-    protected LanguageService $languageService;
+    public function __construct(
+        protected string $logDir,
+        protected string $appDir,
+        protected LanguageService $languageService,
+    ) { }
 
-    public function __construct(string $logDir, string $appDir, LanguageService $languageService)
-    {
-        $this->logDir = $logDir;
-        $this->appDir = $appDir;
-        $this->languageService = $languageService;
-    }
-
-    public function logDebug($details, string $subName = 'general'): bool
+    public function logDebug(mixed $details, string $fileName = 'general'): bool
     {
         $details = $this->normalizeLogDetails($details);
 
@@ -36,13 +31,10 @@ class LogManager
             return false;
         }
 
-        $logFileName = sprintf('debug/%s',
-            $subName);
-
-        return $this->writeToLogFile($logFileName, 'php', $details);
+        return $this->writeToLogFile('debug/' . $fileName, fileType: 'php', entry: $details);
     }
 
-    public function logError($details): bool
+    public function logInfo(mixed $details): bool
     {
         $details = $this->normalizeLogDetails($details);
 
@@ -50,7 +42,29 @@ class LogManager
             return false;
         }
 
-        return $this->writeToLogFile('errors', 'json', $details);
+        return $this->writeToLogFile('infos', fileType: 'json', entry: $details);
+    }
+
+    public function logWarning(mixed $details): bool
+    {
+        $details = $this->normalizeLogDetails($details);
+
+        if (! $details) {
+            return false;
+        }
+
+        return $this->writeToLogFile('warnings', fileType: 'json', entry: $details);
+    }
+
+    public function logError(mixed $details): bool
+    {
+        $details = $this->normalizeLogDetails($details);
+
+        if (! $details) {
+            return false;
+        }
+
+        return $this->writeToLogFile('errors', fileType: 'json', entry: $details);
     }
 
     public function logMissingTranslation(string $key, ?string $textDomain = null, ?string $languageTag = null): bool
@@ -63,11 +77,11 @@ class LogManager
             $languageTag = $this->languageService->getCurrentLanguage();
         }
 
-        return $this->writeToLogFile('missing-translations', 'json', [
+        return $this->writeToLogFile('missing-translations', fileType: 'json', entry: [
             'key' => $key,
-            'textDomain' => $textDomain,
-            'languageTag' => $languageTag,
-        ], function (array $log) use ($key): bool {
+            'text-domain' => $textDomain,
+            'language-tag' => $languageTag,
+        ], condition: function (array $log) use ($key): bool {
 
             return ! array_filter($log, function ($logEntry) use ($key) {
                 if (is_array($logEntry)) {
@@ -83,18 +97,7 @@ class LogManager
         });
     }
 
-    public function logWarning($details): bool
-    {
-        $details = $this->normalizeLogDetails($details);
-
-        if (! $details) {
-            return false;
-        }
-
-        return $this->writeToLogFile('warnings', 'json', $details);
-    }
-
-    protected function normalizeLogDetails($details): ?array
+    protected function normalizeLogDetails(mixed $details): ?array
     {
         if (is_scalar($details)) {
             $details = [
@@ -105,7 +108,7 @@ class LogManager
                 $logDetails = [
                     'time' => date('Y-m-d H:i:s T'),
                     'message' => $error->getMessage(),
-                    'type' => get_class($error),
+                    'type' => $error::class,
                     'code' => $error->getCode(),
                     'file' => str_replace($this->appDir . '/', '', $error->getFile()),
                     'line' => $error->getLine(),
@@ -136,20 +139,20 @@ class LogManager
         return $details;
     }
 
-    protected function writeToLogFile(string $name, string $type, array $entry, ?callable $condition = null): bool
+    protected function writeToLogFile(string $fileName, string $fileType, array $entry, ?callable $condition = null): bool
     {
         $logFile = sprintf('%s/%s.%s',
             $this->logDir, $name, $type);
 
         $log = [];
 
-        if (is_file($logFile) && is_readable($logFile)) {
-            switch ($type) {
+        if (is_file($filePath) && is_readable($filePath)) {
+            switch ($fileType) {
                 case 'json':
-                    $log = Json::decode(file_get_contents($logFile), Json::TYPE_ARRAY);
+                    $log = Json::decode(file_get_contents($filePath), Json::TYPE_ARRAY);
                     break;
                 case 'php':
-                    $log = include $logFile;
+                    $log = include $filePath;
                     break;
             }
         }
@@ -162,10 +165,10 @@ class LogManager
 
         $log[] = $entry;
 
-        if ((is_file($logFile) && is_writable($logFile)) ||
-            (! is_file($logFile) && is_writable(dirname($logFile)))) {
+        if ((is_file($filePath) && is_writable($filePath)) ||
+            (! is_file($filePath) && is_writable(dirname($filePath)))) {
 
-            switch ($type) {
+            switch ($fileType) {
                 case 'json':
                     $logContent = Json::encode($log, true, ['prettyPrint' => true]);
                     $logContent = str_replace('\/', '/', $logContent);
@@ -178,7 +181,7 @@ class LogManager
             }
 
             if ($logContent) {
-                return (bool) file_put_contents($logFile, $logContent);
+                return (bool) file_put_contents($filePath, $logContent);
             }
         }
 
