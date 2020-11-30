@@ -13,6 +13,8 @@
  * @license   https://github.com/mezzio/mezzio/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Infeav\Foundation\Middleware\Page;
 
 use Mezzio\Template\TemplateRendererInterface;

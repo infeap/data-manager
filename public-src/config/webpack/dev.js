@@ -22,7 +22,7 @@ module.exports = function (env) {
         devServer: {
             disableHostCheck: true,
             headers: {
-                'Access-Control-Allow-Origin': '*',
+                'access-control-allow-origin': '*',
             },
             hot: true,
             https: true,

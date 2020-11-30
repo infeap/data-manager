@@ -10,6 +10,7 @@
 
 namespace Infeav\Foundation\Middleware\Router;
 
+use Infeav\Foundation\Http\Message\Response\StatusCode;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -29,7 +30,7 @@ class IndexFilesMiddleware implements MiddlewareInterface
             case '/start.php':
                 $basePath = $request->getAttribute('app_base_path');
 
-                return new RedirectResponse($basePath, 301);
+                return new RedirectResponse($basePath . '/', StatusCode::MOVED_PERMANENTLY);
         }
 
         return $handler->handle($request);

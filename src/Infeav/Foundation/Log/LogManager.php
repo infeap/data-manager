@@ -106,7 +106,7 @@ class LogManager
         } else if ($details instanceof \Throwable) {
             $createErrorDetails = function (\Throwable $error) use (&$createErrorDetails): array {
                 $logDetails = [
-                    'time' => date('Y-m-d H:i:s T'),
+                    'timestamp' => date('Y-m-d H:i:s T'),
                     'message' => $error->getMessage(),
                     'type' => $error::class,
                     'code' => $error->getCode(),
@@ -132,8 +132,8 @@ class LogManager
             return null;
         }
 
-        if (! isset($details['time'])) {
-            $details = ['time' => date('Y-m-d H:i:s T')] + $details;
+        if (! isset($details['timestamp'])) {
+            $details = ['timestamp' => date('Y-m-d H:i:s T')] + $details;
         }
 
         return $details;

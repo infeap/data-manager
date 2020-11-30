@@ -60,7 +60,7 @@
                     <form>
                         {% for name, value in server_request('query_params') %}
                             {% if name != 'lang' %}
-                                <input type="hidden" name="{{ name|e('html_attr') }}" value="{{ value|e('html_attr') }}">
+                                <input type="hidden" name="{{ name|escape('html_attr') }}" value="{{ value|escape('html_attr') }}">
                             {% endif %}
                         {% endfor %}
 

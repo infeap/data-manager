@@ -151,7 +151,7 @@ class Translator
 
         $i = 1;
 
-        while ($i < 1000) {
+        while ($i < 1024) {
             $translationKey = $key . '.' . $i;
             $translation = $this->translate($translationKey, $textDomain, $languageTag);
 
@@ -183,7 +183,7 @@ class Translator
 
         $i = 1;
 
-        while ($i < 1000) {
+        while ($i < 1024) {
             if ($number == 1) {
                 $translationKey = $key . '.singular.' . $i;
             } else {

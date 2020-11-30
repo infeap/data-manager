@@ -23,7 +23,7 @@ class ErrorResponseGenerator
         return new ApiResponse([
             'status' => StatusCode::INTERNAL_SERVER_ERROR,
             'headers' => [
-                'Inf-Error-ID' => uniqid(),
+                'inf-error-id' => uniqid(),
             ],
             'key' => 'error.500',
             'debug' => [

@@ -3,17 +3,17 @@
 # open source project
 
 # Configure rewrite engine
-<IfModule mod_rewrite.c>
+<IfModule rewrite_module>
 
-    RewriteEngine On
+    RewriteEngine on
 
     # Redirect every request onto redirect.php
     # basically concealing all directories and files except public/
     RewriteCond %{DOCUMENT_ROOT} !/public/?$
     RewriteCond %{REQUEST_URI} !/public/
-    RewriteRule .* redirect.php [L]
+    RewriteRule .* redirect.php [END]
 
 </IfModule>
 
 # Explain when rewrite engine is not available
-ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apache+setup+required' target='_blank'>Apache setup required</a>"
+ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apache+setup+required' target='_blank' rel='external noreferrer'>Apache setup required</a>"

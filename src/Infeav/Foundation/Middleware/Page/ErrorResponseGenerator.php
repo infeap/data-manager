@@ -12,6 +12,8 @@
  * @license   https://github.com/mezzio/mezzio/blob/master/LICENSE.md New BSD License
  */
 
+declare(strict_types=1);
+
 namespace Infeav\Foundation\Middleware\Page;
 
 use Laminas\Stratigility\Utils;
@@ -56,7 +58,7 @@ class ErrorResponseGenerator
          */
         $errorId = uniqid();
 
-        $response = $response->withHeader('Inf-Error-ID', $errorId);
+        $response = $response->withHeader('inf-error-id', $errorId);
 
         if ($this->renderer) {
             return $this->prepareTemplatedResponse(

@@ -10,6 +10,7 @@
 
 namespace Infeav\Foundation\Http\Response;
 
+use Infeav\Foundation\Http\Message\Response\StatusCode;
 use Laminas\Diactoros\Response;
 
 class KeyedResponse extends Response
@@ -36,7 +37,7 @@ class KeyedResponse extends Response
 
         parent::__construct(
             'php://memory',
-            $options['status'] ?? 200,
+            $options['status'] ?? StatusCode::OK,
             $options['headers'] ?? [],
         );
     }

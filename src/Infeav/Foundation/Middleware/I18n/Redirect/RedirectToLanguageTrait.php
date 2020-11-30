@@ -11,6 +11,7 @@
 namespace Infeav\Foundation\Middleware\I18n\Redirect;
 
 use Infeav\Foundation\Http\Message\Request\AcceptLanguageTrait;
+use Infeav\Foundation\Http\Message\Response\StatusCode;
 use Infeav\Foundation\Http\Message\UriToolsTrait;
 use Infeav\Foundation\I18n\LanguageService;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -41,7 +42,8 @@ trait RedirectToLanguageTrait
                 $redirectLanguage = 'en'; // Polyfilled
             }
 
-            return new RedirectResponse($this->getUriWithAdditionalQueryParams($request, ['lang' => $redirectLanguage]), 302);
+            return new RedirectResponse(
+                $this->getUriWithAdditionalQueryParams($request, ['lang' => $redirectLanguage]), StatusCode::FOUND);
         }
 
         return null;

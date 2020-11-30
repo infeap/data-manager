@@ -29,27 +29,27 @@
 </IfVersion>
 
 # Configure rewrite engine
-<IfModule mod_rewrite.c>
+<IfModule rewrite_module>
 
     # We use start.php instead of index.php to ensure that the rewrite engine works
     DirectoryIndex start.php
 
-    RewriteEngine On
+    RewriteEngine on
 
     # Enforce a HTTPS connection
     # RewriteCond %{HTTP_HOST} ^data\.infeav\.org$ [NC]
-    # RewriteCond %{HTTPS} off
-    # RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+    RewriteCond %{HTTPS} off
+    RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=permanent,END]
 
     # Ignore index.html/.php once app files are setup
-    RewriteRule ^index\.html start.php [L]
-    RewriteRule ^index\.php start.php [L]
+    RewriteRule ^index\.html start.php [END]
+    RewriteRule ^index\.php start.php [END]
 
     # The following rule tells Apache that if the requested filename exists, simply serve it
     RewriteCond %{REQUEST_FILENAME} -s [OR]
     RewriteCond %{REQUEST_FILENAME} -l [OR]
     RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule .* - [NC,L]
+    RewriteRule .* - [NC,END]
 
     # The following rewrites all other queries to start.php.
     # The condition ensures that if you are using Apache aliases to do mass virtual hosting,
@@ -57,12 +57,12 @@
     # it will work in non-aliased environments as well, providing a safe, one-size fits all solution.
     RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$
     RewriteRule ^(.*) - [E=BASE:%1]
-    RewriteRule ^(.*)$ %{ENV:BASE}start.php [NC,L]
+    RewriteRule ^(.*)$ %{ENV:BASE}start.php [NC,END]
 
 </IfModule>
 
 # Explain when rewrite engine is not available
-ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apache+setup+required' target='_blank'>Apache setup required</a>"
+ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apache+setup+required' target='_blank' rel='external noreferrer'>Apache setup required</a>"
 
 # Configure PHP or serve as a template for recommended php.ini settings
 <IfModule php_module>
@@ -81,7 +81,7 @@ ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apac
 </IfModule>
 
 # Add common (and commonly missing) web font mime types
-<IfModule mod_mime.c>
+<IfModule mime_module>
 
     AddType application/font-woff woff
     AddType application/font-woff2 woff2
@@ -89,8 +89,8 @@ ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apac
 </IfModule>
 
 # Configure output compression
-<IfModule mod_filter.c>
-<IfModule mod_deflate.c>
+<IfModule filter_module>
+<IfModule deflate_module>
 
     AddOutputFilterByType DEFLATE text/plain text/csv text/html text/xml text/css text/javascript application/javascript application/json image/svg+xml image/x-icon application/font-woff application/font-woff2 application/vnd.ms-fontobject
 
@@ -98,32 +98,32 @@ ErrorDocument 404 "<a href='https://www.infeav.org/data-manager/help?search=Apac
 </IfModule>
 
 # Configure HTTP cache and headers
-<IfModule mod_headers.c>
+<IfModule headers_module>
 
-    # Disable ETag header
-    Header Unset ETag
+    # Disable ETag and remove header
     FileETag None
+    Header unset etag
 
-    # Disable Expires header
-    Header Unset Expires
+    # Remove expires header
+    Header unset expires
 
-    # Disable Powered-By header
-    Header Unset X-Powered-By
+    # Remove PHP version header
+    Header unset x-powered-by
 
     # Disable caching of content file types
     <FilesMatch "\.(txt|csv|htm|html|xml|zip)$">
-        Header Set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+        Header set cache-control "max-age=0, no-cache, no-store, must-revalidate"
     </FilesMatch>
 
     # Set cache time to one month for most important static file types
     <FilesMatch "\.(css|js|jpg|jpeg|png|gif|svg|ico|pdf|mpg|mpeg|mp4|mp3|ogg|woff|woff2|eot|ttf)$">
-        Header Set Cache-Control "max-age=2592000"
+        Header set cache-control "max-age=2592000"
     </FilesMatch>
 
 </IfModule>
 
 # Set default charset for text and html files
-AddDefaultCharset UTF-8
+AddDefaultCharset utf-8
 
 # Disable directory listings and MultiViews negotiation
 Options -Indexes -MultiViews

@@ -117,17 +117,17 @@ return function (array $app, array $routesConfig, Application $application): voi
     if ($app['config']['debug']) {
         $middlewarePipelineLog = [];
 
-        $pipe = function ($middleware) use ($application, &$middlewarePipelineLog) {
+        $pipe = function (string $middleware) use ($application, &$middlewarePipelineLog) {
             $middlewarePipelineLog[] = $middleware;
             $application->pipe($middleware);
         };
     } else {
-        $pipe = function ($middleware) use ($application) {
+        $pipe = function (string $middleware) use ($application) {
             $application->pipe($middleware);
         };
     }
 
-    $pipeLine = function (array $middlewarePipeline) use (&$pipeLine, $pipe, $wrapMiddleware): void {
+    $pipeLine = function (array $middlewarePipeline) use (&$pipeLine, $pipe, $wrapMiddleware) {
         foreach ($middlewarePipeline as $middleware) {
             if (isset($wrapMiddleware[$middleware])) {
                 $pipeLine($wrapMiddleware[$middleware]['before']);

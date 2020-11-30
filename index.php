@@ -55,21 +55,14 @@
 
                     <?php
 
-                    if (! isset($heading)) {
-                        $heading = 'Apache setup required';
-                    }
-
-                    printf('<h1>%s</h1>',
-                        $heading);
+                    echo "<h1>$heading</h1>";
 
                     if (isset($text)) {
                         if (is_string($text)) {
-                            printf('<p>%s</p>',
-                                $text);
+                            echo "<p>$text</p>";
                         } else if (is_array($text)) {
                             foreach ($text as $line) {
-                                printf('<p>%s</p>',
-                                    $line);
+                                echo "<p>$line</p>";
                             }
                         }
                     } else {

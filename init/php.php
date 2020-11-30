@@ -29,7 +29,7 @@ return function (array $app): void {
 
     ini_set('ignore_user_abort', $app['config']['debug'] ? '0' : '1');
 
-    ini_set('default_charset', 'UTF-8');
+    ini_set('default_charset', 'utf-8');
 
     $phpConfig = $app['config']['php'] ?? null;
 

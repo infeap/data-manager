@@ -97,7 +97,7 @@ export default {
         }
     },
     parseResponseBody(response) {
-        switch (response.headers.get('Content-Type')) {
+        switch (response.headers.get('content-type')) {
             case 'application/json':
                 return new Promise((resolve, reject) => {
                     response.json().then((parsedBody) => {
@@ -114,7 +114,7 @@ export default {
     },
     prepareOptionsForJson(options = {}) {
         options.headers ??= {}
-        options.headers['Content-Type'] = 'application/json'
+        options.headers['content-type'] = 'application/json'
 
         if (options.body) {
             options.body = JSON.stringify(options.body)

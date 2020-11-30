@@ -19,7 +19,7 @@ trait AcceptLanguageTrait
 
     protected function getAcceptLanguageHeader(ServerRequestInterface $request): ?AcceptLanguage
     {
-        $headerLine = $request->getHeaderLine('Accept-Language');
+        $headerLine = $request->getHeaderLine('accept-language');
 
         if (! $headerLine) {
             return null;

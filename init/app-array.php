@@ -89,7 +89,7 @@ return (function (): callable {
     if (! is_file($app['dir'] . '/public/.htaccess')) {
         if (is_writable($app['dir'] . '/public/') && is_readable($app['dir'] . '/public/.htaccess-default')) {
             if (copy($app['dir'] . '/public/.htaccess-default', $app['dir'] . '/public/.htaccess')) {
-                header('Refresh: 0');
+                header('refresh: 0');
                 infeav_render_init_message('Reload required', 'Please reload this page.');
             }
         }
@@ -178,7 +178,7 @@ return (function (): callable {
     $configCacheDir = $app['config']['cache_dir'] . '/config';
 
     if (! is_dir($configCacheDir) && $app['checks']['cache_dir_is_writable']) {
-        mkdir($configCacheDir);
+        mkdir($configCacheDir, 0775);
     }
 
     $app['config']['hash'] = crc32(serialize($app['config']));
@@ -203,7 +203,7 @@ return (function (): callable {
         if ((is_file($cachedContextConfigHashFile) && is_writable($cachedContextConfigHashFile)) ||
             (! is_file($cachedContextConfigHashFile) && is_writable(dirname($cachedContextConfigHashFile)))) {
 
-            file_put_contents($cachedContextConfigHashFile, "<?php\n\nreturn {$app['config']['hash']};\n");
+            file_put_contents($cachedContextConfigHashFile, "<?php\n\nreturn " . $app['config']['hash'] . ";\n");
         }
     }
 

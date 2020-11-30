@@ -26,8 +26,8 @@ class Listener
     {
         $createLogDetails = function (\Throwable $error) use (&$createLogDetails, $request, $response): array {
             $logDetails = [
-                'id' => $response->getHeaderLine('Inf-Error-ID'),
-                'time' => date('Y-m-d H:i:s T'),
+                'id' => $response->getHeaderLine('inf-error-id'),
+                'timestamp' => date('Y-m-d H:i:s T'),
                 'request' => [
                     'method' => $request->getMethod(),
                     'uri' => (string) $request->getUri(),
