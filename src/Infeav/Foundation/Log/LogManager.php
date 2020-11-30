@@ -141,8 +141,8 @@ class LogManager
 
     protected function writeToLogFile(string $fileName, string $fileType, array $entry, ?callable $condition = null): bool
     {
-        $logFile = sprintf('%s/%s.%s',
-            $this->logDir, $name, $type);
+        $filePath = sprintf('%s/%s.%s',
+            $this->logDir, $fileName, $fileType);
 
         $log = [];
 

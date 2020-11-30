@@ -13,6 +13,14 @@
     Apache's document root should be set to the public/ directory!
 -->
 
+<?php
+
+if (! isset($heading)) {
+    $heading = 'Apache setup required';
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
     <head>
@@ -76,8 +84,8 @@
             </main>
 
             <footer>
-                <a href="https://www.infeav.org/data-manager" target="_blank" rel="external noreferrer noopener">Infeav Website</a>
-                <a href="https://www.infeav.org/data-manager/help?search=<?php echo urlencode($heading); ?>" target="_blank" rel="external noreferrer noopener">Help</a>
+                <a href="https://www.infeav.org/data-manager" target="_blank" rel="external noreferrer">Infeav Website</a>
+                <a href="https://www.infeav.org/data-manager/help?search=<?php echo urlencode($heading); ?>" target="_blank" rel="external noreferrer">Help</a>
             </footer>
         </article>
     </body>

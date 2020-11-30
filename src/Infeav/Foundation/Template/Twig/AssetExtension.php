@@ -28,9 +28,9 @@ class AssetExtension extends AbstractExtension
 
     public function minifyAssetUrl(array $context, string $url): string
     {
-        $file = $this->getFilePath($context, $url);
+        $filePath = $this->getFilePath($context, $url);
 
-        if ($context['app']['config']['debug'] && is_file($file)) {
+        if ($context['app']['config']['debug'] && is_file($filePath)) {
             return $url;
         } else {
             if (str_contains($url, '?')) {
@@ -55,9 +55,9 @@ class AssetExtension extends AbstractExtension
 
     public function appendFileVersion(array $context, string $url): string
     {
-        $file = $this->getFilePath($context, $url);
+        $filePath = $this->getFilePath($context, $url);
 
-        if (is_file($file) && is_readable($file)) {
+        if (is_file($filePath) && is_readable($filePath)) {
             $anchorPos = strpos($url, '#');
 
             if ($anchorPos) {
@@ -68,7 +68,7 @@ class AssetExtension extends AbstractExtension
                 $versionedUrl = $url;
             }
 
-            $fileVersion = filemtime($file);
+            $fileVersion = filemtime($filePath);
 
             if (str_contains($versionedUrl, '?')) {
                 $versionedUrl .= '&v=' . $fileVersion;
@@ -132,10 +132,10 @@ class AssetExtension extends AbstractExtension
             $compiledUrl = $context['app']['config']['dev_server_url'] . $compiledPath;
         } else {
             $compiledUrl = $env->getFunction('asset')->getCallable()($compiledPath);
-        }
 
-        $compiledUrl = $this->minifyAssetUrl($context, $compiledUrl);
-        $compiledUrl = $this->appendFileVersion($context, $compiledUrl);
+            $compiledUrl = $this->minifyAssetUrl($context, $compiledUrl);
+            $compiledUrl = $this->appendFileVersion($context, $compiledUrl);
+        }
 
         return $compiledUrl;
     }

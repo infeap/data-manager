@@ -23,7 +23,7 @@
     <article class="inf-basic-message">
         <header>
             <figure>
-                <a href="{{ app.base_path }}">
+                <a href="{{ path('page/start') }}">
                     <svg id="inf-logo" width="160" height="34" viewBox="0 0 160 34">
                         <title>Infeav</title>
                         <path d="M442.62,292.88H437.2V261.54h5.42Z" transform="translate(-394.73 -259.37)" />
@@ -112,11 +112,11 @@
                 <a href="{{ 'app.website.url'|trans }}" target="_blank" rel="external noreferrer">{{ 'operator.name'|trans }} {{ 'app.website.label'|trans }}</a>
 
                 {% if block('help_search_term') is defined %}
-                    <a href="{{ 'app.help.url'|trans }}?search={{ block('help_search_term')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>
+                    <a href="{{ 'app.help.url'|trans }}?search={{ block('help_search_term')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer">{{ 'app.help.label'|trans }}</a>
                 {% elseif block('message_heading') is defined %}
-                    <a href="{{ 'app.help.url'|trans }}?search={{ block('message_heading')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>
+                    <a href="{{ 'app.help.url'|trans }}?search={{ block('message_heading')|unicode_string.words(16)|url_encode }}" target="_blank" rel="external noreferrer">{{ 'app.help.label'|trans }}</a>
                 {% else %}
-                    <a href="{{ 'app.help.url'|trans }}" target="_blank" rel="external noreferrer noopener">{{ 'app.help.label'|trans }}</a>
+                    <a href="{{ 'app.help.url'|trans }}" target="_blank" rel="external noreferrer">{{ 'app.help.label'|trans }}</a>
                 {% endif %}
             </div>
         </footer>

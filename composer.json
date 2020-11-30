@@ -38,5 +38,8 @@
         "psr-4": {
             "Infeav\\": "src/Infeav/"
         }
+    },
+    "scripts": {
+        "post-update-cmd": "node bin/dev/delete-cache.js"
     }
 }
