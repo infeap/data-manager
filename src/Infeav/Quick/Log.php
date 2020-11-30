@@ -23,6 +23,7 @@ class InfeavQuickLog
     public static function logDebug(mixed $details, string $fileName = 'general'): bool
     {
         if (! static::$logManager) {
+            trigger_error('LogManager has not yet been initialized', E_USER_NOTICE);
             return false;
         }
 
@@ -32,6 +33,7 @@ class InfeavQuickLog
     public static function logInfo(mixed $details): bool
     {
         if (! static::$logManager) {
+            trigger_error('LogManager has not yet been initialized', E_USER_NOTICE);
             return false;
         }
 
@@ -41,6 +43,7 @@ class InfeavQuickLog
     public static function logWarning(mixed $details): bool
     {
         if (! static::$logManager) {
+            trigger_error('LogManager has not yet been initialized', E_USER_NOTICE);
             return false;
         }
 
@@ -50,6 +53,7 @@ class InfeavQuickLog
     public static function logError(mixed $details): bool
     {
         if (! static::$logManager) {
+            trigger_error('LogManager has not yet been initialized', E_USER_NOTICE);
             return false;
         }
 
