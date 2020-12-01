@@ -17,26 +17,26 @@
  * $app['request_path'] = '/' or with leading (and request dependent trailing) slash; without query params
  *
  * $app['version'] = Version data from version.json file
- * $app['version']['number']
- * $app['version']['date']
- * $app['version']['branch']
+ * $app['version']['number'] = string
+ * $app['version']['date'] = string
+ * $app['version']['branch'] = string
  *
  * $app['context'] = Context set in public/.htaccess or 'default'
  *
  * $app['config'] = Context dependend configuration (merged with config/context/* files)
- * $app['config']['debug']
- * $app['config']['develop']
+ * $app['config']['debug'] = bool
+ * $app['config']['develop'] = bool
  *
  * $app['config']['dev_server_url'] = For Webpack DevServer; always with trailing slash
  *
  * $app['config']['cache_dir'] = Without trailing slash
  * $app['config']['log_dir'] = Without trailing slash
  *
- * $app['config']['hash']
+ * $app['config']['hash'] = string
  *
  * $app['checks']
- * $app['checks']['cache_dir_is_writable']
- * $app['checks']['context_config_has_changed']
+ * $app['checks']['cache_dir_is_writable'] = bool
+ * $app['checks']['context_config_has_changed'] = bool
  */
 return (function (): callable {
 
