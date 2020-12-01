@@ -60,7 +60,7 @@ class Translator
             $l10nCacheDir = $this->appConfig['cache_dir'] . '/resources/l10n/';
 
             if (! is_dir($l10nCacheDir)) {
-                mkdir($l10nCacheDir, 0775, true);
+                mkdir($l10nCacheDir, $this->appConfig['dir_permissions_mode'], true);
             }
 
             $this->engine->setCache(StorageFactory::factory([

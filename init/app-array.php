@@ -11,32 +11,34 @@
 /*
  * $app keys:
  *
- * $app['dir'] = Application root directory path (not public/) without trailing slash
+ * $app['dir']: Application root directory path (not public/) without trailing slash
  *
- * $app['base_path'] = '' (empty) or with leading and without trailing slash (like '/public')
- * $app['request_path'] = '/' or with leading (and request dependent trailing) slash; without query params
+ * $app['base_path']: '' (empty) or with leading and without trailing slash (like '/public')
+ * $app['request_path']: '/' or with leading (and request dependent trailing) slash; without query params
  *
- * $app['version'] = Version data from version.json file
- * $app['version']['number'] = string
- * $app['version']['date'] = string
- * $app['version']['branch'] = string
+ * $app['version']: Version data from version.json file
+ * $app['version']['number'] :string
+ * $app['version']['date']: string
+ * $app['version']['branch']: string
  *
- * $app['context'] = Context set in public/.htaccess or 'default'
+ * $app['context']: Context set in public/.htaccess or 'default'
  *
- * $app['config'] = Context dependend configuration (merged with config/context/* files)
- * $app['config']['debug'] = bool
- * $app['config']['develop'] = bool
+ * $app['config']: Context dependend configuration (merged with config/context/* files)
+ * $app['config']['debug']: bool
+ * $app['config']['develop']: bool
  *
- * $app['config']['dev_server_url'] = For Webpack DevServer; always with trailing slash
+ * $app['config']['dev_server_url']: For Webpack DevServer; always with trailing slash
  *
- * $app['config']['cache_dir'] = Without trailing slash
- * $app['config']['log_dir'] = Without trailing slash
+ * $app['config']['cache_dir']: Without trailing slash
+ * $app['config']['log_dir']: Without trailing slash
  *
- * $app['config']['hash'] = string
+ * $app['config']['dir_permissions_mode']: octal int
+ *
+ * $app['config']['hash']: string
  *
  * $app['checks']
- * $app['checks']['cache_dir_is_writable'] = bool
- * $app['checks']['context_config_has_changed'] = bool
+ * $app['checks']['cache_dir_is_writable']: bool
+ * $app['checks']['context_config_has_changed']: bool
  */
 return (function (): callable {
 
@@ -62,6 +64,8 @@ return (function (): callable {
     $app['config']['develop'] = false; // during init
 
     $app['config']['log_dir'] = $app['dir'] . '/var/logs';
+
+    $app['config']['dir_permissions_mode'] = 0770;
 
     $initPhp = require $app['dir'] . '/init/php.php';
     $initPhp($app);
@@ -170,7 +174,7 @@ return (function (): callable {
     $initPhp($app);
 
     if (! is_dir($app['config']['cache_dir']) && is_writable(dirname(dirname($app['config']['cache_dir'])))) {
-        mkdir($app['config']['cache_dir'], 0775, true);
+        mkdir($app['config']['cache_dir'], $app['config']['dir_permissions_mode'], true);
     }
 
     $app['checks']['cache_dir_is_writable'] = is_writable($app['config']['cache_dir']);
@@ -178,7 +182,7 @@ return (function (): callable {
     $configCacheDir = $app['config']['cache_dir'] . '/config';
 
     if (! is_dir($configCacheDir) && $app['checks']['cache_dir_is_writable']) {
-        mkdir($configCacheDir, 0775);
+        mkdir($configCacheDir, $app['config']['dir_permissions_mode']);
     }
 
     $app['config']['hash'] = crc32(serialize($app['config']));
