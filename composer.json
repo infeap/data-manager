@@ -6,30 +6,29 @@
     "readme": "docs/readme.md",
     "require": {
         "php": "^8.0",
-        "ext-json": "*",
 
-        "laminas/laminas-cache": "^2.9.0",
-        "laminas/laminas-code": "^3.4.1",
-        "laminas/laminas-config": "^3.3.0",
-        "laminas/laminas-config-aggregator": "^1.1.1",
-        "laminas/laminas-dependency-plugin": "^1.0",
-        "laminas/laminas-db": "^2.11.3",
-        "laminas/laminas-diactoros": "^2.2.1",
-        "laminas/laminas-eventmanager": "^3.3.0",
-        "laminas/laminas-http": "^2.11.2",
-        "laminas/laminas-i18n": "^2.10.3",
-        "laminas/laminas-serializer": "^2.9.1",
-        "laminas/laminas-servicemanager": "^3.4.0",
-        "mezzio/mezzio": "^3.2.1",
-        "mezzio/mezzio-fastroute": "^3.0.3",
-        "mezzio/mezzio-twigrenderer": "^2.5.0",
-        "twig/intl-extra": "^3.0.3",
-        "twig/string-extra": "^3.0.3",
+        "laminas/laminas-cache": "@stable",
+        "laminas/laminas-code": "@stable",
+        "laminas/laminas-config": "@stable",
+        "laminas/laminas-config-aggregator": "@stable",
+        "laminas/laminas-dependency-plugin": "@stable",
+        "laminas/laminas-db": "@stable",
+        "laminas/laminas-diactoros": "@stable",
+        "laminas/laminas-eventmanager": "@stable",
+        "laminas/laminas-http": "@stable",
+        "laminas/laminas-i18n": "@stable",
+        "laminas/laminas-serializer": "@stable",
+        "laminas/laminas-servicemanager": "@stable",
+        "mezzio/mezzio": "@stable",
+        "mezzio/mezzio-fastroute": "@stable",
+        "mezzio/mezzio-twigrenderer": "@stable",
+        "twig/intl-extra": "@stable",
+        "twig/string-extra": "@stable",
 
-        "symfony/polyfill-intl-grapheme": "^1.15.0",
-        "symfony/polyfill-intl-icu": "^1.15.0",
-        "symfony/polyfill-intl-messageformatter": "1.15.0",
-        "symfony/polyfill-intl-normalizer": "^1.15.0"
+        "symfony/polyfill-intl-grapheme": "@stable",
+        "symfony/polyfill-intl-icu": "@stable",
+        "symfony/polyfill-intl-messageformatter": "@stable",
+        "symfony/polyfill-intl-normalizer": "@stable"
     },
     "suggest": {
         "ext-intl": "Required for languages other than English"
@@ -38,6 +37,13 @@
         "psr-4": {
             "Infeav\\": "src/Infeav/"
         }
+    },
+    "config": {
+        "platform": {
+            "php": "8.0"
+        },
+        "platform-check": false,
+        "sort-packages": true
     },
     "scripts": {
         "post-update-cmd": "node bin/dev/delete-cache.js"
