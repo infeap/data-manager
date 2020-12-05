@@ -36,10 +36,9 @@
 {% endblock %}
 
 {% block foot %}
-    {% if app.config.develop %}
-        <script src="{{ compiled_js('vendors~error~start') }}"></script>
-    {% endif %}
+    {{ parent() }}
 
-    <script src="{{ compiled_js('vendors~start') }}"></script>
+    <script src="{{ compiled_js('5') }}"></script>
+    <script src="{{ compiled_js('7') }}"></script>
     <script src="{{ compiled_js('start') }}"></script>
 {% endblock %}

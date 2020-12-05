@@ -14,6 +14,7 @@ const path = require('path')
 
 const autoprefixer = require('autoprefixer')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const webpack = require('webpack')
 
@@ -51,7 +52,7 @@ module.exports = function (env) {
         },
         output: {
             filename: 'js/compiled/[name]' + env.vars.fileExtensionPrefix + '.js',
-            chunkFilename: 'js/compiled/[name]' + env.vars.fileExtensionPrefix + '.js?v=[hash]',
+            chunkFilename: 'js/compiled/[name]' + env.vars.fileExtensionPrefix + '.js?v=[chunkhash]',
             path: path.resolve('public/'),
         },
         module: {
@@ -68,7 +69,7 @@ module.exports = function (env) {
                             presets: [
                                 ['@babel/preset-env', {
                                     useBuiltIns: 'usage',
-                                    corejs: 2,
+                                    corejs: 3,
                                 }],
                             ],
                         },
@@ -100,9 +101,11 @@ module.exports = function (env) {
                         {
                             loader: 'postcss-loader',
                             options: {
-                                plugins: [
-                                    autoprefixer,
-                                ],
+                                postcssOptions: {
+                                    plugins: [
+                                        autoprefixer,
+                                    ],
+                                },
                             },
                         },
                         {
@@ -126,7 +129,7 @@ module.exports = function (env) {
         plugins: [
             new MiniCssExtractPlugin({
                 filename: 'css/compiled/[name]' + env.vars.fileExtensionPrefix + '.css',
-                chunkFilename: 'css/compiled/[name]' + env.vars.fileExtensionPrefix + '.css?v=[hash]',
+                chunkFilename: 'css/compiled/[name]' + env.vars.fileExtensionPrefix + '.css?v=[chunkhash]',
             }),
             new VueLoaderPlugin(),
             new webpack.DefinePlugin({
@@ -141,9 +144,17 @@ module.exports = function (env) {
             },
         },
         optimization: {
+            chunkIds: 'natural',
             splitChunks: {
                 chunks: 'all',
             },
+            minimizer: [
+                new TerserPlugin({
+                    extractComments: {
+                        filename: '[file].license.txt[query]',
+                    },
+                }),
+            ],
         },
         devtool: false,
         mode: env.vars.mode,

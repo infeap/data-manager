@@ -32,9 +32,9 @@
     <body class="{% block body_class '' %}">
         {% block body '' %}
 
-        <script src="{{ compiled_js('vendors~error~foundation~start') }}"></script>
-        <script src="{{ compiled_js('foundation') }}"></script>
-
-        {% block foot '' %}
+        {% block foot %}
+            <script src="{{ compiled_js('4') }}"></script>
+            <script src="{{ compiled_js('foundation') }}"></script>
+        {% endblock %}
     </body>
 </html>

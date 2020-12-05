@@ -38,7 +38,7 @@ module.exports = function (env) {
         },
         output: {
             filename: 'js/compiled/[name].js',
-            chunkFilename: 'js/compiled/[name].js?v=[hash]',
+            chunkFilename: 'js/compiled/[name].js?v=[chunkhash]',
             path: path.resolve('public/'),
             publicPath: 'https://localhost:8080/',
         },
@@ -56,7 +56,7 @@ module.exports = function (env) {
                             presets: [
                                 ['@babel/preset-env', {
                                     useBuiltIns: 'usage',
-                                    corejs: 2,
+                                    corejs: 3,
                                 }],
                             ],
                         },
@@ -88,9 +88,11 @@ module.exports = function (env) {
                         {
                             loader: 'postcss-loader',
                             options: {
-                                plugins: [
-                                    autoprefixer,
-                                ],
+                                postcssOptions: {
+                                    plugins: [
+                                        autoprefixer,
+                                    ],
+                                },
                             },
                         },
                         {
@@ -129,6 +131,7 @@ module.exports = function (env) {
             },
         },
         optimization: {
+            chunkIds: 'natural',
             splitChunks: {
                 chunks: 'all',
             },
