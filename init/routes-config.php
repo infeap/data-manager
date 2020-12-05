@@ -69,7 +69,7 @@ return function (array $app): array {
                 $config = $config($app);
             }
 
-            if (is_array($config)) {
+            if (is_iterable($config)) {
                 $configArray = [];
 
                 foreach ($config as $key => $value) {
