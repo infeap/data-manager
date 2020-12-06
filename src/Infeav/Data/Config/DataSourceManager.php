@@ -30,6 +30,9 @@ class DataSourceManager extends AbstractPluginManager
         parent::__construct($serviceManager, $serviceTypesConfig);
     }
 
+    /**
+     * @return DataSource[]
+     */
     public function getAllDataSources(): array
     {
         if ($this->dataSources === null) {
@@ -87,7 +90,6 @@ class DataSourceManager extends AbstractPluginManager
 
     public function getDataSource(string $name): ?DataSource
     {
-        /** @var DataSource $dataSource */
         foreach ($this->getAllDataSources() as $dataSource) {
             if ($dataSource->getName() === $name) {
                 return $dataSource;
@@ -101,7 +103,6 @@ class DataSourceManager extends AbstractPluginManager
     {
         $permittedDataSources = [];
 
-        /** @var DataSource $dataSource */
         foreach ($this->getAllDataSources() as $dataSource) {
             $dataSourceName = $dataSource->getName();
 

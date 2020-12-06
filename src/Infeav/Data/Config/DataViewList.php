@@ -13,6 +13,10 @@ namespace Infeav\Data\Config;
 class DataViewList implements \IteratorAggregate
 {
 
+    /**
+     * @param $dataViews DataView[]
+     * @param bool|null $isComplete
+     */
     public function __construct(
         protected array $dataViews = [],
         protected ?bool $isComplete = null,
@@ -32,7 +36,6 @@ class DataViewList implements \IteratorAggregate
     {
         $overview = [];
 
-        /** @var DataView $dataView */
         foreach ($this->dataViews as $dataView) {
             $overview[] = $dataView->toOverview();
         }

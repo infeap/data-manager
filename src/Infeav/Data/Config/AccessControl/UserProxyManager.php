@@ -35,6 +35,9 @@ class UserProxyManager
         protected UserSessionManager $userSessionManager,
     ) { }
 
+    /**
+     * @return UserProxy[]
+     */
     public function getUserProxies(): array
     {
         if ($this->userProxies === null) {

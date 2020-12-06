@@ -10,11 +10,9 @@
 
 namespace Infeav\Data\Config;
 
-use Infeav\Data\Config\AccessControl\Permission;
 use Infeav\Data\Config\AccessControl\PermissionManager;
 use Infeav\Data\Config\AccessControl\RoleManager;
 use Infeav\Data\Config\AccessControl\User;
-use Infeav\Data\Config\AccessControl\UserProxy;
 use Infeav\Data\Config\AccessControl\UserProxyManager;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -29,7 +27,6 @@ class AccessControl
 
     public function authenticateUser(ServerRequestInterface $request): ?User
     {
-        /** @var UserProxy $userProxy */
         foreach ($this->userProxyManager->getUserProxies() as $userProxy) {
             $userMatch = $userProxy->matchAuthentication($request);
 
@@ -43,7 +40,6 @@ class AccessControl
 
     public function getSessionUser(ServerRequestInterface $request): User
     {
-        /** @var UserProxy $userProxy */
         foreach ($this->userProxyManager->getUserProxies() as $userProxy) {
             $userMatch = $userProxy->matchSession($request);
 
@@ -62,7 +58,6 @@ class AccessControl
             $this->roleManager->getRoleNames(),
         );
 
-        /** @var Permission $permission */
         foreach ($this->permissionManager->getPermissions() as $permission) {
             if (in_array($permission->getRoleName(), $validUserRoleNames)) {
                 if ($permission->getType() === $permissionType) {

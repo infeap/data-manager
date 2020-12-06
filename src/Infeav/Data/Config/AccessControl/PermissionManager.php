@@ -62,6 +62,9 @@ class PermissionManager
         }
     }
 
+    /**
+     * @return Permission[]
+     */
     public function getPermissions(): array
     {
         return $this->permissions;

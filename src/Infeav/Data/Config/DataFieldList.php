@@ -13,6 +13,9 @@ namespace Infeav\Data\Config;
 class DataFieldList implements \IteratorAggregate
 {
 
+    /**
+     * @param DataField[] $fields
+     */
     public function __construct(
         protected array $fields = [],
     ) { }
@@ -26,7 +29,6 @@ class DataFieldList implements \IteratorAggregate
     {
         $response = [];
 
-        /** @var DataField $field */
         foreach ($this->fields as $field) {
             $response[] = $field->toResponse();
         }

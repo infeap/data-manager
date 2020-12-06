@@ -15,6 +15,9 @@ use Infeav\Data\Config\DataPartial\SubViewsPartial;
 class DataPartialList implements \IteratorAggregate
 {
 
+    /**
+     * @param DataPartial[] $dataPartials
+     */
     public function __construct(
         protected array $dataPartials = [],
     ) { }
@@ -43,7 +46,6 @@ class DataPartialList implements \IteratorAggregate
     {
         $response = [];
 
-        /** @var DataPartial $dataPartial */
         foreach ($this->dataPartials as $dataPartial) {
             $response[] = $dataPartial->toResponse();
         }
