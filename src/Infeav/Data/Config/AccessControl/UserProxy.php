@@ -28,9 +28,14 @@ class UserProxy
         protected ?UserSession $session = null,
     ) { }
 
+    public function canAuthenticate(): bool
+    {
+        return $this->dataStore && $this->identification && $this->authentication;
+    }
+
     public function matchAuthentication(ServerRequestInterface $request): ?User
     {
-        if (! ($this->dataStore && $this->identification && $this->authentication)) {
+        if (! $this->canAuthenticate()) {
             return null;
         }
 
@@ -61,9 +66,14 @@ class UserProxy
         return new User($identity, $userData, $isAuthenticated);
     }
 
+    public function canSession(): bool
+    {
+        return $this->dataStore && $this->identification && $this->session;
+    }
+
     public function matchSession(ServerRequestInterface $request): ?User
     {
-        if (! ($this->dataStore && $this->identification && $this->session)) {
+        if (! $this->canSession()) {
             return null;
         }
 

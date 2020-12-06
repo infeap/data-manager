@@ -25,6 +25,17 @@ class AccessControl
         protected UserProxyManager $userProxyManager,
     ) { }
 
+    public function offerAuthentication(): bool
+    {
+        foreach ($this->userProxyManager->getUserProxies() as $userProxy) {
+            if ($userProxy->canAuthenticate()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function authenticateUser(ServerRequestInterface $request): ?User
     {
         foreach ($this->userProxyManager->getUserProxies() as $userProxy) {

@@ -33,7 +33,7 @@ class SessionHandler implements RequestHandlerInterface
         return new JsonResponse([
             'user' => [
                 'isAuthenticated' => $sessionUser->isAuthenticated(),
-                'offerLogin' => ! $sessionUser->isAuthenticated() && ! $dataSources->isComplete(),
+                'offerLogin' => ! $sessionUser->isAuthenticated() && $this->accessControl->offerAuthentication(),
             ],
             'dataSources' => $dataSources->toOverview(),
         ]);
