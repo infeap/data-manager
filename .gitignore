@@ -2,21 +2,11 @@
 # Infeav Data Manager (https://www.infeav.org/data-manager)
 # open source project
 
-.idea/
-.project/
-.settings/
-nbproject/
-.buildpath
-.project
+# Add your local OS and IDE files to your global .gitignore file
+# or to .git/info/exclude for this project only
 
 /node_modules/
 /vendor/
 
 /public/.htaccess
 /public/.htpasswd
-
-composer.phar
-
-.DS_Store
-Desktop.ini
-Thumbs.db
