@@ -47,6 +47,8 @@
         }
     },
     "scripts": {
+        "postinstall": "husky install",
+
         "compile-to-deploy": "webpack --config public-src/config/webpack/compile.js --env production",
         "compile-to-debug": "webpack --config public-src/config/webpack/compile.js --env debug",
         "start-dev-server": "webpack serve --config public-src/config/webpack/dev.js"
