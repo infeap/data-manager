@@ -8,12 +8,12 @@
 -->
 
 <template>
-    <div class="-component" data-name="data-view">
-        <div class="-partials -card">
+    <div class="-component -data-view" data-name="data-view">
+        <div class="-data-partials -card">
             <inf-load :flag="loading">
-                <template v-if="partials.length">
-                    <inf-data-partial v-for="(partial, i) in partials" :key="i"
-                        :data-path="dataPath" :partial="partial" />
+                <template v-if="dataPartials.length">
+                    <inf-data-partial v-for="(dataPartial, i) in dataPartials" :key="i"
+                        :data-path="dataPath" :data-partial="dataPartial" />
                 </template><template v-else>
                     <div class="-no-data">{{ 'data_views.no_tools.label' | trans }}</div>
                 </template>
@@ -27,13 +27,14 @@
 </template>
 
 <script>
-    import partialComponent from './data-partial.vue'
+    import dataPartialComponent from './data-partial.vue'
 
     export default {
         data() {
             return {
                 loading: true,
-                partials: [],
+
+                dataPartials: [],
                 hasAnnotationsSupport: false,
             }
         },
@@ -48,7 +49,7 @@
             },
         },
         components: {
-            'inf-data-partial': partialComponent,
+            'inf-data-partial': dataPartialComponent,
         },
         watch: {
             $route(toRoute) {
@@ -63,15 +64,17 @@
 
                 this.infetch.get('/api/v1/data-view', {
                     query: {
-                        path: this.dataPath,
+                        'data-path': this.dataPath,
                     },
                 }).then((response) => {
                     if (response.parsedBody) {
-                        this.partials = response.parsedBody.partials
+                        this.dataPartials = response.parsedBody.dataPartials
                         this.hasAnnotationsSupport = response.parsedBody.hasAnnotationsSupport
 
-                        if (this.partials.length === 1 && this.partials[0].type == 'sub_views' && this.partials[0].subViews.length === 1) {
-                            this.$router.replace({ name: 'structure', params: { dataPath: [...this.dataPath.split('/'), this.partials[0].subViews[0].id] } })
+                        if (this.isActiveView) {
+                            if (this.dataPartials.length === 1 && this.dataPartials[0].type == 'sub_views' && this.dataPartials[0].subViews.length === 1) {
+                                this.$router.replace({ name: 'structure', params: { dataPath: [...this.dataPath.split('/'), this.dataPartials[0].subViews[0].slug] } })
+                            }
                         }
                     } else {
                         throw new Error('Unable to parse response body')

@@ -30,13 +30,17 @@ $(document).ready(() => {
 
                     $startElement.before($mainVmElement)
 
-                    mainVm.init({ rootElement: $mainVmElement[0] }).then(() => {
+                    mainVm.init({ containerElement: $mainVmElement[0] }).then(() => {
                         $startElement.remove()
+                    }).catch((error) => {
+                        console.error('[Infeav Data Manager] Failed to initialize main VM', error)
                     })
                 }
-            )
+            ).catch((error) => {
+                console.error('[Infeav Data Manager] Unable to load main VM dynamic module', error)
+            })
         }).catch((error) => {
-            console.warn('[Infeav Data Manager] Unable to load main VM translations',
+            console.error('[Infeav Data Manager] Unable to load main VM translations',
                 error.response && error.response.parsedBody ? error.response.parsedBody : error)
         })
     } else {

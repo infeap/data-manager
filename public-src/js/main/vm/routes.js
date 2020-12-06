@@ -7,8 +7,12 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+import userRoutes from './routes/user'
 import structure from './routes/structure'
 
 export default [
+    ...userRoutes,
+
+    // Last, because catches all
     structure,
 ]

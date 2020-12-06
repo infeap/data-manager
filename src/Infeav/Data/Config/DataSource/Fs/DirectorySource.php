@@ -15,9 +15,6 @@ use Infeav\Data\Config\DataSource;
 class DirectorySource extends DataSource
 {
 
-    public function getIcon(): string
-    {
-        return $this->getMetaValue('icon', 'folder');
-    }
+    protected ?string $defaultIcon = 'folder';
 
 }

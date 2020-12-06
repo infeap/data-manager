@@ -8,11 +8,11 @@
 -->
 
 <template>
-    <nav class="-partial" data-type="sub-views">
-        <template v-if="partial.subViews.length">
+    <nav class="-data-partial" data-type="sub-views">
+        <template v-if="dataPartial.subViews.length">
             <ul>
-                <li v-for="subView in partial.subViews" :key="subView.id">
-                    <router-link :to="{ name: 'structure', params: { dataPath: [...dataPathSegments, subView.id] } }">
+                <li v-for="subView in dataPartial.subViews" :key="subView.slug">
+                    <router-link :to="{ name: 'structure', params: { dataPath: [...dataPathSegments, subView.slug] } }">
                         <b-icon v-if="subView.icon" :icon="subView.icon" class="mr-1" />
 
                         {{ subView.label | transOnDemand }}
@@ -30,17 +30,12 @@
 </template>
 
 <script>
+    import dataPartialMixin from '../data-partial-mixin'
+
     export default {
-        props: {
-            dataPath: {
-                type: String,
-                required: true,
-            },
-            partial: {
-                type: Object,
-                required: true,
-            },
-        },
+        mixins: [
+            dataPartialMixin,
+        ],
         computed: {
             dataPathSegments() {
                 return this.dataPath.split('/')

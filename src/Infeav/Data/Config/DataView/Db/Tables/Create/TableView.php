@@ -15,13 +15,8 @@ use Infeav\Data\Config\DataView\DbBasedView;
 class TableView extends DbBasedView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'table',
-            'icon' => 'file',
-            'label' => 'trans:data_views.db.table.label',
-        ]);
-    }
+    protected ?string $name = 'name';
+    protected ?string $icon = 'file';
+    protected ?string $label = 'trans:data_views.db.table.label';
 
 }

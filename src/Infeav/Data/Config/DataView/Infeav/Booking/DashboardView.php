@@ -15,12 +15,7 @@ use Infeav\Data\Config\DataView\Infeav\BookingView;
 class DashboardView extends BookingView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'dashboard',
-            'label' => 'trans:data_views.infeav.booking.dashboard.label',
-        ]);
-    }
+    protected ?string $name = 'dashboard';
+    protected ?string $label = 'trans:data_views.infeav.booking.dashboard.label';
 
 }

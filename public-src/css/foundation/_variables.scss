@@ -7,12 +7,61 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+// Color system
+
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
 $gray-500: darken(#adb5bd, 5%);
+$gray-600: #6c757d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
 
-$body-bg: #f8f9fa; // = $gray-100
-$body-color: #343a40; // == $gray-800
+$blue: #0096c8;
 
+
+// Body
+
+$body-bg: $gray-100;
+$body-color: $gray-800;
+
+
+// Components
+
+$border-radius-xs: 2px;
 $border-radius-sm: 4px;
 $border-radius: 6px;
 
+
+// Typography
+
 $hr-margin-y: 2rem;
+
+
+// Buttons + Forms
+
+$input-btn-padding-y: 0.3rem;
+
+
+// Buttons
+
+$btn-border-radius-sm: $border-radius-xs;
+$btn-border-radius: $border-radius-sm;
+$btn-border-radius-lg: $border-radius-sm;
+
+
+// Forms
+
+$input-bg: rgba(white, 0.33);
+
+$input-color: $body-color;
+$input-border-color: $gray-500;
+$input-box-shadow: inset 0 3px 2px rgba(black, 0.1);
+
+$input-border-radius-sm: $border-radius-xs;
+$input-border-radius: $border-radius-sm;
+$input-border-radius-lg: $border-radius-sm;
+
+$input-focus-border-color: $blue;

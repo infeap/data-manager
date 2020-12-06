@@ -15,19 +15,7 @@ use Infeav\Data\Config\DataSource;
 class ReflectionSource extends DataSource
 {
 
-    public function getId(): string
-    {
-        return 'reflection';
-    }
-
-    public function getIcon(): string
-    {
-        return $this->getMetaValue('icon', 'gear-fill');
-    }
-
-    public function getLabel(): string
-    {
-        return 'trans:data_views.reflection.label';
-    }
+    protected ?string $defaultIcon = 'gear-fill';
+    protected ?string $defaultLabel = 'trans:data_views.reflection.label';
 
 }

@@ -20,3 +20,7 @@ a, button, .btn {
         transform: scale(0.96) translate(0, 0.05em);
     }
 }
+
+.btn {
+    transition: none;
+}

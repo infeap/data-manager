@@ -13,7 +13,12 @@ namespace Infeav\Data\Config;
 abstract class DataPartial
 {
 
-    abstract public function getType(): string;
+    protected ?string $type = null;
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
 
     public function toResponse(): array
     {

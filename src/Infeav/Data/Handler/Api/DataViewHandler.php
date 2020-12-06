@@ -11,7 +11,7 @@
 namespace Infeav\Data\Handler\Api;
 
 use Infeav\Data\Config\AccessControl;
-use Infeav\Data\Config\DataSourcesManager;
+use Infeav\Data\Config\DataSourceManager;
 use Infeav\Foundation\Http\Response\ApiResponse;
 use Infeav\Foundation\Http\Response\ApiResponseException;
 use Laminas\Diactoros\Response\JsonResponse;
@@ -23,19 +23,15 @@ class DataViewHandler implements RequestHandlerInterface
 {
     use DataPathTrait;
 
-    protected AccessControl $accessControl;
-    protected DataSourcesManager $dataSourcesManager;
-
-    public function __construct(AccessControl $accessControl, DataSourcesManager $dataSourcesManager)
-    {
-        $this->accessControl = $accessControl;
-        $this->dataSourcesManager = $dataSourcesManager;
-    }
+    public function __construct(
+        protected AccessControl $accessControl,
+        protected DataSourceManager $dataSourceManager,
+    ) { }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $sessionUser = $this->accessControl->getSessionUser($request);
-        $dataSources = $this->dataSourcesManager->getDataSourcesWithPermission('read', $sessionUser);
+        $dataSources = $this->dataSourceManager->getDataSources(forUser: $sessionUser, withPermissionTo: 'read');
 
         try {
             $dataPathSegments = $this->getDataPathSegments($request);
@@ -46,7 +42,7 @@ class DataViewHandler implements RequestHandlerInterface
         }
 
         return new JsonResponse([
-            'partials' => $requestedDataView->getPartials()->toResponse(),
+            'dataPartials' => $requestedDataView->getDataPartials()->toResponse(),
             'hasAnnotationsSupport' => $requestedDataSource->hasAnnotationsSupport(),
         ]);
     }

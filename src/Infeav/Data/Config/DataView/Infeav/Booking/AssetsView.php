@@ -15,12 +15,7 @@ use Infeav\Data\Config\DataView\Infeav\BookingView;
 class AssetsView extends BookingView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'assets',
-            'label' => 'trans:data_views.infeav.booking.assets.label',
-        ]);
-    }
+    protected ?string $name = 'assets';
+    protected ?string $label = 'trans:data_views.infeav.booking.assets.label';
 
 }

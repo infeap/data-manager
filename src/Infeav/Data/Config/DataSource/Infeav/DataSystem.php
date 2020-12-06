@@ -17,10 +17,7 @@ use Infeav\Data\Config\DataView\Infeav\Data\CreateView;
 class DataSystem extends InfeavSource
 {
 
-    public function getIcon(): string
-    {
-        return $this->getMetaValue('icon', 'collection-fill');
-    }
+    protected ?string $defaultIcon = 'collection-fill';
 
     public function isUsableForAnnotations(): bool
     {

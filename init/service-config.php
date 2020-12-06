@@ -69,7 +69,7 @@ return function (array $app): array {
                 'app_version' => $app['version'],
                 'app_context' => $app['context'],
                 'app_config' => array_filter($app['config'],
-                    fn($key) => ! in_array($key, ['data_sources', 'access_control']), ARRAY_FILTER_USE_KEY),
+                    fn ($key) => ! in_array($key, ['data_sources', 'access_control']), ARRAY_FILTER_USE_KEY),
             ],
         ],
 

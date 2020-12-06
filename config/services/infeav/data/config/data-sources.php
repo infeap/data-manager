@@ -10,11 +10,11 @@
 
 return [
     'factories' => [
-        \Infeav\Data\Config\DataSourcesManager::class => \Infeav\Data\Config\DataSourcesManagerFactory::class,
+        \Infeav\Data\Config\DataSourceManager::class => \Infeav\Data\Config\DataSourceManagerFactory::class,
     ],
     'services' => [
         'config' => [
-            \Infeav\Data\Config\DataSourcesManager::class => [
+            \Infeav\Data\Config\DataSourceManager::class => [
                 'types' => [
                     'infeav/data' => \Infeav\Data\Config\DataSource\Infeav\DataSystemFactory::class,
                     'infeav/booking' => \Infeav\Data\Config\DataSource\Infeav\BookingSystemFactory::class,

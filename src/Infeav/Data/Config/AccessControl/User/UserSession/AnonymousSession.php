@@ -18,9 +18,9 @@ use Psr\Http\Message\ServerRequestInterface;
 class AnonymousSession extends UserSession
 {
 
-    public function matchIdentity(ServerRequestInterface $request, UserIdentification $identification): ?UserIdentity
+    public function match(ServerRequestInterface $request, UserIdentification $identification): ?UserIdentity
     {
-        return $identification->matchIdentity($request);
+        return $identification->match($request);
     }
 
 }

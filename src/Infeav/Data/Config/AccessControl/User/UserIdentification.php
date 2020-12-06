@@ -15,7 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class UserIdentification
 {
 
-    abstract public function matchIdentity(ServerRequestInterface $request): ?UserIdentity;
+    abstract public function match(ServerRequestInterface $request): ?UserIdentity;
 
     abstract public function getUserData(UserIdentity $identity, UserDataStore $dataStore): ?UserData;
 

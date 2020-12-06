@@ -15,6 +15,6 @@ use Psr\Http\Message\ServerRequestInterface;
 abstract class UserAuthentication
 {
 
-    abstract public function authenticate(UserIdentity $identity, ServerRequestInterface $request): bool;
+    abstract public function authenticate(UserIdentity $identity, UserData $userData, ServerRequestInterface $request): bool;
 
 }

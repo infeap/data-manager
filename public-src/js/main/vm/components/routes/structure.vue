@@ -8,92 +8,46 @@
 -->
 
 <template>
-    <div class="-component" data-name="routes/structure">
-        <template v-if="loading">
-
-            <div class="-loading text-center" style="margin: 6rem 0 4rem 0">
-                <inf-spinner />
-            </div>
-
-        </template><template v-else>
-
+    <div class="-component -has-structure-container" data-name="routes/structure">
+        <inf-load-structure :flag="loading">
             <inf-data-sources />
             <inf-data-views />
-
-        </template>
+        </inf-load-structure>
     </div>
 </template>
 
 <script>
-    import $ from 'jquery-slim'
+    import structureMixin from './structure-mixin'
 
-    import dataSourcesComponent from '../data/data-sources.vue'
     import dataViewsComponent from '../data/data-views.vue'
 
     export default {
-        data() {
-            return {
-                loading: true,
-            }
-        },
+        mixins: [
+            structureMixin,
+        ],
         components: {
-            'inf-data-sources': dataSourcesComponent,
             'inf-data-views': dataViewsComponent,
         },
         methods: {
-            switchBodyLayout(name) {
-                let $body = $('body')
-                let $bodyArticle = $body.children('article:first')
-
-                $body.removeClass('inf-has-basic-message inf-has-main-layout')
-                $bodyArticle.removeClass('inf-basic-message inf-main-layout')
-
-                switch (name) {
-                    case 'basic-message':
-                        $body.addClass('inf-has-basic-message')
-                        $bodyArticle.addClass('inf-basic-message')
-                        break
-                    case 'main':
-                        $body.addClass('inf-has-main-layout')
-                        $bodyArticle.addClass('inf-main-layout')
-                        break
-                }
-            },
-            auth() {
-                this.$store.dispatch('auth').then(() => {
-                    if (this.$store.state.user.isAuthenticated) {
-                        if (this.$store.state.dataSources.list.length) {
-                            // ToDo: Show list
-                            this.switchBodyLayout('main')
-                        } else {
-                            // ToDo: Show minimal user data + logout
-                        }
+            init() {
+                if (this.$store.state.user.isAuthenticated) {
+                    if (this.$store.state.dataSources.list.length) {
+                        this.switchBodyLayout('main')
                     } else {
-                        if (this.$store.state.dataSources.list.length) {
-                            if (this.$store.state.user.offerLogin) {
-                                // ToDo: Show list + login fore "more" (with lock icon)
-                            } else {
-                                // ToDo: Show list
-                            }
-
-                            this.switchBodyLayout('main')
+                        // ToDo: Redirect to (minimal; basic message?) user data ("dashboard" panel) + logout option
+                    }
+                } else {
+                    if (this.$store.state.dataSources.list.length) {
+                        this.switchBodyLayout('main')
+                    } else {
+                        if (this.$store.state.user.offerLogin) {
+                            // ToDo: Redirect to user/auth route
                         } else {
-                            if (this.$store.state.user.offerLogin) {
-                                // ToDo: Show login
-                            } else {
-                                // ToDo: Show setup wizard
-                            }
+                            // ToDo: Show setup wizard
                         }
                     }
-
-                    this.loading = false
-                }).catch(() => {
-                    // ToDo: Differentiate between recoverable and unrecoverable errors and show respective basic message template
-                })
+                }
             },
-        },
-        mounted() {
-            this.auth()
         },
     }
 </script>

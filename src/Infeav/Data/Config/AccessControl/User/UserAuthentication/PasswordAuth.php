@@ -11,13 +11,14 @@
 namespace Infeav\Data\Config\AccessControl\User\UserAuthentication;
 
 use Infeav\Data\Config\AccessControl\User\UserAuthentication;
+use Infeav\Data\Config\AccessControl\User\UserData;
 use Infeav\Data\Config\AccessControl\User\UserIdentity;
 use Psr\Http\Message\ServerRequestInterface;
 
 class PasswordAuth extends UserAuthentication
 {
 
-    public function authenticate(UserIdentity $identity, ServerRequestInterface $request): bool
+    public function authenticate(UserIdentity $identity, UserData $userData, ServerRequestInterface $request): bool
     {
         return false; // ToDo
     }

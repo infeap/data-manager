@@ -15,9 +15,6 @@ use Infeav\Data\Config\DataSource\RemoteSource;
 class HttpSource extends RemoteSource
 {
 
-    public function getIcon(): string
-    {
-        return $this->getMetaValue('icon', 'file-earmark-arrow-down');
-    }
+    protected ?string $defaultIcon = 'file-earmark-arrow-down';
 
 }

@@ -18,14 +18,10 @@ use Laminas\Db\Metadata\MetadataInterface;
 abstract class LaminasDbSource extends DbSource
 {
 
-    protected DbAdapter $dbAdapter;
-    protected MetadataInterface $dbMeta;
-
-    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta)
-    {
-        $this->dbAdapter = $dbAdapter;
-        $this->dbMeta = $dbMeta;
-    }
+    public function __construct(
+        protected DbAdapter $dbAdapter,
+        protected MetadataInterface $dbMeta,
+    ) { }
 
     public function getDbAdapter(): DbAdapter
     {

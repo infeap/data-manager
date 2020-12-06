@@ -27,10 +27,7 @@ class TableView extends DbBasedView
         parent::__construct($dbAdapter, $dbMeta);
 
         $this->tableName = $tableName;
-
-        $this->setMeta([
-            'name' => $tableName,
-        ]);
+        $this->name = $tableName;
     }
 
     public function toOverview(): array

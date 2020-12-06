@@ -16,14 +16,9 @@ use Infeav\Data\Config\DataView\DbBasedView;
 class CreateView extends DbBasedView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'new',
-            'icon' => 'plus-circle',
-            'label' => 'trans:data_views.new.label',
-        ]);
-    }
+    protected ?string $name = 'new';
+    protected ?string $icon = 'plus-circle';
+    protected ?string $label = 'trans:data_views.new.label';
 
     public function assembleSubViews(): array
     {

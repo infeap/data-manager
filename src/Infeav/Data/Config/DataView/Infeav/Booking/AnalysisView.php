@@ -15,12 +15,7 @@ use Infeav\Data\Config\DataView\Infeav\BookingView;
 class AnalysisView extends BookingView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'analysis',
-            'label' => 'trans:data_views.infeav.booking.analysis.label',
-        ]);
-    }
+    protected ?string $name = 'analysis';
+    protected ?string $label = 'trans:data_views.infeav.booking.analysis.label';
 
 }

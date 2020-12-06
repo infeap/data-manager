@@ -13,28 +13,25 @@ namespace Infeav\Data\Config\AccessControl\User;
 class UserData
 {
 
-    protected array $data;
-
     protected ?array $roleNames = null;
 
-    public function __construct(array $data = [])
-    {
-        $this->data = $data;
-    }
+    public function __construct(
+        protected array $data = [],
+    ) { }
 
     public function getRoleNames(): array
     {
         if ($this->roleNames === null) {
             $this->roleNames = [];
 
-            foreach (['roles', 'role'] as $roleDataKey) {
-                if (isset($this->data[$roleDataKey])) {
-                    if (is_string($this->data[$roleDataKey])) {
-                        $this->roleNames[] = $this->data[$roleDataKey];
-                    } else if (is_iterable($this->data[$roleDataKey])) {
-                        foreach ($this->data[$roleDataKey] as $role) {
-                            if (is_string($role)) {
-                                $this->roleNames[] = $role;
+            foreach (['roles', 'role'] as $roleKey) {
+                if (isset($this->data[$roleKey])) {
+                    if (is_string($this->data[$roleKey])) {
+                        $this->roleNames[] = $this->data[$roleKey];
+                    } else if (is_iterable($this->data[$roleKey])) {
+                        foreach ($this->data[$roleKey] as $roleName) {
+                            if (is_string($roleName)) {
+                                $this->roleNames[] = $roleName;
                             }
                         }
                     }

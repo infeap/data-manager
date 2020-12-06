@@ -8,7 +8,7 @@
 -->
 
 <template>
-    <div class="-component" data-name="data-views">
+    <div class="-component -data-views-container" data-name="data-views">
         <inf-data-view v-for="(dataPath, i) in dataPaths" :key="i"
             :data-path="dataPath" :is-active-view="i + 1 === dataPaths.length" />
     </div>
@@ -17,9 +17,12 @@
 <script>
     import isString from 'lodash/isString'
 
-    import dataView from './data-view.vue'
+    import dataViewComponent from './data-view.vue'
 
     export default {
+        components: {
+            'inf-data-view': dataViewComponent,
+        },
         computed: {
             dataPaths() {
                 let dataPaths = []
@@ -38,9 +41,6 @@
 
                 return dataPaths
             },
-        },
-        components: {
-            'inf-data-view': dataView,
         },
     }
 </script>

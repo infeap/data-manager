@@ -10,7 +10,7 @@
 
 namespace Infeav\Data\Config\DataSource\Infeav;
 
-use Infeav\Data\Config\DataSourcesManager;
+use Infeav\Data\Config\DataSourceManager;
 use Laminas\ServiceManager\ServiceManager;
 
 class DataSystemFactory
@@ -18,18 +18,18 @@ class DataSystemFactory
 
     public function __invoke(ServiceManager $serviceManager, string $serviceName, array $dataSourceConfig = [])
     {
-        $dataSourceId = $dataSourceConfig['data_source'] ?? null;
+        $dataSourceName = $dataSourceConfig['data_source_name'] ?? null;
 
-        if (! $dataSourceId) {
+        if (! $dataSourceName) {
             // ToDo: Throw exception
         }
 
-        /** @var DataSourcesManager $dataSourcesManager */
-        $dataSourcesManager = $serviceManager->get(DataSourcesManager::class);
+        /** @var DataSourceManager $dataSourceManager */
+        $dataSourceManager = $serviceManager->get(DataSourceManager::class);
 
         return new DataSystem(
-            $dataSourceId,
-            $dataSourcesManager,
+            $dataSourceName,
+            $dataSourceManager,
         );
     }
 

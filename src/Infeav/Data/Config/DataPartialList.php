@@ -15,23 +15,20 @@ use Infeav\Data\Config\DataPartial\SubViewsPartial;
 class DataPartialList implements \IteratorAggregate
 {
 
-    protected array $partials;
-
-    public function __construct(array $partials = [])
-    {
-        $this->partials = $partials;
-    }
+    public function __construct(
+        protected array $dataPartials = [],
+    ) { }
 
     public function getIterator(): \Traversable
     {
-        return new \ArrayIterator($this->partials);
+        return new \ArrayIterator($this->dataPartials);
     }
 
-    public function findSubView(string $id): ?DataView
+    public function findSubView(string $slug): ?DataView
     {
-        foreach ($this->partials as $partial) {
-            if ($partial instanceof SubViewsPartial) {
-                $subView = $partial->findSubView($id);
+        foreach ($this->dataPartials as $dataPartial) {
+            if ($dataPartial instanceof SubViewsPartial) {
+                $subView = $dataPartial->findSubView($slug);
 
                 if ($subView) {
                     return $subView;
@@ -46,9 +43,9 @@ class DataPartialList implements \IteratorAggregate
     {
         $response = [];
 
-        /** @var DataPartial $partial */
-        foreach ($this->partials as $partial) {
-            $response[] = $partial->toResponse();
+        /** @var DataPartial $dataPartial */
+        foreach ($this->dataPartials as $dataPartial) {
+            $response[] = $dataPartial->toResponse();
         }
 
         return $response;

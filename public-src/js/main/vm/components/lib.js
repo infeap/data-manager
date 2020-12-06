@@ -11,14 +11,14 @@ import Vue from 'vue'
 
 import slideUpDown from 'vue-slide-up-down'
 
-import loading from './lib/loading.vue'
+import load from './lib/load.vue'
 import spinner from './lib/spinner.vue'
 
 export default {
     init() {
         Vue.component('slide-up-down', slideUpDown)
 
-        Vue.component('inf-load', loading)
+        Vue.component('inf-load', load)
         Vue.component('inf-spinner', spinner)
     },
 }

@@ -7,8 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-#inf-main-vm .-component {
-    &[data-name="layout/user-panel"] {
+#inf-main-vm {
+    .-component[data-name="layout/user-panel"] {
         position: absolute;
         z-index: 100;
         right: 0;

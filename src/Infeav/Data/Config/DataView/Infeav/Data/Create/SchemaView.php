@@ -10,18 +10,27 @@
 
 namespace Infeav\Data\Config\DataView\Infeav\Data\Create;
 
+use Infeav\Data\Config\DataPartial\FieldsPartial;
 use Infeav\Data\Config\DataView\DbBasedView;
 
 class SchemaView extends DbBasedView
 {
 
-    public function initMeta(): void
+    protected ?string $name = 'schema';
+    protected ?string $icon = 'bounding-box';
+    protected ?string $label = 'trans:data_views.infeav.data.schema.label';
+
+    protected function assembleDataPartials(): array
     {
-        $this->setMeta([
-            'name' => 'schema',
-            'icon' => 'bounding-box',
-            'label' => 'trans:data_views.infeav.data.schema.label',
-        ]);
+        return [
+            new FieldsPartial([
+                [
+                    'type' => 'text',
+                    'name' => 'title',
+                    'label' => 'trans:data_partials.fields.title.label',
+                ],
+            ]),
+        ];
     }
 
 }

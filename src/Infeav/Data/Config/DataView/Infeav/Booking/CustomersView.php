@@ -15,12 +15,7 @@ use Infeav\Data\Config\DataView\Infeav\BookingView;
 class CustomersView extends BookingView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'customers',
-            'label' => 'trans:data_views.infeav.booking.customers.label',
-        ]);
-    }
+    protected ?string $name = 'customers';
+    protected ?string $label = 'trans:data_views.infeav.booking.customers.label';
 
 }

@@ -11,7 +11,7 @@
 namespace Infeav\Data\Handler\Api;
 
 use Infeav\Data\Config\AccessControl;
-use Infeav\Data\Config\DataSourcesManager;
+use Infeav\Data\Config\DataSourceManager;
 use Laminas\ServiceManager\ServiceManager;
 
 class DataViewHandlerFactory
@@ -21,7 +21,7 @@ class DataViewHandlerFactory
     {
         return new DataViewHandler(
             $serviceManager->get(AccessControl::class),
-            $serviceManager->get(DataSourcesManager::class),
+            $serviceManager->get(DataSourceManager::class),
         );
     }
 

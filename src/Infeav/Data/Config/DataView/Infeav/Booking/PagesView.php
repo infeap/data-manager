@@ -15,12 +15,7 @@ use Infeav\Data\Config\DataView\Infeav\BookingView;
 class PagesView extends BookingView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'pages',
-            'label' => 'trans:data_views.infeav.booking.pages.label',
-        ]);
-    }
+    protected ?string $name = 'pages';
+    protected ?string $label = 'trans:data_views.infeav.booking.pages.label';
 
 }

@@ -7,8 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-#inf-main-vm .-component {
-    &[data-name="data-sources"] {
+#inf-main-vm {
+    .-component[data-name="data-sources"] {
         flex: 0 1 13rem;
         height: 100%;
         padding: 1.5rem 0 1.5rem 1.5rem;
@@ -38,6 +38,19 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
+            }
+
+            &.-login {
+                margin-top: 2.5rem;
+
+                &:before {
+                    content: "";
+                    position: absolute;
+                    left: 0; right: 1.5rem;
+                    top: -1.25rem; height: 2px;
+                    opacity: 0.3;
+                    background: $body-bg;
+                }
             }
         }
 

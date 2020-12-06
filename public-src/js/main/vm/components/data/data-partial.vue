@@ -9,32 +9,27 @@
 
 <template>
     <component :is="'inf-' + normalizedPartialType"
-        :data-path="dataPath" :partial="partial" />
+        :data-path="dataPath" :data-partial="dataPartial" />
 </template>
 
 <script>
-    import separator from './data-partials/separator.vue'
-    import subViews from './data-partials/sub-views.vue'
+    import dataPartialMixin from './data-partial-mixin'
+
+    import fieldsComponent from './data-partials/fields.vue'
+    import subViewsComponent from './data-partials/sub-views.vue'
 
     export default {
-        props: {
-            dataPath: {
-                type: String,
-                required: true,
-            },
-            partial: {
-                type: Object,
-                required: true,
-            },
+        mixins: [
+            dataPartialMixin,
+        ],
+        components: {
+            'inf-fields': fieldsComponent,
+            'inf-sub-views': subViewsComponent,
         },
         computed: {
             normalizedPartialType() {
-                return this.partial.type.replace('/', '-').replace('_', '-')
+                return this.dataPartial.type.split('/')[0].replaceAll('_', '-')
             },
         },
-        components: {
-            'inf-separator': separator,
-            'inf-sub-views': subViews,
-        }
     }
 </script>

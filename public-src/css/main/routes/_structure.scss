@@ -7,14 +7,18 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-#inf-main-vm .-component {
-    &[data-name="routes/structure"] {
+#inf-main-vm {
+    .-has-structure-container {
+        height: 100%;
+    }
+
+    .-structure-container {
         height: 100%;
 
         display: flex;
         align-items: stretch;
 
-        > .-loading {
+        > .inf-load {
             margin: 3.4rem 0 4rem 0 !important;
             flex: 1;
         }

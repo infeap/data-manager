@@ -7,4 +7,19 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-@import 'data-partials/separator';
+#inf-main-vm {
+    .-data-view {
+        .-data-partial + .-data-partial {
+            &:before {
+                content: '';
+                display: block;
+
+                margin: 1rem 0;
+                height: 2px;
+                opacity: 0.25;
+                color: inherit;
+                background: currentColor;
+            }
+        }
+    }
+}

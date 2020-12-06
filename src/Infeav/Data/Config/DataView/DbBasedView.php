@@ -17,18 +17,9 @@ use Laminas\Db\Metadata\MetadataInterface;
 abstract class DbBasedView extends DataView
 {
 
-    protected DbAdapter $dbAdapter;
-    protected MetadataInterface $dbMeta;
-
-    public function __construct(DbAdapter $dbAdapter, MetadataInterface $dbMeta)
-    {
-        $this->dbAdapter = $dbAdapter;
-        $this->dbMeta = $dbMeta;
-
-        $this->initMeta();
-    }
-
-    public function initMeta(): void
-    { }
+    public function __construct(
+        protected DbAdapter $dbAdapter,
+        protected MetadataInterface $dbMeta,
+    ) { }
 
 }

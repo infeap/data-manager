@@ -11,8 +11,8 @@
 namespace Infeav\Data\Config;
 
 use Infeav\Data\Config\AccessControl\Permission;
-use Infeav\Data\Config\AccessControl\PermissionsManager;
-use Infeav\Data\Config\AccessControl\RolesManager;
+use Infeav\Data\Config\AccessControl\PermissionManager;
+use Infeav\Data\Config\AccessControl\RoleManager;
 use Infeav\Data\Config\AccessControl\User;
 use Infeav\Data\Config\AccessControl\UserProxy;
 use Infeav\Data\Config\AccessControl\UserProxyManager;
@@ -21,16 +21,11 @@ use Psr\Http\Message\ServerRequestInterface;
 class AccessControl
 {
 
-    protected PermissionsManager $permissionsManager;
-    protected RolesManager $rolesManager;
-    protected UserProxyManager $userProxyManager;
-
-    public function __construct(PermissionsManager $permissionsManager, RolesManager $rolesManager, UserProxyManager $userProxyManager)
-    {
-        $this->permissionsManager = $permissionsManager;
-        $this->rolesManager = $rolesManager;
-        $this->userProxyManager = $userProxyManager;
-    }
+    public function __construct(
+        protected PermissionManager $permissionManager,
+        protected RoleManager $roleManager,
+        protected UserProxyManager $userProxyManager,
+    ) { }
 
     public function authenticateUser(ServerRequestInterface $request): ?User
     {
@@ -60,15 +55,18 @@ class AccessControl
         return new User();
     }
 
-    public function hasPermission(User $user, string $permissionType, string $dataSourceId): bool
+    public function hasPermission(User $user, string $permissionType, string $dataSourceName): bool
     {
-        $validUserRoleNames = array_intersect($user->getData()->getRoleNames(), $this->rolesManager->getRoleNames());
+        $validUserRoleNames = array_intersect(
+            $user->getData()->getRoleNames(),
+            $this->roleManager->getRoleNames(),
+        );
 
         /** @var Permission $permission */
-        foreach ($this->permissionsManager->getPermissions() as $permission) {
-            if ($permission->getDataSourceId() === $dataSourceId) {
+        foreach ($this->permissionManager->getPermissions() as $permission) {
+            if (in_array($permission->getRoleName(), $validUserRoleNames)) {
                 if ($permission->getType() === $permissionType) {
-                    if (in_array($permission->getRoleName(), $validUserRoleNames)) {
+                    if ($permission->getDataSourceName() === $dataSourceName) {
                         return true;
                     }
                 }

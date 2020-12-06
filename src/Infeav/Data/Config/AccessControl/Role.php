@@ -24,7 +24,7 @@ class Role
         $this->config = $config;
     }
 
-    public static function isValidConfig(array $config)
+    public static function isValidConfig(array $config): bool
     {
         if (! (isset($config['name']) && is_string($config['name']))) {
             return false;

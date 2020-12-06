@@ -26,7 +26,7 @@ class Permission
 
     public static function isValidConfig(array $config): bool
     {
-        if (! (isset($config['data_source']) && is_string($config['data_source']))) {
+        if (! (isset($config['role']) && is_string($config['role']))) {
             return false;
         }
 
@@ -34,20 +34,20 @@ class Permission
             return false;
         }
 
-        if (! in_array($config['type'], ['read', 'create', 'edit', 'delete'])) {
+        if (! in_array($config['type'], ['read', 'edit', 'create', 'delete'])) {
             return false;
         }
 
-        if (! (isset($config['role']) && is_string($config['role']))) {
+        if (! (isset($config['data_view']) && is_string($config['data_view']))) {
             return false;
         }
 
         return true;
     }
 
-    public function getDataSourceId(): string
+    public function getRoleName(): string
     {
-        return $this->config['data_source'];
+        return $this->config['role'];
     }
 
     public function getType(): string
@@ -55,9 +55,14 @@ class Permission
         return $this->config['type'];
     }
 
-    public function getRoleName(): string
+    public function getDataViewPath(): string
     {
-        return $this->config['role'];
+        return $this->config['data_view'];
+    }
+
+    public function getDataSourceName(): string
+    {
+        return $this->config['data_view'];
     }
 
 }

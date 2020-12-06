@@ -15,12 +15,7 @@ use Infeav\Data\Config\DataView\Infeav\BookingView;
 class ProcessView extends BookingView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'process',
-            'label' => 'trans:data_views.infeav.booking.process.label',
-        ]);
-    }
+    protected ?string $name = 'process';
+    protected ?string $label = 'trans:data_views.infeav.booking.process.label';
 
 }

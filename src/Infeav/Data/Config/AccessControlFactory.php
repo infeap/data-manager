@@ -10,8 +10,8 @@
 
 namespace Infeav\Data\Config;
 
-use Infeav\Data\Config\AccessControl\PermissionsManager;
-use Infeav\Data\Config\AccessControl\RolesManager;
+use Infeav\Data\Config\AccessControl\PermissionManager;
+use Infeav\Data\Config\AccessControl\RoleManager;
 use Infeav\Data\Config\AccessControl\UserProxyManager;
 use Laminas\ServiceManager\ServiceManager;
 
@@ -20,7 +20,7 @@ class AccessControlFactory
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        $accessControlConfig = $serviceManager->get('app_config')['access_control'] ?? null;
+        $accessControlConfig = $serviceManager->get('app_config')['access_control'] ?? [];
 
         if (! is_array($accessControlConfig)) {
             $accessControlConfig = [];
@@ -31,8 +31,8 @@ class AccessControlFactory
         $usersConfig = $accessControlConfig['users'] ?? [];
 
         return new AccessControl(
-            $serviceManager->build(PermissionsManager::class, $permissionsConfig),
-            $serviceManager->build(RolesManager::class, $rolesConfig),
+            $serviceManager->build(PermissionManager::class, $permissionsConfig),
+            $serviceManager->build(RoleManager::class, $rolesConfig),
             $serviceManager->build(UserProxyManager::class, $usersConfig),
         );
     }

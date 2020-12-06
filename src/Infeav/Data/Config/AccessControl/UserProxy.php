@@ -20,42 +20,29 @@ use Psr\Http\Message\ServerRequestInterface;
 class UserProxy
 {
 
-    protected array $filters;
-    protected ?UserDataStore $dataStore;
-    protected ?UserIdentification $identification;
-    protected ?UserAuthentication $authentication;
-    protected ?UserSession $session;
-
     public function __construct(
-        array $filters,
-        ?UserDataStore $dataStore,
-        ?UserIdentification $identification,
-        ?UserAuthentication $authentication,
-        ?UserSession $session)
-    {
-        $this->filters = $filters;
-        $this->dataStore = $dataStore;
-        $this->identification = $identification;
-        $this->authentication = $authentication;
-        $this->session = $session;
-    }
+        protected array $filters = [],
+        protected ?UserDataStore $dataStore = null,
+        protected ?UserIdentification $identification = null,
+        protected ?UserAuthentication $authentication = null,
+        protected ?UserSession $session = null,
+    ) { }
 
     public function matchAuthentication(ServerRequestInterface $request): ?User
     {
-        /** @var UserFilter $filter */
+        if (! ($this->dataStore && $this->identification && $this->authentication)) {
+            return null;
+        }
+
         foreach ($this->filters as $filter) {
-            if (! $filter->match($request)) {
+            if ($filter instanceof UserFilter && ! $filter->match($request)) {
                 return null;
             }
         }
 
-        if (! $this->identification) {
-            return null;
-        }
+        $identity = $this->identification->match($request);
 
-        $identity = $this->identification->matchIdentity($request);
-
-        if (! $identity || ! $this->dataStore) {
+        if (! $identity) {
             return null;
         }
 
@@ -65,11 +52,7 @@ class UserProxy
             return null;
         }
 
-        if (! $this->authentication) {
-            return null;
-        }
-
-        $isAuthenticated = $this->authentication->authenticate($identity, $request);
+        $isAuthenticated = $this->authentication->authenticate($identity, $userData, $request);
 
         if (! $isAuthenticated) {
             return null;
@@ -80,24 +63,19 @@ class UserProxy
 
     public function matchSession(ServerRequestInterface $request): ?User
     {
-        /** @var UserFilter $filter */
+        if (! ($this->dataStore && $this->identification && $this->session)) {
+            return null;
+        }
+
         foreach ($this->filters as $filter) {
-            if (! $filter->match($request)) {
+            if ($filter instanceof UserFilter &&  ! $filter->match($request)) {
                 return null;
             }
         }
 
-        if (! $this->session || ! $this->identification) {
-            return null;
-        }
-
-        $identity = $this->session->matchIdentity($request, $this->identification);
+        $identity = $this->session->match($request, $this->identification);
 
         if (! $identity) {
-            return null;
-        }
-
-        if (! $this->identification) {
             return null;
         }
 
@@ -108,9 +86,9 @@ class UserProxy
         }
 
         if ($identity instanceof UserIdentification\AnonymousIdentity) {
-            return new User(null, $userData, false);
+            return new User(data: $userData, isAuthenticated: false);
         } else {
-            return new User($identity, $userData, true);
+            return new User($identity, $userData, isAuthenticated: true);
         }
     }
 

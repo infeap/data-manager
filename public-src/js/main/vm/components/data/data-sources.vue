@@ -11,16 +11,30 @@
     <div class="-component" data-name="data-sources">
         <nav>
             <ul>
-                <li v-for="dataSource in dataSources" :key="dataSource.id">
-                    <div v-if="dataSource.icon" class="-icon">
+                <li v-for="dataSource in dataSources" :key="dataSource.slug">
+                    <span v-if="dataSource.icon" class="-icon">
                         <b-icon :icon="dataSource.icon" />
-                    </div>
+                    </span>
 
-                    <router-link :to="{ name: 'structure', params: { dataPath: dataSource.id } }">
+                    <router-link :to="{ name: 'structure', params: { dataPath: dataSource.slug } }">
                         {{ dataSource.label | transOnDemand }}
 
                         <small v-if="dataSource.description">
                             {{ dataSource.description | transOnDemand }}
+                        </small>
+                    </router-link>
+                </li>
+
+                <li v-if="offerLogin" key="login" class="-login">
+                    <span class="-icon">
+                        <b-icon icon="key-fill" />
+                    </span>
+
+                    <router-link :to="{ name: 'user/authenticate' }">
+                        {{ 'user.login.label' | trans }}
+
+                        <small>
+                            {{ 'user.login.description' | trans }}
                         </small>
                     </router-link>
                 </li>
@@ -32,10 +46,15 @@
 <script>
     export default {
         computed: {
-            dataSources: {
-                get() {
-                    return this.$store.state.dataSources.list
-                },
+            dataSources() {
+                return this.$store.state.dataSources.list
+            },
+            offerLogin() {
+                if (! this.$store.state.user.isAuthenticated && this.$store.state.user.offerLogin) {
+                    return true
+                } else {
+                    return false
+                }
             },
         },
     }

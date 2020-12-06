@@ -10,6 +10,9 @@
 
 return [
     'factories' => [
-        \Infeav\Data\Handler\Api\AuthHandler::class => \Infeav\Data\Handler\Api\AuthHandlerFactory::class,
+        \Infeav\Data\Handler\Api\User\AuthenticateHandler::class => \Infeav\Data\Handler\Api\User\AuthenticateHandlerFactory::class,
+        \Infeav\Data\Handler\Api\User\SessionHandler::class => \Infeav\Data\Handler\Api\User\SessionHandlerFactory::class,
+        \Infeav\Data\Handler\Api\DataFieldsHandler::class => \Infeav\Data\Handler\Api\DataFieldsHandlerFactory::class,
+        \Infeav\Data\Handler\Api\DataViewHandler::class => \Infeav\Data\Handler\Api\DataViewHandlerFactory::class,
     ],
 ];

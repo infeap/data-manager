@@ -22,7 +22,7 @@ trait DataPathTrait
 
     protected function getDataPathSegments(ServerRequestInterface $request): array
     {
-        $dataPath = $request->getQueryParams()['path'] ?? null;
+        $dataPath = $request->getQueryParams()['data-path'] ?? null;
 
         if ($dataPath === null) {
             throw new ApiResponseException([
@@ -57,7 +57,7 @@ trait DataPathTrait
 
         /** @var DataSource $dataSource */
         foreach ($dataSources as $dataSource) {
-            if ($dataSource->getId() === $dataPathSegments[0]) {
+            if ($dataSource->getSlug() === $dataPathSegments[0]) {
                 $requestedDataSource = $dataSource;
                 break;
             }
@@ -68,7 +68,7 @@ trait DataPathTrait
                 'status' => StatusCode::NOT_FOUND,
                 'key' => 'error.data_view.not_found',
                 'details' => [
-                    'message' => 'The requested data source has not been found',
+                    'message' => 'The requested data source has not been found or access is not permitted',
                     'dataSource' => $dataPathSegments[0],
                 ],
             ]);

@@ -16,7 +16,8 @@ return [
         'config' => [
             \Infeav\Data\Config\AccessControl\User\UserDataStoreManager::class => [
                 'types' => [
-                    'plain' => \Infeav\Data\Config\AccessControl\User\UserDataStore\PlainDataStore::class,
+                    'plain' => \Infeav\Data\Config\AccessControl\User\UserDataStore\PlainDataStoreFactory::class,
+                    'data_source' => \Infeav\Data\Config\AccessControl\User\UserDataStore\SourceDataStoreFactory::class,
                 ],
             ],
         ],

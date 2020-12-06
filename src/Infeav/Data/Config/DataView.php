@@ -15,52 +15,72 @@ use Infeav\Data\Config\DataPartial\SubViewsPartial;
 abstract class DataView
 {
 
-    protected ?array $meta = null;
-    protected ?DataPartialList $partials = null;
+    protected ?string $name = null;
+    protected ?string $slug = null;
+    protected ?string $icon = null;
+    protected ?string $defaultIcon = null;
+    protected ?string $label = null;
+    protected ?string $defaultLabel = null;
+    protected ?string $description = null;
+    protected ?string $defaultDescription = null;
 
-    public function setMeta(array $meta): void
+    protected ?DataPartialList $dataPartials = null;
+
+    public function setName(string $name): void
     {
-        $this->meta = $meta;
+        $this->name = $name;
     }
 
-    public function getMeta(): array
+    public function getName(): ?string
     {
-        if ($this->meta === null) {
-            return [];
-        }
-
-        return $this->meta;
+        return $this->name;
     }
 
-    public function getMetaValue(string $key, $defaultValue = null)
+    public function setSlug(string $slug): void
     {
-        return $this->getMeta()[$key] ?? $defaultValue;
+        $this->slug = $slug;
     }
 
-    public function getId(): ?string
+    public function getSlug(): ?string
     {
-        return $this->getMetaValue('id') ?: $this->getMetaValue('name');
+        return $this->slug ?: /* ToDo: Slugify */ $this->getName();
+    }
+
+    public function setIcon(string $icon): void
+    {
+        $this->icon = $icon;
     }
 
     public function getIcon(): ?string
     {
-        return $this->getMetaValue('icon');
+        return $this->icon ?: $this->defaultIcon;
+    }
+
+    public function setLabel(string $label): void
+    {
+        $this->label = $label;
     }
 
     public function getLabel(): ?string
     {
-        return $this->getMetaValue('label') ?: $this->getId();
+        return ($this->label ?: $this->defaultLabel) ?: $this->getName();
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     public function getDescription(): ?string
     {
-        return $this->getMetaValue('description');
+        return $this->description ?: $this->defaultDescription;
     }
 
     public function toOverview(): array
     {
         return [
-            'id' => $this->getId(),
+            'name' => $this->getName(),
+            'slug' => $this->getSlug(),
             'icon' => $this->getIcon(),
             'label' => $this->getLabel(),
             'description' => $this->getDescription(),
@@ -72,31 +92,31 @@ abstract class DataView
         return null;
     }
 
-    protected function assemblePartials(): array
+    protected function assembleDataPartials(): array
     {
-        $partials = [];
+        $dataPartials = [];
 
         $subViews = $this->assembleSubViews();
 
         if (is_array($subViews)) {
-            $partials[] = new SubViewsPartial(new DataViewList($subViews));
+            $dataPartials[] = new SubViewsPartial(new DataViewList($subViews));
         }
 
-        return $partials;
+        return $dataPartials;
     }
 
-    public function getPartials(): DataPartialList
+    public function getDataPartials(): DataPartialList
     {
-        if ($this->partials === null) {
-            $this->partials = new DataPartialList($this->assemblePartials());
+        if ($this->dataPartials === null) {
+            $this->dataPartials = new DataPartialList($this->assembleDataPartials());
         }
 
-        return $this->partials;
+        return $this->dataPartials;
     }
 
-    public function findSubView(string $id): ?DataView
+    public function findSubView(string $slug): ?DataView
     {
-        return $this->getPartials()->findSubView($id);
+        return $this->getDataPartials()->findSubView($slug);
     }
 
 }

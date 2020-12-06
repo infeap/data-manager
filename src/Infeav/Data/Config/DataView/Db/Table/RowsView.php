@@ -15,13 +15,8 @@ use Infeav\Data\Config\DataView\Db\TableBasedView;
 class RowsView extends TableBasedView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'rows',
-            'icon' => 'list',
-            'label' => 'trans:data_views.db.table.rows.label',
-        ]);
-    }
+    protected ?string $name = 'rows';
+    protected ?string $icon = 'list';
+    protected ?string $label = 'trans:data_views.db.table.rows.label';
 
 }

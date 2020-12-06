@@ -16,29 +16,37 @@ use Infeav\Data\Config\AccessControl\User\UserDataStore;
 class PlainDataStore extends UserDataStore
 {
 
-    protected array $config;
+    public function __construct(
+        protected array $config = [],
+    ) { }
 
-    public function __construct(array $config = [])
+    public static function isValidConfig(array $config): bool
     {
-        $this->config = $config;
+        foreach (array_keys($config) as $key) {
+            if (is_numeric($key)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public function getData(?string $key = null, ?string $value = null): ?UserData
     {
         if ($key === null) {
-            if ($this->isValidConfig($this->config)) {
+            if (static::isValidConfig($this->config)) {
                 return new UserData($this->config);
             }
         } else {
-            if ($this->isValidConfig($this->config)) {
+            if (static::isValidConfig($this->config)) {
                 if (isset($this->config[$key]) && $this->config[$key] === $value) {
                     return new UserData($this->config);
                 }
             } else {
                 foreach ($this->config as $configKey => $configValue) {
                     if (is_numeric($configKey) && is_array($configValue)) {
-                        if (isset($configValue[$key]) && $configValue[$key] === $value) {
-                            if ($this->isValidConfig($configValue)) {
+                        if (static::isValidConfig($configValue)) {
+                            if (isset($configValue[$key]) && $configValue[$key] === $value) {
                                 return new UserData($configValue);
                             }
                         }
@@ -48,17 +56,6 @@ class PlainDataStore extends UserDataStore
         }
 
         return null;
-    }
-
-    protected function isValidConfig(array $config)
-    {
-        foreach (array_keys($this->config) as $key) {
-            if (is_numeric($key)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
 }

@@ -12,25 +12,22 @@ namespace Infeav\Data\Config\DataSource;
 
 use Infeav\Data\Config\DataSource;
 use Infeav\Data\Config\DataSource\Db\LaminasDbSource;
-use Infeav\Data\Config\DataSourcesManager;
+use Infeav\Data\Config\DataSourceManager;
 
 abstract class DependentSource extends DataSource
 {
 
-    protected string $dependentDataSourceId;
     protected ?DataSource $dependentDataSource = null;
-    protected DataSourcesManager $dataSourcesManager;
 
-    public function __construct(string $dependentDataSourceId, DataSourcesManager $dataSourcesManager)
-    {
-        $this->dependentDataSourceId = $dependentDataSourceId;
-        $this->dataSourcesManager = $dataSourcesManager;
-    }
+    public function __construct(
+        protected string $dependentDataSourceName,
+        protected DataSourceManager $dataSourceManager,
+    ) { }
 
     public function getDependentDataSource(): LaminasDbSource
     {
         if ($this->dependentDataSource === null) {
-            $this->dependentDataSource = $this->dataSourcesManager->getDataSource($this->dependentDataSourceId);
+            $this->dependentDataSource = $this->dataSourceManager->getDataSource($this->dependentDataSourceName);
 
             if (! $this->dependentDataSource) {
                 // ToDo: Throw exception

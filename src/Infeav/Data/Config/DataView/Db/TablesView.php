@@ -13,28 +13,20 @@ namespace Infeav\Data\Config\DataView\Db;
 use Infeav\Data\Config\DataPartial\SubViewsPartial;
 use Infeav\Data\Config\DataView\Db\Tables\CreateView;
 use Infeav\Data\Config\DataView\DbBasedView;
-use Infeav\Data\Config\DataPartial\SeparatorPartial;
-use Infeav\Data\Config\DataViewList;
 
 class TablesView extends DbBasedView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'tables',
-            'icon' => 'files',
-            'label' => 'trans:data_views.db.tables.label',
-        ]);
-    }
+    protected ?string $name = 'tables';
+    protected ?string $icon = 'files';
+    protected ?string $label = 'trans:data_views.db.tables.label';
 
-    protected function assemblePartials(): array
+    protected function assembleDataPartials(): array
     {
         return [
             new SubViewsPartial([
                 new CreateView($this->dbAdapter, $this->dbMeta),
             ]),
-            new SeparatorPartial(),
             new SubViewsPartial(
                 array_map(fn ($tableName) => new TableView($this->dbAdapter, $this->dbMeta, $tableName), $this->dbMeta->getTableNames()),
             ),

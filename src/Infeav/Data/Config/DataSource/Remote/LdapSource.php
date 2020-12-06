@@ -15,9 +15,6 @@ use Infeav\Data\Config\DataSource\RemoteSource;
 class LdapSource extends RemoteSource
 {
 
-    public function getIcon(): string
-    {
-        return $this->getMetaValue('icon', 'folder-symlink');
-    }
+    protected ?string $defaultIcon = 'folder-symlink';
 
 }

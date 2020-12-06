@@ -15,13 +15,8 @@ use Infeav\Data\Config\DataView\Db\TableBasedView;
 class StructureView extends TableBasedView
 {
 
-    public function initMeta(): void
-    {
-        $this->setMeta([
-            'name' => 'structure',
-            'icon' => 'bounding-box',
-            'label' => 'trans:data_views.db.table.structure.label',
-        ]);
-    }
+    protected ?string $name = 'structure';
+    protected ?string $icon = 'bounding-box';
+    protected ?string $label = 'trans:data_views.db.table.structure.label';
 
 }

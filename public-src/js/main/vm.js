@@ -10,6 +10,7 @@
 import '../../css/main.scss'
 
 import Vue from 'vue'
+import { ButtonPlugin, FormPlugin, FormGroupPlugin, FormInputPlugin, LayoutPlugin } from 'bootstrap-vue'
 import { BootstrapVueIcons } from 'bootstrap-vue'
 
 import components from './vm/components'
@@ -20,10 +21,15 @@ import store from './vm/store'
 
 import userPanelComponent from './vm/components/layout/user-panel.vue'
 
+Vue.use(ButtonPlugin)
+Vue.use(FormPlugin)
+Vue.use(FormGroupPlugin)
+Vue.use(FormInputPlugin)
+Vue.use(LayoutPlugin)
 Vue.use(BootstrapVueIcons)
 
 export default {
-    init({ rootElement }) {
+    init({ containerElement }) {
         return new Promise((resolve, reject) => {
 
             components.init()
@@ -31,7 +37,7 @@ export default {
             plugins.init()
 
             this.instance = new Vue({
-                el: rootElement,
+                el: containerElement,
                 router: router.init(),
                 store: store.init(),
                 render(createElement) {

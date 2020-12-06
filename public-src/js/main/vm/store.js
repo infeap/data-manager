@@ -10,7 +10,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import actions from './store/actions'
 import modules from './store/modules'
 
 export default {
@@ -18,7 +17,6 @@ export default {
         Vue.use(Vuex)
 
         this.instance = new Vuex.Store({
-            actions,
             modules,
         })
 

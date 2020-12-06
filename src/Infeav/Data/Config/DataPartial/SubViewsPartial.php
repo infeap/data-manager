@@ -17,6 +17,8 @@ use Infeav\Data\Config\DataViewList;
 class SubViewsPartial extends DataPartial
 {
 
+    protected ?string $type = 'sub_views';
+
     protected DataViewList $subViews;
 
     public function __construct($subViews)
@@ -28,21 +30,16 @@ class SubViewsPartial extends DataPartial
         $this->subViews = $subViews;
     }
 
-    public function findSubView(string $id): ?DataView
+    public function findSubView(string $slug): ?DataView
     {
         /** @var DataView $subView */
         foreach ($this->subViews as $subView) {
-            if ($subView->getId() === $id) {
+            if ($subView->getSlug() === $slug) {
                 return $subView;
             }
         }
 
         return null;
-    }
-
-    public function getType(): string
-    {
-        return 'sub_views';
     }
 
     public function toResponse(): array

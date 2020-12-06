@@ -16,14 +16,13 @@ use Infeav\Data\Config\AccessControl\User\UserIdentity;
 class User
 {
 
-    protected ?UserIdentity $identity;
-    protected ?UserData $data;
     protected bool $isAuthenticated;
 
-    public function __construct(?UserIdentity $identity = null, ?UserData $data = null, bool $isAuthenticated = false)
-    {
-        $this->identity = $identity;
-        $this->data = $data;
+    public function __construct(
+        protected ?UserIdentity $identity = null,
+        protected ?UserData $data = null,
+        bool $isAuthenticated = false,
+    ) {
         $this->isAuthenticated = $identity && $isAuthenticated;
     }
 
@@ -44,7 +43,7 @@ class User
 
     public function isAuthenticated(): bool
     {
-        return $this->isIdentified() && $this->isAuthenticated;
+        return $this->isAuthenticated;
     }
 
 }

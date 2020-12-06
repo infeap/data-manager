@@ -13,12 +13,9 @@ namespace Infeav\Data\Config;
 abstract class DataSource extends DataView
 {
 
-    protected ?DataSource $annotationsDataSource = null;
+    protected ?string $defaultIcon = 'file';
 
-    public function getIcon(): string
-    {
-        return $this->getMetaValue('icon', 'file');
-    }
+    protected ?DataSource $annotationsDataSource = null;
 
     public function isUsableForAnnotations(): bool
     {

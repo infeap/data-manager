@@ -7,6 +7,8 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
+import actions from './user/actions'
+
 export default {
     namespaced: true,
     state: {
@@ -21,4 +23,5 @@ export default {
             state.offerLogin = offerLogin
         },
     },
+    actions,
 }

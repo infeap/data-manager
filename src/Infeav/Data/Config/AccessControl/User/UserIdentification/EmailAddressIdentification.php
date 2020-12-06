@@ -19,7 +19,7 @@ use Psr\Http\Message\ServerRequestInterface;
 class EmailAddressIdentification extends UserIdentification
 {
 
-    public function matchIdentity(ServerRequestInterface $request): ?UserIdentity
+    public function match(ServerRequestInterface $request): ?UserIdentity
     {
         return null; // ToDo
     }
