@@ -29,7 +29,7 @@
     # Example for local machine development (or testing)
     <If "%{HTTP_HOST} == 'data.infeav.localhost'">
         SetEnv INFEAV_CONTEXT development
-        # Can also be further branched by developer names as "development/t.krebs"
+        # Can also be further branched by developer as "development/t.krebs" (+ additional conditions)
 
         ServerSignature on
         # ServerTokens Full # This cannot be set in .htaccess, but remains here as a recommendation
@@ -51,8 +51,8 @@
     RewriteRule .* https://%{HTTP_HOST}%{REQUEST_URI} [R=permanent,END]
 
     # Ignore index.html/.php once app files are setup
-    RewriteRule ^index\.html start.php [END]
-    RewriteRule ^index\.php start.php [END]
+    RewriteRule ^index\.html start.php [NC,END]
+    RewriteRule ^index\.php start.php [NC,END]
 
     # The following rule tells Apache that if the requested filename exists, simply serve it
     RewriteCond %{REQUEST_FILENAME} -s [OR]
@@ -60,8 +60,8 @@
     RewriteCond %{REQUEST_FILENAME} -d
     RewriteRule .* - [NC,END]
 
-    # The following rewrites all other queries to start.php.
-    # The condition ensures that if you are using Apache aliases to do mass virtual hosting,
+    # The following rules rewrite all other requests to start.php.
+    # The condition ensures that when using Apache aliases to do mass virtual hosting,
     # the base path will be prepended to allow proper resolution of the start.php file;
     # it will work in non-aliased environments as well, providing a safe, one-size fits all solution.
     RewriteCond %{REQUEST_URI}::$1 ^(/.+)(.+)::\2$

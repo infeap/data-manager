@@ -1,9 +1,9 @@
 {
     "name": "infeav/data-manager",
-    "type": "project",
     "homepage": "https://www.infeav.org/data-manager",
-    "license": "GPL-3.0-only",
+    "type": "project",
     "readme": "docs/readme.md",
+    "license": "GPL-3.0-only",
     "require": {
         "php": "^8.0",
 
