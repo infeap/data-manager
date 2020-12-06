@@ -11,6 +11,6 @@ import component from '../../components/routes/user/authenticate.vue'
 
 export default {
     name: 'user/authenticate',
-    path: '/user/auth',
+    path: '/user/authenticate',
     component,
 }
