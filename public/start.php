@@ -8,12 +8,12 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-$initApp = require '../init/app.php';
+$infeavInitApp = require '../init/app.php';
 
 /*
  * See init/app-array.php for available $appBaseConfig keys
  */
-$initApp(function ($appBaseConfig) {
+$infeavInitApp(function ($appBaseConfig) {
 
     $initServiceManager = require '../init/service-manager.php';
 

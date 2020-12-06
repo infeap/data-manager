@@ -8,12 +8,12 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-$initAppArray = require 'app-array.php';
+$infeavInitAppArray = require 'app-array.php';
 
 /*
  * See init/app-array.php for available $app keys
  */
-return $initAppArray(function (array $app): callable {
+return $infeavInitAppArray(function (array $app): callable {
 
     $autoloadFile = $app['dir'] . '/vendor/autoload.php';
 
