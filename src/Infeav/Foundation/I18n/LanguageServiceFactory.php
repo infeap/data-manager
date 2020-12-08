@@ -18,8 +18,8 @@ class LanguageServiceFactory
     public function __invoke(ServiceManager $serviceManager)
     {
         return new LanguageService(
-            $serviceManager->get('app_config')['supported_languages'],
-            $serviceManager->get('app_config')['fallback_language'],
+            $serviceManager->get('app_config')['supported_languages'] ?? null,
+            $serviceManager->get('app_config')['fallback_language'] ?? null,
         );
     }
 

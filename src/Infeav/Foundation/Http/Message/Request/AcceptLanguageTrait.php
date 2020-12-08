@@ -10,7 +10,6 @@
 
 namespace Infeav\Foundation\Http\Message\Request;
 
-use Laminas\Http\Header\Accept\FieldValuePart\LanguageFieldValuePart;
 use Laminas\Http\Header\AcceptLanguage;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -37,25 +36,6 @@ trait AcceptLanguageTrait
         }
 
         return $header->getPrioritized();
-    }
-
-    protected function getAcceptedAndSupportedLanguage(ServerRequestInterface $request, array $supportedLanguages): ?LanguageFieldValuePart
-    {
-        $header = $this->getAcceptLanguageHeader($request);
-
-        if (! $header) {
-            return null;
-        }
-
-        $supportedLanguagesLine = implode(',', $supportedLanguages);
-
-        $languageMatch = $header->match($supportedLanguagesLine);
-
-        if (! $languageMatch) {
-            return null;
-        }
-
-        return $languageMatch;
     }
 
 }

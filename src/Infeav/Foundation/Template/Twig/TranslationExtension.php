@@ -63,25 +63,25 @@ class TranslationExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('supported_languages', [$this, 'getSupportedLanguages']),
             new TwigFunction('current_language', [$this, 'getCurrentLanguage']),
             new TwigFunction('fallback_language', [$this, 'getFallbackLanguage']),
+            new TwigFunction('supported_languages', [$this, 'getSupportedLanguages']),
         ];
-    }
-
-    public function getSupportedLanguages(): array
-    {
-        return $this->languageService->getSupportedLanguages();
     }
 
     public function getCurrentLanguage(): string
     {
-        return $this->languageService->getCurrentLanguage() ?: $this->languageService->getFallbackLanguage();
+        return $this->languageService->getCurrentLanguage();
     }
 
-    public function getFallbackLanguage(): string
+    public function getFallbackLanguage(): ?string
     {
         return $this->languageService->getFallbackLanguage();
+    }
+
+    public function getSupportedLanguages(): array
+    {
+        return $this->languageService->getSupportedLanguages() ?: [];
     }
 
 }

@@ -10,7 +10,6 @@
 
 namespace Infeav\Foundation\Log;
 
-use Infeav\Foundation\I18n\LanguageService;
 use Laminas\ServiceManager\ServiceManager;
 
 class LogManagerFactory
@@ -21,7 +20,6 @@ class LogManagerFactory
         return new LogManager(
             $serviceManager->get('app_config')['log_dir'],
             $serviceManager->get('app_dir'),
-            $serviceManager->get(LanguageService::class),
         );
     }
 

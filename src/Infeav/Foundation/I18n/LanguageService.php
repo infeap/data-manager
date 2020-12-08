@@ -13,52 +13,59 @@ namespace Infeav\Foundation\I18n;
 class LanguageService
 {
 
-    protected array $supportedLanguages;
-    protected string $fallbackLanguage;
+    protected ?array $supportedLanguages = null;
+    protected ?string $fallbackLanguage = null;
 
-    protected ?string $currentLanguage = null;
+    protected string $currentLanguage;
 
-    public function __construct(array $supportedLanguages, string $fallbackLanguage)
+    public function __construct(?array $supportedLanguages = null, ?string $fallbackLanguage = null)
     {
-        $this->supportedLanguages = array_map(function (string $languageTag) {
-            return $this->normalizeLanguageTag($languageTag);
-        }, $supportedLanguages);
-
-        $this->fallbackLanguage = $this->normalizeLanguageTag($fallbackLanguage);
-
-        if (class_exists('Locale')) {
-            \Locale::setDefault($fallbackLanguage);
+        if ($supportedLanguages) {
+            $this->supportedLanguages = array_map(function (string $languageTag): string {
+                return $this->normalizeLanguageTag($languageTag);
+            }, $supportedLanguages);
         }
+
+        if ($fallbackLanguage) {
+            $this->fallbackLanguage = $this->normalizeLanguageTag($fallbackLanguage);
+        }
+
+        $this->setCurrentLanguage('en');
     }
 
-    public function getSupportedLanguages(): array
+    public function getSupportedLanguages(): ?array
     {
         return $this->supportedLanguages;
     }
 
-    public function getFallbackLanguage(): string
+    public function getFallbackLanguage(): ?string
     {
         return $this->fallbackLanguage;
     }
 
-    public function getCurrentLanguage(): ?string
+    public function getCurrentLanguage(): string
     {
         return $this->currentLanguage;
     }
 
-    public function setCurrentLanguage(string $languageTag): bool
+    protected function setCurrentLanguage(string $languageTag): void
     {
-        if (! $this->isSupportedLanguage($languageTag)) {
-            return false;
-        }
-
         $this->currentLanguage = $this->normalizeLanguageTag($languageTag);
 
         if (class_exists('Locale')) {
             \Locale::setDefault($this->currentLanguage);
         }
+    }
 
-        return true;
+    public function updateCurrentLanguage(string $languageTag): bool
+    {
+        if ($this->isSupportedLanguage($languageTag)) {
+            $this->setCurrentLanguage($languageTag);
+
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function isSupportedLanguage(string $languageTag): bool

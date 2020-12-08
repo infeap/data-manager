@@ -48,11 +48,13 @@ class Translator
                 );
             }
 
-            if ($this->languageService->getCurrentLanguage()) {
-                $this->engine->setLocale($this->languageService->getCurrentLanguage());
-            }
+            $this->engine->setLocale(
+                $this->languageService->getCurrentLanguage());
 
-            $this->engine->setFallbackLocale($this->languageService->getFallbackLanguage());
+            if ($this->languageService->getFallbackLanguage()) {
+                $this->engine->setFallbackLocale(
+                    $this->languageService->getFallbackLanguage());
+            }
 
             /*
              * Setup caching
@@ -76,14 +78,12 @@ class Translator
             ]));
 
             if ($this->appConfig['debug'] || $this->appConfig['develop']) {
-                if ($this->languageService->getCurrentLanguage()) {
-                    foreach ($this->textDomains as $textDomain) {
-                        $this->engine->clearCache($textDomain, $this->languageService->getCurrentLanguage());
-                    }
-                }
-
                 foreach ($this->textDomains as $textDomain) {
-                    $this->engine->clearCache($textDomain, $this->languageService->getFallbackLanguage());
+                    $this->engine->clearCache($textDomain, $this->languageService->getCurrentLanguage());
+
+                    if ($this->languageService->getFallbackLanguage()) {
+                        $this->engine->clearCache($textDomain, $this->languageService->getFallbackLanguage());
+                    }
                 }
             }
 
@@ -94,14 +94,20 @@ class Translator
                 $this->engine->enableEventManager()->getEventManager()->attach('missingTranslation', function (EventInterface $event) {
                     $this->logManager->logMissingTranslation(
                         key: $event->getParam('message'),
-                        textDomain: $event->getParam('text_domain'),
                         languageTag: $event->getParam('locale'),
+                        textDomain: $event->getParam('text_domain'),
                     );
                 });
             }
         }
 
         return $this->engine;
+    }
+
+    public function syncCurrentLanguage(): void
+    {
+        $this->getEngine()->setLocale(
+            $this->languageService->getCurrentLanguage());
     }
 
     public function hasTextDomain(string $textDomain): bool
@@ -116,17 +122,19 @@ class Translator
         return $this->textDomains;
     }
 
-    public function getAllMessages(string $textDomain = 'foundation', ?string $languageTag = null)
+    public function getAllTranslations(string $textDomain = 'foundation', ?string $languageTag = null): array
     {
-        return $this->getEngine()->getAllMessages($textDomain, $languageTag);
+        $translations = $this->getEngine()->getAllMessages($textDomain, $languageTag);
+
+        if ($translations) {
+            return (array) $translations;
+        } else {
+            return [];
+        }
     }
 
     public function translate(string $key, string $textDomain = 'foundation', ?string $languageTag = null): string
     {
-        if ($languageTag && ! $this->languageService->isSupportedLanguage($languageTag)) {
-            $languageTag = null;
-        }
-
         $translation = $this->getEngine()->translate($key, $textDomain, $languageTag);
 
         if ($translation === $key) {

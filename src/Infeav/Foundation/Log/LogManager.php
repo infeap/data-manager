@@ -10,7 +10,6 @@
 
 namespace Infeav\Foundation\Log;
 
-use Infeav\Foundation\I18n\LanguageService;
 use Laminas\Code\Generator\ValueGenerator;
 use Laminas\Json\Json;
 
@@ -20,7 +19,6 @@ class LogManager
     public function __construct(
         protected string $logDir,
         protected string $appDir,
-        protected LanguageService $languageService,
     ) { }
 
     public function logDebug(mixed $details, string $fileName = 'general'): bool
@@ -67,20 +65,20 @@ class LogManager
         return $this->writeToLogFile('errors', fileType: 'json', entry: $details);
     }
 
-    public function logMissingTranslation(string $key, ?string $textDomain = null, ?string $languageTag = null): bool
+    public function logMissingTranslation(string $key, ?string $languageTag = null, ?string $textDomain = null): bool
     {
+        if (! $languageTag) {
+            $languageTag = 'Unspecified';
+        }
+
         if (! $textDomain) {
             $textDomain = 'Unspecified (probably "foundation")';
         }
 
-        if (! $languageTag) {
-            $languageTag = $this->languageService->getCurrentLanguage();
-        }
-
         return $this->writeToLogFile('missing-translations', fileType: 'json', entry: [
             'key' => $key,
-            'text-domain' => $textDomain,
             'language-tag' => $languageTag,
+            'text-domain' => $textDomain,
         ], condition: function (array $log) use ($key): bool {
 
             return ! array_filter($log, function ($logEntry) use ($key) {

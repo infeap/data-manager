@@ -7,7 +7,7 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-import isEmpty from 'lodash/isEmpty'
+import isObject from 'lodash/isObject'
 
 import infetch from '../http/request/infetch'
 import language from './language'
@@ -18,22 +18,22 @@ export default {
     loadTranslations(textDomain = 'js-main-vm', languageTag = null) {
         if (! languageTag) {
             languageTag = language.documentLanguage
+
+            if (! languageTag) {
+                throw new Error('No language tag passed or found on the document')
+            }
         }
 
         return infetch.get('/api/v1/translations/' + languageTag + '/' + textDomain)
             .then((response) => {
-                if (response.parsedBody) {
+                if (isObject(response.parsedBody)) {
                     if (! loadedTranslations[languageTag]) {
                         loadedTranslations[languageTag] = {}
                     }
 
                     loadedTranslations[languageTag][textDomain] = response.parsedBody
                 } else {
-                    if (isEmpty(loadedTranslations)) {
-                        throw new Error('Unable to parse response body')
-                    } else {
-                        console.warn('[Infeav Data Manager] Unable to parse response body of translations for ' + languageTag + '/' + textDomain)
-                    }
+                    throw new Error('Unable to parse response body of loaded translations for ' + languageTag + '/' + textDomain)
                 }
             })
     },
@@ -42,15 +42,23 @@ export default {
             languageTag = language.documentLanguage
         }
 
-        if (loadedTranslations?.[languageTag]?.[textDomain]?.[key]) {
-            return loadedTranslations[languageTag][textDomain][key]
+        if (languageTag) {
+            if (loadedTranslations[languageTag]?.[textDomain]?.[key]) {
+                return loadedTranslations[languageTag][textDomain][key]
+            }
         }
 
-        console.warn('[Infeav Data Manager] Missing translation "' + key + '" in ' + languageTag + '/' + textDomain)
+        if (languageTag) {
+            console.warn('[Infeav Data Manager] Missing translation "' + key + '" in ' + languageTag + '/' + textDomain)
+        } else {
+            console.warn('[Infeav Data Manager] No language tag found on the document')
+        }
 
         if (language.fallbackLanguage) {
-            if (loadedTranslations?.[language.fallbackLanguage]?.[textDomain]?.[key]) {
-                return loadedTranslations[language.fallbackLanguage][textDomain][key]
+            if (loadedTranslations[language.fallbackLanguage]) {
+                if (loadedTranslations[language.fallbackLanguage]?.[textDomain]?.[key]) {
+                    return loadedTranslations[language.fallbackLanguage][textDomain][key]
+                }
             } else {
                 loadedTranslations[language.fallbackLanguage] = {}
 

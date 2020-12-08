@@ -8,18 +8,20 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-namespace Infeav\Foundation\Middleware\I18n\Redirect;
+namespace Infeav\Foundation\Middleware\I18n;
 
 use Infeav\Foundation\I18n\LanguageService;
+use Infeav\Foundation\I18n\Translator;
 use Laminas\ServiceManager\ServiceManager;
 
-class PageLanguageMiddlewareFactory
+class LanguageMiddlewareFactory
 {
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        return new PageLanguageMiddleware(
+        return new LanguageMiddleware(
             $serviceManager->get(LanguageService::class),
+            $serviceManager->get(Translator::class),
         );
     }
 

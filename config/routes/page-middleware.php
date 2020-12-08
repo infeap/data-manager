@@ -13,9 +13,7 @@ return [
         'before' => [
             \Infeav\Foundation\Middleware\Page\ErrorHandler::class,
             \Infeav\Foundation\Middleware\Page\BasicMessageMiddleware::class,
-
-            \Infeav\Foundation\Middleware\I18n\LanguageParamMiddleware::class,
-            \Infeav\Foundation\Middleware\I18n\Redirect\PageLanguageMiddleware::class,
+            \Infeav\Foundation\Middleware\I18n\LanguageMiddleware::class,
         ],
         'target' => [
             \Mezzio\Router\Middleware\RouteMiddleware::class,

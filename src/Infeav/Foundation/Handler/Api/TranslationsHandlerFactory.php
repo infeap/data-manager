@@ -10,7 +10,6 @@
 
 namespace Infeav\Foundation\Handler\Api;
 
-use Infeav\Foundation\I18n\LanguageService;
 use Infeav\Foundation\I18n\Translator;
 use Laminas\ServiceManager\ServiceManager;
 
@@ -21,7 +20,6 @@ class TranslationsHandlerFactory
     {
         return new TranslationsHandler(
             $serviceManager->get(Translator::class),
-            $serviceManager->get(LanguageService::class),
         );
     }
 

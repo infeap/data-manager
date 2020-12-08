@@ -17,32 +17,33 @@ $(document).ready(() => {
 
     if ($startElement.length) {
 
-        translator.loadTranslations().then(() => {
-
-            import(
-                /* webpackChunkName: "dynamic/main/vm" */
-                /* webpackMode: "lazy" */
-                '../main/vm').then((mainVmModule) => {
-
-                    let mainVm = mainVmModule.default
-
-                    let $mainVmElement = $('<div id="inf-main-vm"></div>')
-
-                    $startElement.before($mainVmElement)
-
-                    mainVm.init({ containerElement: $mainVmElement[0] }).then(() => {
-                        $startElement.remove()
-                    }).catch((error) => {
-                        console.error('[Infeav Data Manager] Failed to initialize main VM', error)
-                    })
-                }
-            ).catch((error) => {
-                console.error('[Infeav Data Manager] Unable to load main VM dynamic module', error)
+        translator.loadTranslations()
+            .catch((error) => {
+                console.error('[Infeav Data Manager] Unable to load main VM translations', error)
             })
-        }).catch((error) => {
-            console.error('[Infeav Data Manager] Unable to load main VM translations',
-                error.response && error.response.parsedBody ? error.response.parsedBody : error)
-        })
+            .then(() => {
+
+                import(
+                    /* webpackChunkName: "dynamic/main/vm" */
+                    /* webpackMode: "lazy" */
+                    '../main/vm').then((mainVmModule) => {
+
+                        let mainVm = mainVmModule.default
+
+                        let $mainVmElement = $('<div id="inf-main-vm"></div>')
+
+                        $startElement.before($mainVmElement)
+
+                        mainVm.init({ containerElement: $mainVmElement[0] }).then(() => {
+                            $startElement.remove()
+                        }).catch((error) => {
+                            console.error('[Infeav Data Manager] Failed to initialize main VM', error)
+                        })
+                    }
+                ).catch((error) => {
+                    console.error('[Infeav Data Manager] Unable to load main VM dynamic module', error)
+                })
+            })
     } else {
         console.warn('[Infeav Data Manager] #inf-start element required to init main UI')
     }

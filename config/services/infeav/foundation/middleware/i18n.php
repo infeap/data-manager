@@ -10,7 +10,6 @@
 
 return [
     'factories' => [
-        \Infeav\Foundation\Middleware\I18n\LanguageParamMiddleware::class => \Infeav\Foundation\Middleware\I18n\LanguageParamMiddlewareFactory::class,
-        \Infeav\Foundation\Middleware\I18n\Redirect\PageLanguageMiddleware::class => \Infeav\Foundation\Middleware\I18n\Redirect\PageLanguageMiddlewareFactory::class,
+        \Infeav\Foundation\Middleware\I18n\LanguageMiddleware::class => \Infeav\Foundation\Middleware\I18n\LanguageMiddlewareFactory::class,
     ],
 ];

@@ -18,10 +18,10 @@ class TranslatorFactory
 
     public function __invoke(ServiceManager $serviceManager)
     {
-        if (! $serviceManager->get('app_config')['debug']) {
-            $logManager = $serviceManager->get(LogManager::class);
-        } else {
+        if ($serviceManager->get('app_config')['debug']) {
             $logManager = null;
+        } else {
+            $logManager = $serviceManager->get(LogManager::class);
         }
 
         return new Translator(

@@ -12,7 +12,6 @@ namespace Infeav\Foundation\Handler\Api;
 
 use Infeav\Foundation\Http\Message\Response\StatusCode;
 use Infeav\Foundation\Http\Response\ApiResponse;
-use Infeav\Foundation\I18n\LanguageService;
 use Infeav\Foundation\I18n\Translator;
 use Laminas\Diactoros\Response\JsonResponse;
 use Psr\Http\Message\ResponseInterface;
@@ -24,7 +23,6 @@ class TranslationsHandler implements RequestHandlerInterface
 
     public function __construct(
         protected Translator $translator,
-        protected LanguageService $languageService,
     ) { }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
@@ -41,8 +39,6 @@ class TranslationsHandler implements RequestHandlerInterface
             ]);
         }
 
-        $languageTag = $request->getAttribute('language-tag');
-
         if (! str_starts_with($textDomain, 'js-')) {
             return new ApiResponse([
                 'status' => StatusCode::FORBIDDEN,
@@ -53,9 +49,11 @@ class TranslationsHandler implements RequestHandlerInterface
             ]);
         }
 
-        $messages = $this->translator->getAllMessages($textDomain, $languageTag);
+        $languageTag = $request->getAttribute('language-tag');
 
-        return new JsonResponse($messages);
+        $translations = $this->translator->getAllTranslations($textDomain, $languageTag);
+
+        return new JsonResponse($translations);
     }
 
 }

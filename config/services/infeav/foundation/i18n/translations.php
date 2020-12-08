@@ -33,13 +33,16 @@ return function (array $app): array {
 
     if (is_array($languagesConfig)) {
         $l10nDir = $config['services']['app_config']['l10n_dir'];
-        $fallbackLanguage = $languagesConfig['services']['app_config']['fallback_language'];
 
-        $languageDir = $l10nDir . '/' . $fallbackLanguage;
+        $scanLanguageTag =
+            $languagesConfig['services']['app_config']['fallback_language'] ??
+                ($languagesConfig['services']['app_config']['supported_languages'][0] ?? null);
 
-        if (is_dir($languageDir)) {
+        $scanLanguageDir = $l10nDir . '/' . $scanLanguageTag;
+
+        if (is_dir($scanLanguageDir) && is_readable($scanLanguageDir)) {
             foreach (new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($languageDir,
+                new RecursiveDirectoryIterator($scanLanguageDir,
                 FilesystemIterator::CURRENT_AS_PATHNAME | FilesystemIterator::SKIP_DOTS)) as $iteratedFile) {
 
                 if (str_ends_with($iteratedFile, '.ini')) {
@@ -47,7 +50,7 @@ return function (array $app): array {
                         DIRECTORY_SEPARATOR => '/',
                     ]);
 
-                    $relativeIteratedFile = substr($normalizedIteratedFile, strlen($languageDir) + 1);
+                    $relativeIteratedFile = substr($normalizedIteratedFile, strlen($scanLanguageDir) + 1);
 
                     $config['services']['app_config']['l10n_files'][] = $relativeIteratedFile;
                 }
