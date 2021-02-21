@@ -7,8 +7,6 @@
  * @license     https://www.gnu.org/licenses/gpl.html GNU General Public License 3
  */
 
-import isString from 'lodash/isString'
-
 import app from '../../init/app-array'
 
 export default {
@@ -17,7 +15,7 @@ export default {
      * Core
      */
     fetch(method, resource, options = {}) {
-        if (isString(resource) && options.query) {
+        if (typeof resource == 'string' && options.query) {
             resource += '?' + new URLSearchParams(options.query).toString()
             delete options.query
         }
@@ -75,7 +73,7 @@ export default {
      * Internal helpers
      */
     prependBasePath(resource) {
-        if (isString(resource) && resource.startsWith('/')) {
+        if (typeof resource == 'string' && resource.startsWith('/')) {
             resource = app.basePath + resource
         }
 
@@ -97,20 +95,33 @@ export default {
         }
     },
     parseResponseBody(response) {
-        switch (response.headers.get('content-type')) {
-            case 'application/json':
-                return new Promise((resolve, reject) => {
-                    response.json().then((parsedBody) => {
-                        response.parsedBody = parsedBody
+        let contentType = response.headers.get('content-type')?.split(';')?.[0]?.trim()
 
-                        resolve(response)
-                    }).catch((error) => {
-                        reject(error)
-                    })
+        if (contentType == 'application/json') {
+            return new Promise((resolve, reject) => {
+                response.json().then((parsedBody) => {
+                    response.parsedBody = parsedBody
+
+                    resolve(response)
+                }).catch((error) => {
+                    reject(error)
                 })
-            default:
-                return response
+            })
         }
+
+        if (contentType.startsWith('text/')) {
+            return new Promise((resolve, reject) => {
+                response.text().then((parsedBody) => {
+                    response.parsedBody = parsedBody
+
+                    resolve(response)
+                }).catch((error) => {
+                    reject(error)
+                })
+            })
+        }
+
+        return response
     },
     prepareOptionsForJson(options = {}) {
         options.headers ??= {}
