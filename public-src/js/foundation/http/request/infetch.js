@@ -15,9 +15,25 @@ export default {
      * Core
      */
     fetch(method, resource, options = {}) {
-        if (typeof resource == 'string' && options.query) {
-            resource += '?' + new URLSearchParams(options.query).toString()
-            delete options.query
+        if (typeof resource == 'string') {
+            if (typeof options.params == 'object') {
+                for (let [paramKey, paramValue] of Object.entries(options.params)) {
+                    let paramKeySearch = '/:' + paramKey
+                    let paramReplacement = '/' + encodeURIComponent(paramValue)
+
+                    if (resource.endsWith(paramKeySearch)) {
+                        resource = resource.replace(paramKeySearch, paramReplacement)
+                    } else {
+                        resource = resource.replace(paramKey + '/', paramReplacement + '/')
+                    }
+                }
+                delete options.params
+            }
+
+            if (options.query) {
+                resource += '?' + new URLSearchParams(options.query).toString()
+                delete options.query
+            }
         }
 
         return fetch(this.prependBasePath(resource), {
