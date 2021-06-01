@@ -15,12 +15,13 @@ export default {
      * Core method
      *
      * .then((response) => { response.ok, response.status, response.parsedBody, ... })
-     * .catch((response) => { ! response.ok, response.status, response.parsedBody, ... })
      *
-     * @throws AbortError
-     * @throws TypeError (e. g. on CORS)
-     *
-     * @throws SyntaxError (e. g. when parsing JSON responses)
+     * .catch((error) => {
+     *     error.response
+     *     || error instanceof AbortError
+     *     || error instanceof TypeError (e. g. on CORS)
+     *     || error instanceof SyntaxError (e. g. when parsing invalid JSON responses)
+     * })
      */
     fetch(method, resource, options = {}) {
         if (typeof resource == 'string') {
@@ -44,11 +45,15 @@ export default {
             }
         }
 
-        return fetch(this.prependBasePath(resource), {
-            ...options,
-            method,
-        }).then(this.checkResponseStatus.bind(this))
-            .then(this.parseResponseBody.bind(this))
+        try {
+            return fetch(resource, {
+                ...options,
+                method,
+            }).then(this.checkResponseStatus.bind(this))
+                .then(this.parseResponseBody.bind(this))
+        } catch (error) {
+            return Promise.reject(error)
+        }
     },
 
     /*
@@ -109,7 +114,9 @@ export default {
         } else {
             return new Promise((resolve, reject) => {
                 this.parseResponseBody(response).then((response) => {
-                    reject(response)
+                    reject({
+                        response,
+                    })
                 })
             })
         }
