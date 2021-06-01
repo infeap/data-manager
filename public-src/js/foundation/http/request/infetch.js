@@ -11,8 +11,16 @@ import app from '../../init/app-array'
 
 export default {
 
-    /*
-     * Core
+    /**
+     * Core method
+     *
+     * .then((response) => { response.ok, response.status, response.parsedBody, ... })
+     * .catch((response) => { ! response.ok, response.status, response.parsedBody, ... })
+     *
+     * @throws AbortError
+     * @throws TypeError (e. g. on CORS)
+     *
+     * @throws SyntaxError (e. g. when parsing JSON responses)
      */
     fetch(method, resource, options = {}) {
         if (typeof resource == 'string') {
@@ -101,11 +109,7 @@ export default {
         } else {
             return new Promise((resolve, reject) => {
                 this.parseResponseBody(response).then((response) => {
-                    reject({
-                        response,
-                    })
-                }).catch((error) => {
-                    reject(error)
+                    reject(response)
                 })
             })
         }
@@ -117,10 +121,7 @@ export default {
             return new Promise((resolve, reject) => {
                 response.json().then((parsedBody) => {
                     response.parsedBody = parsedBody
-
                     resolve(response)
-                }).catch((error) => {
-                    reject(error)
                 })
             })
         }
@@ -129,10 +130,7 @@ export default {
             return new Promise((resolve, reject) => {
                 response.text().then((parsedBody) => {
                     response.parsedBody = parsedBody
-
                     resolve(response)
-                }).catch((error) => {
-                    reject(error)
                 })
             })
         }
